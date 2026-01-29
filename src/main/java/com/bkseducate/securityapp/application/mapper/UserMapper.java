@@ -24,6 +24,11 @@ public interface UserMapper {
     UserResponse toResponse(User user);
     
     /**
+     * Convierte una lista de Roles del dominio a lista de RoleResponse DTOs
+     */
+    java.util.List<RoleResponse> rolesToRoleResponses(java.util.Set<Role> roles);
+    
+    /**
      * Convierte un Role del dominio a RoleResponse DTO
      */
     RoleResponse toRoleResponse(Role role);

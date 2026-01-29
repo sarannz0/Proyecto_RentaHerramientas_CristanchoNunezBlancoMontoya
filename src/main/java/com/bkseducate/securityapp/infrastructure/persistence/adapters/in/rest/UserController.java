@@ -1,4 +1,4 @@
-package com.bkseducate.securityapp.adapters.in.rest;
+package com.bkseducate.securityapp.infrastructure.persistence.adapters.in.rest;
 
 import com.bkseducate.securityapp.application.dto.AssignRoleRequest;
 import com.bkseducate.securityapp.application.dto.UserResponse;

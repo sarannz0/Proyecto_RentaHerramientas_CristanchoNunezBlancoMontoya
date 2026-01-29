@@ -1,4 +1,4 @@
-package com.bkseducate.securityapp.adapters.out.persistence;
+package com.bkseducate.securityapp.infrastructure.persistence.adapters.out.persistence;
 
 import com.bkseducate.securityapp.domain.model.RefreshToken;
 import com.bkseducate.securityapp.domain.ports.RefreshTokenRepository;
