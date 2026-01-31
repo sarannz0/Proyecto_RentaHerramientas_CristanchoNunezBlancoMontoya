@@ -1,3 +1,9 @@
+app:
+  admin:
+    email: ${ADMIN_EMAIL:admin@bkseducate.com}
+    password: ${ADMIN_PASSWORD:admin}
+
+
 spring:
   application:
     name: security-app

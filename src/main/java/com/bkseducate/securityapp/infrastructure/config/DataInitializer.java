@@ -1,10 +1,15 @@
 package com.bkseducate.securityapp.infrastructure.config;
 
 import com.bkseducate.securityapp.domain.model.Role;
+import com.bkseducate.securityapp.domain.model.User;
+import com.bkseducate.securityapp.domain.ports.PasswordService;
 import com.bkseducate.securityapp.domain.ports.RoleRepository;
+import com.bkseducate.securityapp.domain.ports.UserRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -21,14 +26,25 @@ public class DataInitializer implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
     
     private final RoleRepository roleRepository;
+    private final PasswordService passwordService;
+    private final UserRepository userRepository;
+
+    @Value("${app.admin.email:admin@bkseducate.com}")
+    private String adminEmail;
+
+    @Value("${app.admin.password:admin123}")
+    private String adminPassword;
     
-    public DataInitializer(RoleRepository roleRepository) {
+    public DataInitializer(RoleRepository roleRepository, PasswordService passwordService, UserRepository userRepository) {
         this.roleRepository = roleRepository;
+        this.passwordService = passwordService;
+        this.userRepository = userRepository;
     }
     
     @Override
     public void run(String... args) {
         initializeRoles();
+        initializeAdmin();
     }
     
     private void initializeRoles() {
@@ -68,5 +84,17 @@ public class DataInitializer implements CommandLineRunner {
         }
         
         logger.info("Inicialización de roles completada");
+    }
+
+    private void initializeAdmin() {
+        logger.info("Creando usuario admin...");
+        if (userRepository.existsByEmail("admin@bkseducate.com")) return;
+        String password = passwordService.hash(adminPassword);
+        User user = User.create("admin", adminEmail, password);
+        Role role = roleRepository.findByName("ADMIN")
+            .orElseThrow(() -> new RuntimeException("Rol ADMIN no fue encontrado"));
+        user.assignRole(role);
+        userRepository.save(user);
+        logger.info("Usuario admin creado");
     }
 }
