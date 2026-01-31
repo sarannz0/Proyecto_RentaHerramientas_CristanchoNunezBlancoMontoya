@@ -4,6 +4,10 @@ import com.bkseducate.securityapp.application.dto.RoleResponse;
 import com.bkseducate.securityapp.application.dto.UserResponse;
 import com.bkseducate.securityapp.domain.model.Role;
 import com.bkseducate.securityapp.domain.model.User;
+
+import java.util.List;
+import java.util.Set;
+import java.util.ArrayList;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -26,7 +30,7 @@ public interface UserMapper {
     /**
      * Convierte una lista de Roles del dominio a lista de RoleResponse DTOs
      */
-    java.util.List<RoleResponse> rolesToRoleResponses(java.util.Set<Role> roles);
+    List<RoleResponse> rolesToRoleResponses(Set<Role> roles);
     
     /**
      * Convierte un Role del dominio a RoleResponse DTO

@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: ${DB_URL:jdbc:mysql://localhost:3306/security_app_prod?useSSL=true&requireSSL=true&serverTimezone=UTC}
+    url: ${DB_URL:jdbc:mysql://localhost:3309/toolscat_db?useSSL=true&requireSSL=true&serverTimezone=UTC}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:admin}
     hikari:
       maximum-pool-size: 20
       minimum-idle: 10
@@ -54,7 +54,8 @@ jwt:
 
 server:
   port: ${SERVER_PORT:8080}
-  error:
-    include-stacktrace: never
-    include-message: on_param
-    include-binding-errors: on_param
+  web:
+    error:
+        include-stacktrace: never
+        include-message: on_param
+        include-binding-errors: on_param

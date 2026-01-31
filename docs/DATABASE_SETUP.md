@@ -12,9 +12,9 @@
 Por defecto, el proyecto usa el perfil `dev`. Configura las siguientes variables de entorno o edita `application-dev.yml`:
 
 ```bash
-export DB_URL=jdbc:mysql://localhost:3306/security_app_dev?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+export DB_URL=jdbc:mysql://localhost:3309/toolscat_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
 export DB_USERNAME=root
-export DB_PASSWORD=tu_password
+export DB_PASSWORD=admin
 ```
 
 O ejecuta con parámetros:
@@ -28,9 +28,9 @@ Para producción, configura las variables de entorno:
 
 ```bash
 export SPRING_PROFILES_ACTIVE=prod
-export DB_URL=jdbc:mysql://tu-servidor:3306/security_app_prod?useSSL=true&requireSSL=true&serverTimezone=UTC
-export DB_USERNAME=usuario_prod
-export DB_PASSWORD=password_seguro_prod
+export DB_URL=jdbc:mysql://localhost:3306/toolscat_db?useSSL=true&requireSSL=true&serverTimezone=UTC
+export DB_USERNAME=root
+export DB_PASSWORD=admin
 export JWT_SECRET=tu-secreto-super-seguro-aqui
 export SERVER_PORT=8080
 ```
