@@ -1,8 +1,11 @@
 package com.bkseducate.securityapp.infrastructure.persistence.adapters.in.rest;
 
 import com.bkseducate.securityapp.application.dto.AssignRoleRequest;
+import com.bkseducate.securityapp.application.dto.RegisterRequest;
 import com.bkseducate.securityapp.application.dto.UserResponse;
 import com.bkseducate.securityapp.application.usecase.AssignRoleUseCase;
+import com.bkseducate.securityapp.application.usecase.CreateSupplierUseCase;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -27,8 +30,13 @@ import java.util.UUID;
 public class UserController {
     
     private final AssignRoleUseCase assignRoleUseCase;
+    private final CreateSupplierUseCase createSupplierUseCase;
     
-    public UserController(AssignRoleUseCase assignRoleUseCase) {
+    public UserController(
+        AssignRoleUseCase assignRoleUseCase,
+        CreateSupplierUseCase createSupplierUseCase
+    ) {
+        this.createSupplierUseCase = createSupplierUseCase;
         this.assignRoleUseCase = assignRoleUseCase;
     }
     
@@ -53,4 +61,14 @@ public class UserController {
         UserResponse response = assignRoleUseCase.execute(userId, request);
         return ResponseEntity.ok(response);
     }
+
+    @SecurityRequirement(name = "bearerAuth")
+    @PutMapping("/suppliers")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<UserResponse> createSupplier(
+        @Valid @RequestBody RegisterRequest request
+    ) {
+        UserResponse user = createSupplierUseCase.execute(request);
+        return ResponseEntity.ok(user);
+    }   
 }
