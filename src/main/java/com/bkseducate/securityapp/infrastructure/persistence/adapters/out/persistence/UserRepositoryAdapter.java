@@ -64,6 +64,7 @@ public class UserRepositoryAdapter implements UserRepository {
         
         return new UserEntity(
             user.getId(),
+            user.getName(),
             user.getEmail(),
             user.getPassword(),
             roleEntities,
@@ -78,6 +79,7 @@ public class UserRepositoryAdapter implements UserRepository {
         
         return User.reconstruct(
             entity.getId(),
+            entity.getName(),
             entity.getEmail(),
             entity.getPassword(),
             roles,

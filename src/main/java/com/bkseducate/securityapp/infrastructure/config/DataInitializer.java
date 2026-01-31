@@ -57,14 +57,14 @@ public class DataInitializer implements CommandLineRunner {
         }
         
         // Crear rol MODERATOR
-        if (!roleRepository.existsByAuthority("ROLE_MODERATOR")) {
+        if (!roleRepository.existsByAuthority("ROLE_SUPPLIER")) {
             Role moderatorRole = Role.reconstruct(
                 UUID.fromString("550e8400-e29b-41d4-a716-446655440003"),
-                "MODERATOR",
-                "ROLE_MODERATOR"
+                "SUPPLIER",
+                "ROLE_SUPPLIER"
             );
             roleRepository.save(moderatorRole);
-            logger.info("Rol MODERATOR creado");
+            logger.info("Rol SUPPLIER creado");
         }
         
         logger.info("Inicialización de roles completada");

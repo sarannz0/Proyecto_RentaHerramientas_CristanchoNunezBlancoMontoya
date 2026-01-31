@@ -12,6 +12,9 @@ import java.util.UUID;
 public class User {
     
     private UUID id;
+    private String name;
+    
+
     private String email;
     private String password;
     private Set<Role> roles;
@@ -25,7 +28,7 @@ public class User {
     /**
      * Factory method para crear un nuevo usuario
      */
-    public static User create(String email, String password) {
+    public static User create(String name, String email, String password) {
         if (email == null || email.isBlank()) {
             throw new DomainException("Email no puede estar vacío");
         }
@@ -38,6 +41,7 @@ public class User {
         
         User user = new User();
         user.id = UUID.randomUUID();
+        user.name = name;
         user.email = email.toLowerCase().trim();
         user.password = password; // Se espera que venga hasheado desde fuera del dominio
         user.status = UserStatus.ACTIVE;
@@ -49,10 +53,11 @@ public class User {
     /**
      * Factory method para reconstruir desde persistencia
      */
-    public static User reconstruct(UUID id, String email, String password, 
+    public static User reconstruct(UUID id, String name,String email, String password, 
                                    Set<Role> roles, UserStatus status) {
         User user = new User();
         user.id = id;
+        user.name = name;
         user.email = email;
         user.password = password;
         user.roles = new HashSet<>(roles);
@@ -126,6 +131,10 @@ public class User {
     // Getters
     public UUID getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
     }
     
     public String getEmail() {

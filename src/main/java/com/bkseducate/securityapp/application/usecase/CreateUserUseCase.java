@@ -46,7 +46,7 @@ public class CreateUserUseCase {
         String hashedPassword = passwordService.hash(request.password());
         
         // Crear el usuario
-        User user = User.create(request.email(), hashedPassword);
+        User user = User.create(request.name() ,request.email(), hashedPassword);
         
         // Buscar y asignar rol USER por defecto
         Role userRole = roleRepository.findByAuthority("ROLE_USER")
