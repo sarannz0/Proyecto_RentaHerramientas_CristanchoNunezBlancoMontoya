@@ -1,4 +1,4 @@
-package com.bkseducate.securityapp.application.usecase;
+package com.bkseducate.securityapp.application.usecase.User;
 
 import java.security.KeyStore.PasswordProtection;
 

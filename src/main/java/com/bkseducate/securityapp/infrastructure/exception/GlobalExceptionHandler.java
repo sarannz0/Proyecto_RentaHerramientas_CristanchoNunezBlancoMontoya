@@ -1,6 +1,7 @@
 package com.bkseducate.securityapp.infrastructure.exception;
 
 import com.bkseducate.securityapp.domain.exceptions.DomainException;
+import com.bkseducate.securityapp.domain.exceptions.InfoNotFoundException;
 import com.bkseducate.securityapp.domain.exceptions.InvalidCredentialsException;
 import com.bkseducate.securityapp.domain.exceptions.UserNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -111,6 +112,19 @@ public class GlobalExceptionHandler {
             HttpStatus.INTERNAL_SERVER_ERROR.value(),
             "Error interno del servidor",
             "Ha ocurrido un error inesperado",
+            request.getRequestURI()
+        );
+        // En producción, no exponer detalles del error
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    }
+
+     @ExceptionHandler(InfoNotFoundException.class)
+    public ResponseEntity<ErrorResponse> InfoNotFoundException(
+            Exception ex, HttpServletRequest request) {
+        ErrorResponse error = ErrorResponse.of(
+            HttpStatus.INTERNAL_SERVER_ERROR.value(),
+            "Error interno del servidor",
+            ex.getMessage(),
             request.getRequestURI()
         );
         // En producción, no exponer detalles del error

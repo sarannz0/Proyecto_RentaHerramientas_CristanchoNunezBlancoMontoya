@@ -1,6 +1,9 @@
 package com.bkseducate.securityapp.domain.ports;
 
+import com.bkseducate.securityapp.application.dto.UserResponse;
 import com.bkseducate.securityapp.domain.model.User;
+
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -9,6 +12,8 @@ import java.util.UUID;
  * Define las operaciones que el dominio necesita sin especificar implementación
  */
 public interface UserRepository {
+
+    List<User> findAllUsersBySpecificRoles();
     
     /**
      * Guarda un usuario

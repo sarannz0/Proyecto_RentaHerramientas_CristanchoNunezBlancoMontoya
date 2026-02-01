@@ -1,4 +1,4 @@
-package com.bkseducate.securityapp.application.usecase;
+package com.bkseducate.securityapp.application.usecase.Role;
 
 import com.bkseducate.securityapp.application.dto.AssignRoleRequest;
 import com.bkseducate.securityapp.application.dto.UserResponse;

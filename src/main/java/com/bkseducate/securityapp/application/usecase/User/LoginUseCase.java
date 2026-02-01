@@ -1,4 +1,4 @@
-package com.bkseducate.securityapp.application.usecase;
+package com.bkseducate.securityapp.application.usecase.User;
 
 import com.bkseducate.securityapp.application.dto.LoginRequest;
 import com.bkseducate.securityapp.application.dto.LoginResponse;

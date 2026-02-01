@@ -1,4 +1,4 @@
-package com.bkseducate.securityapp.application.usecase;
+package com.bkseducate.securityapp.application.usecase.Role;
 
 import com.bkseducate.securityapp.application.dto.LoginResponse;
 import com.bkseducate.securityapp.application.dto.RefreshTokenRequest;

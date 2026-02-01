@@ -2,6 +2,13 @@ package com.bkseducate.securityapp.infrastructure.persistence.adapters.in.rest;
 
 import com.bkseducate.securityapp.application.dto.*;
 import com.bkseducate.securityapp.application.usecase.*;
+import com.bkseducate.securityapp.application.usecase.Role.RefreshTokenUseCase;
+import com.bkseducate.securityapp.application.usecase.User.ChangePasswordUseCase;
+import com.bkseducate.securityapp.application.usecase.User.CreateUserUseCase;
+import com.bkseducate.securityapp.application.usecase.User.GetCurrentUserUseCase;
+import com.bkseducate.securityapp.application.usecase.User.LoginUseCase;
+import com.bkseducate.securityapp.application.usecase.User.LogoutUseCase;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

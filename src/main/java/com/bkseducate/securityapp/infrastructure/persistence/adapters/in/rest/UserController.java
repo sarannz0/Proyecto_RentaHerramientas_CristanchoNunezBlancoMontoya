@@ -3,8 +3,9 @@ package com.bkseducate.securityapp.infrastructure.persistence.adapters.in.rest;
 import com.bkseducate.securityapp.application.dto.AssignRoleRequest;
 import com.bkseducate.securityapp.application.dto.RegisterRequest;
 import com.bkseducate.securityapp.application.dto.UserResponse;
-import com.bkseducate.securityapp.application.usecase.AssignRoleUseCase;
-import com.bkseducate.securityapp.application.usecase.CreateSupplierUseCase;
+import com.bkseducate.securityapp.application.usecase.Role.AssignRoleUseCase;
+import com.bkseducate.securityapp.application.usecase.User.CreateSupplierUseCase;
+import com.bkseducate.securityapp.application.usecase.User.GetUsersForAdminUseCase;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -31,11 +33,14 @@ public class UserController {
     
     private final AssignRoleUseCase assignRoleUseCase;
     private final CreateSupplierUseCase createSupplierUseCase;
+    private final GetUsersForAdminUseCase getUsersForAdminUseCase;
     
     public UserController(
+        GetUsersForAdminUseCase getUsersForAdminUseCase,
         AssignRoleUseCase assignRoleUseCase,
         CreateSupplierUseCase createSupplierUseCase
     ) {
+        this.getUsersForAdminUseCase = getUsersForAdminUseCase;
         this.createSupplierUseCase = createSupplierUseCase;
         this.assignRoleUseCase = assignRoleUseCase;
     }
@@ -63,12 +68,21 @@ public class UserController {
     }
 
     @SecurityRequirement(name = "bearerAuth")
-    @PutMapping("/suppliers")
+    @PostMapping("/suppliers")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserResponse> createSupplier(
         @Valid @RequestBody RegisterRequest request
     ) {
         UserResponse user = createSupplierUseCase.execute(request);
         return ResponseEntity.ok(user);
-    }   
+    }  
+    
+    @SecurityRequirement(name = "bearerAuth")
+    @GetMapping("/list")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<UserResponse>> listUsers() {
+        return ResponseEntity.ok(getUsersForAdminUseCase.execute());
+    }
+
+
 }

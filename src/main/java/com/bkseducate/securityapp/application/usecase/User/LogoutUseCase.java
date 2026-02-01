@@ -1,4 +1,4 @@
-package com.bkseducate.securityapp.application.usecase;
+package com.bkseducate.securityapp.application.usecase.User;
 
 import com.bkseducate.securityapp.domain.exceptions.DomainException;
 import com.bkseducate.securityapp.domain.model.RefreshToken;
