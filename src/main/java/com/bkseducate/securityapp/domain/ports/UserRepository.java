@@ -1,7 +1,7 @@
 package com.bkseducate.securityapp.domain.ports;
 
-import com.bkseducate.securityapp.application.dto.UserResponse;
 import com.bkseducate.securityapp.domain.model.User;
+import com.bkseducate.securityapp.domain.model.UserStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,4 +39,5 @@ public interface UserRepository {
      * Elimina un usuario
      */
     void delete(User user);
+    Integer setStatus(UUID userId, UserStatus status);
 }

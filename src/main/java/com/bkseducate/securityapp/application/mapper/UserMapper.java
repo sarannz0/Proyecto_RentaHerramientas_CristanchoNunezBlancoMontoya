@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Set;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import java.util.ArrayList;
-import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties.Apiversion.Use;
 
 
 /**
@@ -38,6 +36,7 @@ public interface UserMapper {
      * Convierte un Role del dominio a RoleResponse DTO
      */
     RoleResponse toRoleResponse(Role role);
+
 
     UserUpdateResponse toUpdateResponse(User user);
 }

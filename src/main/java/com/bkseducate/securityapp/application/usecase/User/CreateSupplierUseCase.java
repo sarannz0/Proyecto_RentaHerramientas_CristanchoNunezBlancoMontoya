@@ -1,7 +1,5 @@
 package com.bkseducate.securityapp.application.usecase.User;
 
-import java.security.KeyStore.PasswordProtection;
-
 import org.springframework.stereotype.Service;
 
 import com.bkseducate.securityapp.application.dto.RegisterRequest;

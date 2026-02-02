@@ -1,7 +1,5 @@
 package com.bkseducate.securityapp.infrastructure.persistence.adapters.out.persistence;
 
-import com.bkseducate.securityapp.application.dto.UserResponse;
-import com.bkseducate.securityapp.application.mapper.UserMapper;
 import com.bkseducate.securityapp.domain.model.Role;
 import com.bkseducate.securityapp.domain.model.User;
 import com.bkseducate.securityapp.domain.model.UserStatus;
@@ -10,6 +8,7 @@ import com.bkseducate.securityapp.infrastructure.persistence.entity.RoleEntity;
 import com.bkseducate.securityapp.infrastructure.persistence.entity.UserEntity;
 import com.bkseducate.securityapp.infrastructure.persistence.repository.UserJpaRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,13 +24,10 @@ import java.util.stream.Collectors;
 public class UserRepositoryAdapter implements UserRepository {
     
     private final UserJpaRepository jpaRepository;
-    private final UserMapper userMapper;
     
     public UserRepositoryAdapter(
-        UserJpaRepository jpaRepository,
-        UserMapper userMapper
+        UserJpaRepository jpaRepository
     ) {
-        this.userMapper = userMapper;
         this.jpaRepository = jpaRepository;
     }
     
@@ -115,6 +111,12 @@ public class UserRepositoryAdapter implements UserRepository {
             entity.getName(),
             entity.getAuthority()
         );
+    }
+
+    @Override
+    @Transactional
+    public Integer setStatus(UUID userId, UserStatus status) {
+        return jpaRepository.setStatus(userId, status);
     }
 
     
