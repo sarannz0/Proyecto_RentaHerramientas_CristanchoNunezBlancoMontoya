@@ -122,12 +122,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> InfoNotFoundException(
             Exception ex, HttpServletRequest request) {
         ErrorResponse error = ErrorResponse.of(
-            HttpStatus.INTERNAL_SERVER_ERROR.value(),
+            HttpStatus.NOT_FOUND.value(),
             "Error interno del servidor",
             ex.getMessage(),
             request.getRequestURI()
         );
         // En producción, no exponer detalles del error
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 }

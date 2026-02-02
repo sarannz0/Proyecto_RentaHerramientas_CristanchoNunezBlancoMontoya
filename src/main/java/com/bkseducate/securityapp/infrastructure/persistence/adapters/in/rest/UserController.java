@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -74,6 +75,18 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(
+        summary = "Registrar Proveedor en la App",
+        description = "Registra los usuarios de tipo Proveedor (SUPPLIER). Requiere rol ADMIN."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Proveedor registrado exitosamente",
+            content = @Content(schema = @Schema(implementation = UserResponse.class))),
+        @ApiResponse(responseCode = "400", description = "Datos inválidos"),
+        @ApiResponse(responseCode = "401", description = "No autenticado"),
+        @ApiResponse(responseCode = "403", description = "No tiene permisos (requiere ADMIN)"),
+        @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+    })
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/suppliers")
     @PreAuthorize("hasRole('ADMIN')")
@@ -83,7 +96,19 @@ public class UserController {
         UserResponse user = createSupplierUseCase.execute(request);
         return ResponseEntity.ok(user);
     }  
-    
+
+    @Operation(
+        summary = "Listar usuarios.",
+        description = "Devuelve una lista de los usuarios registrados como USER o SUPPLIER. Requiere rol ADMIN."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Usuarios Listados exitosamente",
+            content = @Content(schema = @Schema(implementation = UserResponse.class))),
+        @ApiResponse(responseCode = "400", description = "Datos inválidos"),
+        @ApiResponse(responseCode = "401", description = "No autenticado"),
+        @ApiResponse(responseCode = "403", description = "No tiene permisos (requiere ADMIN)"),
+        @ApiResponse(responseCode = "404", description = "Usuarios no encontrados")
+    })
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/list")
     @PreAuthorize("hasRole('ADMIN')")
@@ -91,14 +116,47 @@ public class UserController {
         return ResponseEntity.ok(getUsersForAdminUseCase.execute());
     }
 
+    @Operation(
+        summary = "Actualizar datos de usuario por el ADMIN",
+        description = "Actualiza informacion no sensible de cada usuario. Requiere Token de autenticación."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Informacion actualizada correctamente",
+            content = @Content(schema = @Schema(implementation = UserUpdateResponse.class))),
+        @ApiResponse(responseCode = "400", description = "Datos inválidos"),
+        @ApiResponse(responseCode = "401", description = "No autenticado"),
+        @ApiResponse(responseCode = "403", description = "No tiene permisos (requiere rol ADMIN)"),
+        @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+    })
     @SecurityRequirement(name = "bearerAuth")
     @PutMapping("/update/{userId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<UserUpdateResponse> updateUser(
+    public ResponseEntity<UserUpdateResponse> updateUserByAdmin(
         @PathVariable UUID userId,
-        @Valid @RequestBody UserUpdateRequest request
-    ) {
+        @Valid @RequestBody UserUpdateRequest request) {
         return ResponseEntity.ok(infoUpdateUsersUseCase.execute(request, userId));
     }
     
+
+    @Operation(
+        summary = "Actualizar datos de usuario",
+        description = "Actualiza informacion no sensible de cada usuario. Requiere Token de autenticación."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Informacion actualizada correctamente",
+            content = @Content(schema = @Schema(implementation = UserUpdateResponse.class))),
+        @ApiResponse(responseCode = "400", description = "Datos inválidos"),
+        @ApiResponse(responseCode = "401", description = "No autenticado"),
+        @ApiResponse(responseCode = "403", description = "No tiene permisos (requiere Token de autenticación)"),
+        @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+    })
+    @SecurityRequirement(name = "bearerAuth")
+    @PutMapping("/update/me")
+    public ResponseEntity<UserUpdateResponse> updateUser(
+        @Valid @RequestBody UserUpdateRequest request,
+        Authentication authentication
+    ) {
+        UUID userId = (UUID) authentication.getPrincipal();
+        return ResponseEntity.ok(infoUpdateUsersUseCase.execute(request, userId));
+    }
 }
