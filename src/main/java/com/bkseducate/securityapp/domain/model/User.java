@@ -13,8 +13,6 @@ public class User {
     
     private UUID id;
     private String name;
-    
-
     private String email;
     private String password;
     private Set<Role> roles;
@@ -64,7 +62,7 @@ public class User {
         user.status = status;
         return user;
     }
-    
+
     /**
      * Asigna un rol al usuario
      */
@@ -151,5 +149,19 @@ public class User {
     
     public UserStatus getStatus() {
         return status;
+    }
+
+    /**
+     * Actualiza la información del perfil del usuario
+     */
+    public void updateInfo(String name, String email) {
+        if (email == null || email.isBlank()) {
+            throw new DomainException("Email no puede estar vacío");
+        }
+        if (!isValidEmail(email)) {
+            throw new DomainException("Email inválido");
+        }
+        this.name = name;
+        this.email = email;
     }
 }

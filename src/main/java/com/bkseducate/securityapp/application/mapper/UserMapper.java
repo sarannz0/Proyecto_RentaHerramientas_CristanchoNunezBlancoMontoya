@@ -2,14 +2,15 @@ package com.bkseducate.securityapp.application.mapper;
 
 import com.bkseducate.securityapp.application.dto.RoleResponse;
 import com.bkseducate.securityapp.application.dto.UserResponse;
+import com.bkseducate.securityapp.application.dto.UserUpdateResponse;
 import com.bkseducate.securityapp.domain.model.Role;
 import com.bkseducate.securityapp.domain.model.User;
 
 import java.util.List;
 import java.util.Set;
-import java.util.ArrayList;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties.Apiversion.Use;
 
 
 /**
@@ -36,4 +37,6 @@ public interface UserMapper {
      * Convierte un Role del dominio a RoleResponse DTO
      */
     RoleResponse toRoleResponse(Role role);
+
+    UserUpdateResponse toUpdateResponse(User user);
 }

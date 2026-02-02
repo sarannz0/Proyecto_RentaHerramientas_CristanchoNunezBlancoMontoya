@@ -3,9 +3,13 @@ package com.bkseducate.securityapp.infrastructure.persistence.adapters.in.rest;
 import com.bkseducate.securityapp.application.dto.AssignRoleRequest;
 import com.bkseducate.securityapp.application.dto.RegisterRequest;
 import com.bkseducate.securityapp.application.dto.UserResponse;
+import com.bkseducate.securityapp.application.dto.UserUpdateRequest;
+import com.bkseducate.securityapp.application.dto.UserUpdateResponse;
 import com.bkseducate.securityapp.application.usecase.Role.AssignRoleUseCase;
 import com.bkseducate.securityapp.application.usecase.User.CreateSupplierUseCase;
 import com.bkseducate.securityapp.application.usecase.User.GetUsersForAdminUseCase;
+import com.bkseducate.securityapp.application.usecase.User.InfoUpdateUsersUseCase;
+import com.bkseducate.securityapp.domain.exceptions.InfoNotFoundException;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -34,12 +38,15 @@ public class UserController {
     private final AssignRoleUseCase assignRoleUseCase;
     private final CreateSupplierUseCase createSupplierUseCase;
     private final GetUsersForAdminUseCase getUsersForAdminUseCase;
+    private final InfoUpdateUsersUseCase infoUpdateUsersUseCase;
     
     public UserController(
+        InfoUpdateUsersUseCase infoUpdateUsersUseCase,
         GetUsersForAdminUseCase getUsersForAdminUseCase,
         AssignRoleUseCase assignRoleUseCase,
         CreateSupplierUseCase createSupplierUseCase
     ) {
+        this.infoUpdateUsersUseCase = infoUpdateUsersUseCase;
         this.getUsersForAdminUseCase = getUsersForAdminUseCase;
         this.createSupplierUseCase = createSupplierUseCase;
         this.assignRoleUseCase = assignRoleUseCase;
@@ -84,5 +91,14 @@ public class UserController {
         return ResponseEntity.ok(getUsersForAdminUseCase.execute());
     }
 
-
+    @SecurityRequirement(name = "bearerAuth")
+    @PutMapping("/update/{userId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<UserUpdateResponse> updateUser(
+        @PathVariable UUID userId,
+        @Valid @RequestBody UserUpdateRequest request
+    ) {
+        return ResponseEntity.ok(infoUpdateUsersUseCase.execute(request, userId));
+    }
+    
 }
