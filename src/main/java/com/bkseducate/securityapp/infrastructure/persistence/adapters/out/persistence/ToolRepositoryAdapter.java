@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.bkseducate.securityapp.domain.exceptions.UserNotFoundException;
-import com.bkseducate.securityapp.domain.model.Tool;
+import com.bkseducate.securityapp.domain.model.ToolCatalog;
 import com.bkseducate.securityapp.domain.ports.ToolRepository;
 import com.bkseducate.securityapp.infrastructure.persistence.entity.ToolEntity;
 import com.bkseducate.securityapp.infrastructure.persistence.repository.ToolJpaRepository;
@@ -18,25 +18,25 @@ public class ToolRepositoryAdapter implements ToolRepository{
     }
 
     @Override
-    public List<Tool> findAll() {
+    public List<ToolCatalog> findAll() {
         return jpaRepository.findAll().stream().map(this::toDomain).toList();
     }
 
     @Override
-    public Optional<Tool> findById(UUID id) {
+    public Optional<ToolCatalog> findById(UUID id) {
         return jpaRepository.findById(id).map(this::toDomain);
     }
 
     @Override
-    public Tool save(Tool tool) {
+    public ToolCatalog save(ToolCatalog tool) {
         return toDomain(jpaRepository.save(toEntity(tool)));
     }
 
     @Override
-    public Tool update(UUID id, Tool tool) {
+    public ToolCatalog update(UUID id, ToolCatalog tool) {
         ToolEntity entity = jpaRepository.findById(id)
             .orElseThrow(() -> new UserNotFoundException("No se pudo encontrar el usuario con ID "+id));
-        Tool updatedTool =  Tool.reconstruct(
+            ToolCatalog updatedTool =  Tool.reconstruct(
             entity.getId(),
             entity.getName(),
             entity.getStock(),
@@ -56,7 +56,7 @@ public class ToolRepositoryAdapter implements ToolRepository{
         jpaRepository.deleteById(id);
     }
 
-    private Tool toDomain(ToolEntity entity) {
+    private ToolCatalog toDomain(ToolEntity entity) {
         return Tool.reconstruct(
             entity.getId(),
             entity.getName(),
@@ -68,7 +68,7 @@ public class ToolRepositoryAdapter implements ToolRepository{
         );
     }
 
-    private ToolEntity toEntity(Tool tool) {
+    private ToolCatalog toEntity(ToolCatalog tool) {
         return new ToolEntity(
             tool.getId(),
             tool.getName(),

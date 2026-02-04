@@ -151,7 +151,6 @@ public class AuthController {
         @ApiResponse(responseCode = "400", description = "Datos inválidos"),
         @ApiResponse(responseCode = "401", description = "Contraseña actual incorrecta o no autenticado")
     })
-    @SecurityRequirement(name = "bearerAuth")
     @PutMapping("/change-password")
     public ResponseEntity<Void> changePassword(
             @Valid @RequestBody ChangePasswordRequest request,

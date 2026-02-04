@@ -25,7 +25,7 @@ public record SupplierRequest(
     @NotBlank(message = "El companyName es requerido")
     String companyName,
 
-    @Schema(description = "Direcion del Supplier", example = "calle 10N....")
+    @Schema(description = "Dirección del Supplier", example = "calle 10N....")
     @NotBlank(message = "El addresId es requerido")
     String addressId
 ) {}

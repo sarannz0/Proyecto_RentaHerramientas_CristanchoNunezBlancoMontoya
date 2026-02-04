@@ -43,6 +43,7 @@ public class CreateSupplierUseCase {
 
         String hashedPassword = passwordService.hash(request.password());
         User user = User.create(request.name(), request.email(), hashedPassword);
+        
         Role role = roleRepository.findByName("SUPPLIER")
             .orElseThrow(() -> new RuntimeException("No se encontro el ROL SUPPLIER"));
         user.assignRole(role);
