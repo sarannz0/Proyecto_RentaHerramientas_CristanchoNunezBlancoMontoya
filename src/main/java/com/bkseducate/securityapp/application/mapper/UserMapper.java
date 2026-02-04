@@ -1,8 +1,8 @@
 package com.bkseducate.securityapp.application.mapper;
 
-import com.bkseducate.securityapp.application.dto.RoleResponse;
-import com.bkseducate.securityapp.application.dto.UserResponse;
-import com.bkseducate.securityapp.application.dto.UserUpdateResponse;
+import com.bkseducate.securityapp.application.dto.Profile.UserResponse;
+import com.bkseducate.securityapp.application.dto.Role.RoleResponse;
+import com.bkseducate.securityapp.application.dto.User.UserUpdateResponse;
 import com.bkseducate.securityapp.domain.model.Role;
 import com.bkseducate.securityapp.domain.model.User;
 

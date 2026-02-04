@@ -1,5 +1,6 @@
-package com.bkseducate.securityapp.application.dto;
+package com.bkseducate.securityapp.application.dto.Profile;
 
+import com.bkseducate.securityapp.application.dto.Role.RoleResponse;
 import com.bkseducate.securityapp.domain.model.UserStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Set;
@@ -24,4 +25,4 @@ public record UserResponse(
     
     @Schema(description = "Estado del usuario", example = "ACTIVE")
     UserStatus status
-) {}
+) implements ProfileResponse {}

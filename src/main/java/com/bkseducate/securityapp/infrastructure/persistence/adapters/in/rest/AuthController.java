@@ -1,6 +1,12 @@
 package com.bkseducate.securityapp.infrastructure.persistence.adapters.in.rest;
 
-import com.bkseducate.securityapp.application.dto.*;
+import com.bkseducate.securityapp.application.dto.Profile.ProfileResponse;
+import com.bkseducate.securityapp.application.dto.Profile.UserResponse;
+import com.bkseducate.securityapp.application.dto.User.ChangePasswordRequest;
+import com.bkseducate.securityapp.application.dto.User.LoginRequest;
+import com.bkseducate.securityapp.application.dto.User.LoginResponse;
+import com.bkseducate.securityapp.application.dto.User.RefreshTokenRequest;
+import com.bkseducate.securityapp.application.dto.User.RegisterRequest;
 import com.bkseducate.securityapp.application.usecase.Role.RefreshTokenUseCase;
 import com.bkseducate.securityapp.application.usecase.User.ChangePasswordUseCase;
 import com.bkseducate.securityapp.application.usecase.User.CreateUserUseCase;
@@ -16,6 +22,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -129,9 +136,9 @@ public class AuthController {
     })
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/me")
-    public ResponseEntity<UserResponse> getCurrentUser(Authentication authentication) {
+    public ResponseEntity<ProfileResponse> getCurrentUser(Authentication authentication) {
         UUID userId = (UUID) authentication.getPrincipal();
-        UserResponse response = getCurrentUserUseCase.execute(userId);
+        ProfileResponse response = getCurrentUserUseCase.execute(userId);
         return ResponseEntity.ok(response);
     }
     

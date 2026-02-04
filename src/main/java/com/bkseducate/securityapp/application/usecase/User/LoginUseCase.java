@@ -1,13 +1,15 @@
 package com.bkseducate.securityapp.application.usecase.User;
 
-import com.bkseducate.securityapp.application.dto.LoginRequest;
-import com.bkseducate.securityapp.application.dto.LoginResponse;
+import com.bkseducate.securityapp.application.dto.User.LoginRequest;
+import com.bkseducate.securityapp.application.dto.User.LoginResponse;
 import com.bkseducate.securityapp.domain.exceptions.InvalidCredentialsException;
 import com.bkseducate.securityapp.domain.exceptions.UserNotFoundException;
 import com.bkseducate.securityapp.domain.model.RefreshToken;
+
 import com.bkseducate.securityapp.domain.model.User;
 import com.bkseducate.securityapp.domain.ports.PasswordService;
 import com.bkseducate.securityapp.domain.ports.RefreshTokenRepository;
+
 import com.bkseducate.securityapp.domain.ports.TokenService;
 import com.bkseducate.securityapp.domain.ports.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,7 +36,8 @@ public class LoginUseCase {
             PasswordService passwordService,
             TokenService tokenService,
             RefreshTokenRepository refreshTokenRepository,
-            @Value("${jwt.access-token-expiration}") Long accessTokenExpiration) {
+            @Value("${jwt.access-token-expiration}") Long accessTokenExpiration
+        ) {
         this.userRepository = userRepository;
         this.passwordService = passwordService;
         this.tokenService = tokenService;
@@ -70,6 +73,8 @@ public class LoginUseCase {
         
         // Calcular expiración del refresh token (7 días por defecto)
         LocalDateTime expiresAt = LocalDateTime.now().plusDays(7);
+
+        
         
         // Crear y guardar refresh token
         RefreshToken refreshToken = RefreshToken.create(

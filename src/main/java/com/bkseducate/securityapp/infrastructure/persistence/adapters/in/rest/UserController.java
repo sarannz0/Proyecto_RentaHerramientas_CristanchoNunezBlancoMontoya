@@ -1,12 +1,14 @@
 package com.bkseducate.securityapp.infrastructure.persistence.adapters.in.rest;
 
-import com.bkseducate.securityapp.application.dto.AssignRoleRequest;
-import com.bkseducate.securityapp.application.dto.RegisterRequest;
-import com.bkseducate.securityapp.application.dto.StatusUserRequest;
-import com.bkseducate.securityapp.application.dto.StatusUserResponse;
-import com.bkseducate.securityapp.application.dto.UserResponse;
-import com.bkseducate.securityapp.application.dto.UserUpdateRequest;
-import com.bkseducate.securityapp.application.dto.UserUpdateResponse;
+import com.bkseducate.securityapp.application.dto.Profile.SupplierResponse;
+import com.bkseducate.securityapp.application.dto.Profile.UserResponse;
+import com.bkseducate.securityapp.application.dto.Role.AssignRoleRequest;
+import com.bkseducate.securityapp.application.dto.Supplier.SupplierRequest;
+import com.bkseducate.securityapp.application.dto.User.RegisterRequest;
+import com.bkseducate.securityapp.application.dto.User.StatusUserRequest;
+import com.bkseducate.securityapp.application.dto.User.StatusUserResponse;
+import com.bkseducate.securityapp.application.dto.User.UserUpdateRequest;
+import com.bkseducate.securityapp.application.dto.User.UserUpdateResponse;
 import com.bkseducate.securityapp.application.usecase.Role.AssignRoleUseCase;
 import com.bkseducate.securityapp.application.usecase.User.CreateSupplierUseCase;
 import com.bkseducate.securityapp.application.usecase.User.GetUsersForAdminUseCase;
@@ -42,7 +44,6 @@ import java.util.UUID;
 public class UserController {
     
     private final AssignRoleUseCase assignRoleUseCase;
-    private final CreateSupplierUseCase createSupplierUseCase;
     private final GetUsersForAdminUseCase getUsersForAdminUseCase;
     private final InfoUpdateUsersUseCase infoUpdateUsersUseCase;
     private final SetStatusUserUseCase setStatusUserUseCase;
@@ -51,12 +52,10 @@ public class UserController {
         SetStatusUserUseCase setStatusUserUseCase,
         InfoUpdateUsersUseCase infoUpdateUsersUseCase,
         GetUsersForAdminUseCase getUsersForAdminUseCase,
-        AssignRoleUseCase assignRoleUseCase,
-        CreateSupplierUseCase createSupplierUseCase
+        AssignRoleUseCase assignRoleUseCase
     ) {
         this.infoUpdateUsersUseCase = infoUpdateUsersUseCase;
         this.getUsersForAdminUseCase = getUsersForAdminUseCase;
-        this.createSupplierUseCase = createSupplierUseCase;
         this.assignRoleUseCase = assignRoleUseCase;
         this.setStatusUserUseCase = setStatusUserUseCase;
     }
@@ -83,26 +82,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(
-        summary = "Registrar Proveedor en la App",
-        description = "Registra los usuarios de tipo Proveedor (SUPPLIER). Requiere rol ADMIN."
-    )
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Proveedor registrado exitosamente",
-            content = @Content(schema = @Schema(implementation = UserResponse.class))),
-        @ApiResponse(responseCode = "400", description = "Datos inválidos"),
-        @ApiResponse(responseCode = "401", description = "No autenticado"),
-        @ApiResponse(responseCode = "403", description = "No tiene permisos (requiere ADMIN)"),
-        @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
-    })
-    @PostMapping("/suppliers")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<UserResponse> createSupplier(
-        @Valid @RequestBody RegisterRequest request
-    ) {
-        UserResponse user = createSupplierUseCase.execute(request);
-        return ResponseEntity.ok(user);
-    }  
+   
 
     @Operation(
         summary = "Listar usuarios.",

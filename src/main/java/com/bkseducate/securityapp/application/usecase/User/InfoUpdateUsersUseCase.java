@@ -4,8 +4,8 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import com.bkseducate.securityapp.application.dto.UserUpdateRequest;
-import com.bkseducate.securityapp.application.dto.UserUpdateResponse;
+import com.bkseducate.securityapp.application.dto.User.UserUpdateRequest;
+import com.bkseducate.securityapp.application.dto.User.UserUpdateResponse;
 import com.bkseducate.securityapp.application.mapper.UserMapper;
 import com.bkseducate.securityapp.domain.exceptions.UserNotFoundException;
 import com.bkseducate.securityapp.domain.model.User;

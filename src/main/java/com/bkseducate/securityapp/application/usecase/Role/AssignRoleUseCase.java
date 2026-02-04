@@ -1,7 +1,7 @@
 package com.bkseducate.securityapp.application.usecase.Role;
 
-import com.bkseducate.securityapp.application.dto.AssignRoleRequest;
-import com.bkseducate.securityapp.application.dto.UserResponse;
+import com.bkseducate.securityapp.application.dto.Profile.UserResponse;
+import com.bkseducate.securityapp.application.dto.Role.AssignRoleRequest;
 import com.bkseducate.securityapp.application.mapper.UserMapper;
 import com.bkseducate.securityapp.domain.exceptions.DomainException;
 import com.bkseducate.securityapp.domain.exceptions.UserNotFoundException;
