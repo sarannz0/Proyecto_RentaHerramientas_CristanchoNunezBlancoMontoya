@@ -11,5 +11,5 @@ public interface ToolRepository {
     Optional<Tool> findById(UUID id);
     Tool save(Tool tool);
     Tool update(UUID id, Tool tool);
-    void delete(UUID id);
+    void delete(UUID id); 
 }
