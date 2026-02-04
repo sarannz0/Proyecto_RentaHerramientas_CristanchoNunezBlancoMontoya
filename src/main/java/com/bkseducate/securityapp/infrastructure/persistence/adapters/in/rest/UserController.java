@@ -1,14 +1,17 @@
 package com.bkseducate.securityapp.infrastructure.persistence.adapters.in.rest;
 
+import com.bkseducate.securityapp.application.dto.Profile.ProfileResponse;
 import com.bkseducate.securityapp.application.dto.Profile.SupplierResponse;
 import com.bkseducate.securityapp.application.dto.Profile.UserResponse;
+import com.bkseducate.securityapp.application.dto.Profile.updateProfile.ProfileUpdate;
+import com.bkseducate.securityapp.application.dto.Profile.updateProfile.UpdateRequest;
+import com.bkseducate.securityapp.application.dto.Profile.updateProfile.UserUpdateRequest;
+import com.bkseducate.securityapp.application.dto.Profile.updateProfile.UserUpdateResponse;
 import com.bkseducate.securityapp.application.dto.Role.AssignRoleRequest;
 import com.bkseducate.securityapp.application.dto.Supplier.SupplierRequest;
 import com.bkseducate.securityapp.application.dto.User.RegisterRequest;
 import com.bkseducate.securityapp.application.dto.User.StatusUserRequest;
 import com.bkseducate.securityapp.application.dto.User.StatusUserResponse;
-import com.bkseducate.securityapp.application.dto.User.UserUpdateRequest;
-import com.bkseducate.securityapp.application.dto.User.UserUpdateResponse;
 import com.bkseducate.securityapp.application.usecase.Role.AssignRoleUseCase;
 import com.bkseducate.securityapp.application.usecase.User.CreateSupplierUseCase;
 import com.bkseducate.securityapp.application.usecase.User.GetUsersForAdminUseCase;
@@ -116,10 +119,10 @@ public class UserController {
     })
     @PutMapping("/update/{userId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<UserUpdateResponse> updateUserByAdmin(
+    public ResponseEntity<ProfileUpdate> updateUserByAdmin(
         @Parameter(description = "ID del usuario", required = true, example = "550e8400-e29b-41d4-a716-446655440000")
         @PathVariable UUID userId,
-        @Valid @RequestBody UserUpdateRequest request) {
+        @Valid @RequestBody UpdateRequest request) {
         return ResponseEntity.ok(infoUpdateUsersUseCase.execute(request, userId));
     }
     
@@ -137,8 +140,8 @@ public class UserController {
         @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
     })
     @PutMapping("/update/me")
-    public ResponseEntity<UserUpdateResponse> updateUser(
-        @Valid @RequestBody UserUpdateRequest request,
+    public ResponseEntity<ProfileUpdate> updateUser(
+        @Valid @RequestBody UpdateRequest request,
         Authentication authentication
     ) {
         UUID userId = (UUID) authentication.getPrincipal();

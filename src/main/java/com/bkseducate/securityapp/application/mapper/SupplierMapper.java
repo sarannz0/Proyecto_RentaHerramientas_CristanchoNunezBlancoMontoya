@@ -4,6 +4,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.bkseducate.securityapp.application.dto.Profile.SupplierResponse;
+import com.bkseducate.securityapp.application.dto.Profile.updateProfile.SupplierUpdateResponse;
+import com.bkseducate.securityapp.application.dto.Supplier.SupplierRequest;
 import com.bkseducate.securityapp.domain.model.SupplierM;
 import com.bkseducate.securityapp.domain.model.User;
 
@@ -11,4 +13,8 @@ import com.bkseducate.securityapp.domain.model.User;
 public interface SupplierMapper {
     @Mapping(source = "supplier.addressId", target = "addressId")
     SupplierResponse toResponse(User user, SupplierM supplier);
+
+    SupplierUpdateResponse toUpdateResponse(User user, SupplierM supplier);
+
+    SupplierRequest toRequest(User user, SupplierM supplier);
 }

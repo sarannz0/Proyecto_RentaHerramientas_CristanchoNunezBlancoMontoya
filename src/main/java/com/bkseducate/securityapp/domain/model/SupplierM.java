@@ -31,7 +31,15 @@ public class SupplierM {
         supplier.companyName = companyName;
         supplier.addressId = addressId;
         return supplier;
-    }   
+    } 
+    
+    public void updateInfo(
+        String companyName,
+        String addresId
+    ) {
+        this.companyName = companyName;
+        this.addressId = addresId;
+    }
 
     public UUID getUserId() {
         return userId;
