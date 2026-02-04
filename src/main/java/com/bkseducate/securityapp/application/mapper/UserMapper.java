@@ -5,13 +5,10 @@ import com.bkseducate.securityapp.application.dto.UserResponse;
 import com.bkseducate.securityapp.application.dto.UserUpdateResponse;
 import com.bkseducate.securityapp.domain.model.Role;
 import com.bkseducate.securityapp.domain.model.User;
-
 import java.util.List;
 import java.util.Set;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties.Apiversion.Use;
-
 
 /**
  * Mapper MapStruct para conversión entre User (dominio) y UserResponse (DTO)
