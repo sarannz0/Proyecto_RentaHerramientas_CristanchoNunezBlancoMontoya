@@ -56,7 +56,7 @@ public class ToolCatalogRepositoryAdapter implements ToolCatalogRepository {
         entity.setName(tool.getName());
         entity.setPrice(tool.getPrice());
         entity.setStatus(tool.getStatus());
-        entity.setDescription(tool.getDesciption());
+        entity.setDescription(tool.getDescription());
         entity.setImageUrl(tool.getImageUrl());
         return toolCatalogMapper.toDomain(jpaRepository.save(entity));
     }

@@ -57,7 +57,7 @@ public class SupplierRepositoryAdapter implements SupplierRepository{
         return SupplierM.create(
             entity.getUserId(),  
             entity.getCompanyName(), 
-            entity.getAddresId());
+            entity.getAddressId());
     }
 
     private SupplierEntity toEntity(SupplierM domain) {

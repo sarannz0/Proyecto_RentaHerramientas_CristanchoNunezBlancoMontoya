@@ -18,18 +18,18 @@ public class SupplierEntity {
     String companyName;
 
     @Column(name = "address_id")
-    String addresId;
+    String addressId;
 
     public SupplierEntity() {}
 
    public SupplierEntity(
         UUID userId,
         String companyName,
-        String addresId
+        String addressId
     ) {
         this.userId = userId;
         this.companyName = companyName;
-        this.addresId = addresId;
+        this.addressId = addressId;
     }
 
    public UUID getUserId() {
@@ -48,12 +48,12 @@ public class SupplierEntity {
     this.companyName = companyName;
    }
 
-   public String getAddresId() {
-    return addresId;
+   public String getAddressId() {
+    return addressId;
    }
 
-   public void setAddresId(String addresId) {
-    this.addresId = addresId;
+   public void setAddresId(String addressId) {
+    this.addressId = addressId;
    }
     
     

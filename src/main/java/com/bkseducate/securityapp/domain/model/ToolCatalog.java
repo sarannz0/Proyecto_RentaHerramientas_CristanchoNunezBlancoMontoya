@@ -79,7 +79,7 @@ public class ToolCatalog {
     public ToolCatalogStatus getStatus() {
         return status;
     }
-    public String getDesciption() {
+    public String getDescription() {
         return description;
     }
     public String getImageUrl() {

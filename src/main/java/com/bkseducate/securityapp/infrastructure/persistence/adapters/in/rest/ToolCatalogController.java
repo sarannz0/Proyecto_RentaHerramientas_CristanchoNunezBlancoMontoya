@@ -13,8 +13,6 @@ import com.bkseducate.securityapp.application.usecase.ToolCatalog.CreateToolCata
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import jakarta.validation.Valid;
-
 @RestController
 @RequestMapping("/tools")
 public class ToolCatalogController {
@@ -33,7 +31,7 @@ public class ToolCatalogController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void createToolCatalog(
         @RequestPart("imgFile") MultipartFile imgFile,
-        @Valid @RequestPart String request
+        @RequestPart String request
     ) throws JsonProcessingException {
         createToolCatalogUseCase.execute(
             objectMapper.readValue(request, ToolCatalogRequest.class), 

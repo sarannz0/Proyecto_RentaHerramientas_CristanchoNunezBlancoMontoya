@@ -23,7 +23,7 @@ public abstract class SupplierMapper {
         return SupplierM.create(
             entity.getUserId(),  
             entity.getCompanyName(), 
-            entity.getAddresId());
+            entity.getAddressId());
     }
 
     public SupplierEntity toEntity(SupplierM domain) {
