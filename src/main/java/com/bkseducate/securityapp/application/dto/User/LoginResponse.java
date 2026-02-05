@@ -1,4 +1,4 @@
-package com.bkseducate.securityapp.application.dto;
+package com.bkseducate.securityapp.application.dto.User;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

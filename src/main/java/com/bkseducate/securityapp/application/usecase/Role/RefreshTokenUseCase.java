@@ -1,8 +1,7 @@
 package com.bkseducate.securityapp.application.usecase.Role;
 
-import com.bkseducate.securityapp.application.dto.LoginResponse;
-import com.bkseducate.securityapp.application.dto.RefreshTokenRequest;
-import com.bkseducate.securityapp.domain.exceptions.DomainException;
+import com.bkseducate.securityapp.application.dto.User.LoginResponse;
+import com.bkseducate.securityapp.application.dto.User.RefreshTokenRequest;
 import com.bkseducate.securityapp.domain.exceptions.InvalidCredentialsException;
 import com.bkseducate.securityapp.domain.exceptions.UserNotFoundException;
 import com.bkseducate.securityapp.domain.model.RefreshToken;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 
 /**
  * Caso de uso: Refrescar token

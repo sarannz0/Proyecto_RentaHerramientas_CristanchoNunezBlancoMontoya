@@ -1,7 +1,7 @@
 package com.bkseducate.securityapp.application.usecase.User;
 
-import com.bkseducate.securityapp.application.dto.RegisterRequest;
-import com.bkseducate.securityapp.application.dto.UserResponse;
+import com.bkseducate.securityapp.application.dto.Profile.UserResponse;
+import com.bkseducate.securityapp.application.dto.User.RegisterRequest;
 import com.bkseducate.securityapp.application.mapper.UserMapper;
 import com.bkseducate.securityapp.domain.exceptions.DomainException;
 import com.bkseducate.securityapp.domain.model.Role;

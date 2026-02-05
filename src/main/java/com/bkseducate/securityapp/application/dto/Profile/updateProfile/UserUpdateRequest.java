@@ -1,4 +1,4 @@
-package com.bkseducate.securityapp.application.dto;
+package com.bkseducate.securityapp.application.dto.Profile.updateProfile;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
@@ -13,6 +13,6 @@ public record UserUpdateRequest(
     @NotBlank(message = "El email es requerido")
     @Email(message = "Email debe tener un formato válido")
     String email
-) {
+)  implements ProfileUpdate {
     
 }

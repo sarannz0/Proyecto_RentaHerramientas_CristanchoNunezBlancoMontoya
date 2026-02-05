@@ -1,4 +1,4 @@
-package com.bkseducate.securityapp.application.dto;
+package com.bkseducate.securityapp.application.dto.User;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -9,11 +9,11 @@ import jakarta.validation.constraints.Size;
  */
 @Schema(description = "Solicitud para cambiar la contraseña del usuario")
 public record ChangePasswordRequest(
-    @Schema(description = "Contraseña actual", example = "oldpassword123", required = true)
+    @Schema(description = "Contraseña actual", example = "oldpassword123", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "Password actual es requerido")
     String currentPassword,
     
-    @Schema(description = "Nueva contraseña (mínimo 6 caracteres)", example = "newpassword456", required = true)
+    @Schema(description = "Nueva contraseña (mínimo 6 caracteres)", example = "newpassword456", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "Nueva password es requerida")
     @Size(min = 6, message = "Nueva password debe tener al menos 6 caracteres")
     String newPassword

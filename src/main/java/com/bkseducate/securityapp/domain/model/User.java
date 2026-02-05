@@ -89,6 +89,11 @@ public class User {
     public boolean hasRole(Role role) {
         return this.roles.contains(role);
     }
+
+    public boolean hasRoleName(String role) {
+        return roles != null && roles.stream()
+            .anyMatch(r -> r.getName().equalsIgnoreCase(role));
+    }
     
     /**
      * Cambia la contraseña del usuario

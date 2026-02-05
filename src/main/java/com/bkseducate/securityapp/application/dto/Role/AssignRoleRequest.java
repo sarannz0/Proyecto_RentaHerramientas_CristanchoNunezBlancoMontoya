@@ -1,4 +1,4 @@
-package com.bkseducate.securityapp.application.dto;
+package com.bkseducate.securityapp.application.dto.Role;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotBlank;
  */
 @Schema(description = "Solicitud para asignar un rol a un usuario")
 public record AssignRoleRequest(
-    @Schema(description = "Nombre del rol o authority (ej: USER, ADMIN, ROLE_USER, ROLE_ADMIN)", example = "ADMIN", required = true)
+    @Schema(description = "Nombre del rol o authority (ej: USER, ADMIN, ROLE_USER, ROLE_ADMIN)", example = "ADMIN", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "Nombre del rol es requerido")
     String roleName
 ) {}

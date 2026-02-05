@@ -1,14 +1,18 @@
 package com.bkseducate.securityapp.application.mapper;
 
-import com.bkseducate.securityapp.application.dto.RoleResponse;
-import com.bkseducate.securityapp.application.dto.UserResponse;
-import com.bkseducate.securityapp.application.dto.UserUpdateResponse;
+import com.bkseducate.securityapp.application.dto.Profile.UserResponse;
+import com.bkseducate.securityapp.application.dto.Profile.updateProfile.UserUpdateResponse;
+import com.bkseducate.securityapp.application.dto.Role.RoleResponse;
 import com.bkseducate.securityapp.domain.model.Role;
 import com.bkseducate.securityapp.domain.model.User;
 import java.util.List;
 import java.util.Set;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59aa70c2cb13e246eb43afa81c73a13958dd9f87
 
 /**
  * Mapper MapStruct para conversión entre User (dominio) y UserResponse (DTO)
@@ -34,6 +38,7 @@ public interface UserMapper {
      * Convierte un Role del dominio a RoleResponse DTO
      */
     RoleResponse toRoleResponse(Role role);
+
 
     UserUpdateResponse toUpdateResponse(User user);
 }
