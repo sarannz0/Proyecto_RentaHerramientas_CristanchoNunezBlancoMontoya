@@ -66,7 +66,7 @@ public class ToolCatalog {
         return id;
     }
 
-    public SupplierM getSupplierId() {
+    public SupplierM getSupplier() {
         return supplier;
     }
 
