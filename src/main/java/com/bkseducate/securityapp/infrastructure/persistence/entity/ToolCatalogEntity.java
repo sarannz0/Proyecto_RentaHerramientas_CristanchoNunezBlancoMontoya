@@ -26,7 +26,7 @@ public class ToolCatalogEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
         name = "supplier_fk",
-        referencedColumnName = "userId",
+        referencedColumnName = "user_id",
         nullable = false,
         updatable = false
     )
