@@ -12,6 +12,4 @@ public interface AddressRepositoryPort {
     Optional<Address> findById(UUID id);
 
     List<Address> findAll();
-
-    Optional<Address> findByAddress(String Address);
 }

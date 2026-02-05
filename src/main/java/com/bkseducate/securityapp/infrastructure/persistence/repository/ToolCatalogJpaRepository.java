@@ -5,8 +5,9 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.bkseducate.securityapp.infrastructure.persistence.entity.SupplierEntity;
+import com.bkseducate.securityapp.infrastructure.persistence.entity.ToolCatalogEntity;
 
 @Repository
-public interface SupplierJpaRepository extends JpaRepository<SupplierEntity, UUID>{
+public interface ToolCatalogJpaRepository extends JpaRepository<ToolCatalogEntity, UUID>{
+    
 }

@@ -8,13 +8,29 @@ import com.bkseducate.securityapp.application.dto.Profile.updateProfile.Supplier
 import com.bkseducate.securityapp.application.dto.Supplier.SupplierRequest;
 import com.bkseducate.securityapp.domain.model.SupplierM;
 import com.bkseducate.securityapp.domain.model.User;
+import com.bkseducate.securityapp.infrastructure.persistence.entity.SupplierEntity;
 
 @Mapper(componentModel = "spring")
-public interface SupplierMapper {
+public abstract class SupplierMapper {
     @Mapping(source = "supplier.addressId", target = "addressId")
-    SupplierResponse toResponse(User user, SupplierM supplier);
+    public abstract SupplierResponse toResponse(User user, SupplierM supplier);
 
-    SupplierUpdateResponse toUpdateResponse(User user, SupplierM supplier);
+    public abstract SupplierUpdateResponse toUpdateResponse(User user, SupplierM supplier);
 
-    SupplierRequest toRequest(User user, SupplierM supplier);
+    public abstract SupplierRequest toRequest(User user, SupplierM supplier);
+
+    public SupplierM toDomain(SupplierEntity entity) {
+        return SupplierM.create(
+            entity.getUserId(),  
+            entity.getCompanyName(), 
+            entity.getAddresId());
+    }
+
+    public SupplierEntity toEntity(SupplierM domain) {
+        return new SupplierEntity(
+            domain.getUserId(),
+            domain.getCompanyName(),
+            domain.getAddressId()
+        );
+    }
 }

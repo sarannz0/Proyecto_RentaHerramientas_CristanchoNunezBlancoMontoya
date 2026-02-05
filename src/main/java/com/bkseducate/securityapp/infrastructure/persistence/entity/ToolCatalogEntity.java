@@ -1,11 +1,14 @@
 package com.bkseducate.securityapp.infrastructure.persistence.entity;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
-import com.bkseducate.securityapp.domain.model.ToolItemStatus;
+import com.bkseducate.securityapp.domain.model.ToolCatalogStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -23,7 +26,7 @@ public class ToolCatalogEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
         name = "supplier_fk",
-        referencedColumnName = "userId",
+        referencedColumnName = "user_id",
         nullable = false,
         updatable = false
     )
@@ -33,28 +36,85 @@ public class ToolCatalogEntity {
     private String name;
     
     @Column(nullable = false)
-    private double price;
+    private BigDecimal price;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ToolCatalogStatus status;
 
     @Column(nullable = false)
-    private ToolItemStatus status;
-
-    @Column(nullable = false)
-    private String desciption;
+    private String description;
 
     @Column(nullable = false, name = "image_url")
     private String imageUrl;
 
-    public ToolCatalogEntity(SupplierEntity supplier, String name, double price, ToolItemStatus status,
-            String desciption, String imageUrl) {
+    public ToolCatalogEntity(SupplierEntity supplier, String name, BigDecimal price, ToolCatalogStatus status,
+            String description, String imageUrl) {
         this.supplier = supplier;
         this.name = name;
         this.price = price;
         this.status = status;
-        this.desciption = desciption;
+        this.description = description;
         this.imageUrl = imageUrl;
     }
 
     public ToolCatalogEntity() {
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public SupplierEntity getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(SupplierEntity supplier) {
+        this.supplier = supplier;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public ToolCatalogStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ToolCatalogStatus status) {
+        this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
 

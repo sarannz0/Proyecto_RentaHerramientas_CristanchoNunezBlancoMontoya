@@ -4,64 +4,43 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.bkseducate.securityapp.application.mapper.CityMapper;
 import com.bkseducate.securityapp.domain.model.City;
-import com.bkseducate.securityapp.domain.model.Country;
 import com.bkseducate.securityapp.domain.ports.CityRepositoryPort;
-import com.bkseducate.securityapp.infrastructure.persistence.entity.CityEntity;
-import com.bkseducate.securityapp.infrastructure.persistence.entity.CountryEntity;
 import com.bkseducate.securityapp.infrastructure.persistence.repository.CityJpaRepository;
 
 public class CityRepositoryAdapter implements CityRepositoryPort{
     
     private final CityJpaRepository jpaRepository;
+    private final CityMapper cityMapper;
 
     public CityRepositoryAdapter(
-        CityJpaRepository jpaRepository
+        CityJpaRepository jpaRepository,
+        CityMapper cityMapper
     ) {
         this.jpaRepository = jpaRepository;
+        this.cityMapper = cityMapper;
     }
 
     @Override
     public List<City> findAll() {
-         return jpaRepository.findAll().stream().map(this::toDomain).toList();
+         return jpaRepository.findAll().stream().map(cityMapper::toDomain).toList();
     }
 
     @Override
     public Optional<City> findById(UUID id) {
-        return jpaRepository.findById(id).map(this::toDomain);
+        return jpaRepository.findById(id).map(cityMapper::toDomain);
     }
 
     @Override
     public Optional<City> findByName(String name) {
-        return jpaRepository.findByName(name).map(this::toDomain);
+        return jpaRepository.findByName(name).map(cityMapper::toDomain);
     }
 
     @Override
     public City save(City city) {
-        return toDomain(jpaRepository.save(toEntity(city)));
+        return cityMapper.toDomain(jpaRepository.save(cityMapper.toEntity(city)));
     }
 
-     private City toDomain(CityEntity entity) {
-        return City.create(entity.getName(), countryToDomain(entity.getCountry()));
-    }
 
-    private CityEntity toEntity(City city) {
-        return new CityEntity(
-            city.getId(),
-            city.getName(),
-            countrytoEntity(city.getCountry())
-        );
-    }
-
-    private CountryEntity countrytoEntity(Country country){
-        return new CountryEntity(
-            country.getId(),
-            country.getName(),
-            country.getIsocode()
-        );
-    }
-
-    private Country countryToDomain(CountryEntity entity) {
-        return Country.create(entity.getName(), entity.getIsocode());
-    }
 }

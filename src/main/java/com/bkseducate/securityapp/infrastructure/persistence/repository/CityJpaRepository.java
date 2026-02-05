@@ -13,3 +13,4 @@ public interface CityJpaRepository extends JpaRepository<CityEntity, UUID> {
     @Query("SELECT ci FROM CityEntity ci WHERE name = :name")
     Optional<CityEntity> findByName(@Param("name") String name);
 }
+

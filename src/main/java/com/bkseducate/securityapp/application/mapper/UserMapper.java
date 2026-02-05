@@ -9,10 +9,6 @@ import java.util.List;
 import java.util.Set;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-<<<<<<< HEAD
-=======
-
->>>>>>> 59aa70c2cb13e246eb43afa81c73a13958dd9f87
 
 /**
  * Mapper MapStruct para conversión entre User (dominio) y UserResponse (DTO)
