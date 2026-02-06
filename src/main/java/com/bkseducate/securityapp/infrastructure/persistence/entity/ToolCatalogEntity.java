@@ -42,7 +42,7 @@ public class ToolCatalogEntity {
     @Column(nullable = false)
     private ToolCatalogStatus status;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "description")
     private String description;
 
     @Column(nullable = false, name = "image_url")

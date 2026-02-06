@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.bkseducate.securityapp.application.dto.Role.RoleResponse;
+import com.bkseducate.securityapp.domain.model.Address;
 import com.bkseducate.securityapp.domain.model.UserStatus;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,5 +20,5 @@ public record SupplierResponse(
     @Schema(description = "Estado del usuario", example = "ACTIVE")
     UserStatus status,
     String companyName,
-    String addressId
+    Address address
 ) implements ProfileResponse {}

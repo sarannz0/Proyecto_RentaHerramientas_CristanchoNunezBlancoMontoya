@@ -13,6 +13,7 @@ import com.bkseducate.securityapp.domain.ports.SupplierRepository;
 import com.bkseducate.securityapp.domain.ports.ToolCatalogRepository;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 
 @Service
 public class CreateToolCatalogUseCase {
@@ -31,6 +32,7 @@ public class CreateToolCatalogUseCase {
         this.fileStorageRepository = fileStorageRepository;
     }
 
+    @Transactional
     public void execute(ToolCatalogRequest request, MultipartFile imgFile) {
         String logicUrl;
         try {

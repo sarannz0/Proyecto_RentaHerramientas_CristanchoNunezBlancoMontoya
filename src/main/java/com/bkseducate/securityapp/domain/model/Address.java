@@ -24,6 +24,20 @@ public class Address {
         return addre;
     }
 
+    public static Address recreate(
+        UUID id,
+        String address,
+        String postalCode,
+        City city
+) {
+    Address addre = new Address();
+    addre.id = id;
+    addre.address = address;
+    addre.postalCode = postalCode;
+    addre.city = city;
+    return addre;
+}
+
     public UUID getId() {
         return id;
     }

@@ -5,40 +5,40 @@ import java.util.UUID;
 public class SupplierM {
     UUID userId;
     String companyName;
-    String addressId;
+    Address address;
 
     public SupplierM() {}
 
      public static SupplierM create(
         UUID userId,
         String companyName,
-        String addressId
+        Address address
     ) {
         SupplierM supplier = new SupplierM();
         supplier.userId = userId;
         supplier.companyName = companyName;
-        supplier.addressId = addressId;
+        supplier.address = address;
         return supplier;
     }   
 
     public static SupplierM reconstruct(
         UUID userId,
         String companyName,
-        String addressId
+        Address address
     ) {
         SupplierM supplier = new SupplierM();
         supplier.userId = userId;
         supplier.companyName = companyName;
-        supplier.addressId = addressId;
+        supplier.address = address;
         return supplier;
     } 
     
     public void updateInfo(
         String companyName,
-        String addresId
+        Address address
     ) {
         this.companyName = companyName;
-        this.addressId = addresId;
+        this.address = address;
     }
 
     public UUID getUserId() {
@@ -49,7 +49,7 @@ public class SupplierM {
         return companyName;
     }
 
-    public String getAddressId() {
-        return addressId;
+    public Address getAddress() {
+        return address;
     }
 }

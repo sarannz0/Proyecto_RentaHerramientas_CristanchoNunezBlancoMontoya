@@ -47,7 +47,7 @@ public class InfoUpdateUsersUseCase {
         if (profile instanceof SupplierUpdateRequest s) {
             SupplierM supplier = supplierRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("No se pudo encontrar el usuario con ID "+id));
-            supplier.updateInfo(s.companyName(), s.addressId());
+            supplier.updateInfo(s.companyName(), s.address());
             supplierRepository.update(id, supplierMapper.toRequest(user, supplier));
             return supplierMapper.toUpdateResponse(user, supplier);
         }

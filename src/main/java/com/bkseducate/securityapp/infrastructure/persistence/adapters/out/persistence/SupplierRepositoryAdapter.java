@@ -7,6 +7,8 @@ import java.util.UUID;
 import org.springframework.stereotype.Component;
 
 import com.bkseducate.securityapp.application.dto.Supplier.SupplierRequest;
+import com.bkseducate.securityapp.application.mapper.AddressMapper;
+import com.bkseducate.securityapp.application.mapper.SupplierMapper;
 import com.bkseducate.securityapp.domain.exceptions.UserNotFoundException;
 import com.bkseducate.securityapp.domain.model.SupplierM;
 import com.bkseducate.securityapp.domain.ports.SupplierRepository;
@@ -17,26 +19,32 @@ import com.bkseducate.securityapp.infrastructure.persistence.repository.Supplier
 public class SupplierRepositoryAdapter implements SupplierRepository{
 
     private final SupplierJpaRepository jpaRepository;
+    private final SupplierMapper supplierMapper;
+    private final AddressMapper addressMapper;
 
     public SupplierRepositoryAdapter(
-        SupplierJpaRepository jpaRepository
+        SupplierJpaRepository jpaRepository,
+        SupplierMapper supplierMapper,
+        AddressMapper addressMapper
     ) {
+        this.addressMapper = addressMapper;
+        this.supplierMapper = supplierMapper;
         this.jpaRepository = jpaRepository;
     }
 
     @Override
     public List<SupplierM> findAll() {
-        return jpaRepository.findAll().stream().map(this::toDomain).toList();
+        return jpaRepository.findAll().stream().map(supplierMapper::toDomain).toList();
     }
 
     @Override
     public Optional<SupplierM> findById(UUID userId) {
-        return jpaRepository.findById(userId).map(this::toDomain);
+        return jpaRepository.findById(userId).map(supplierMapper::toDomain);
     }
 
     @Override
     public SupplierM save(SupplierM supplier) {
-        return toDomain(jpaRepository.save(toEntity(supplier)));
+        return supplierMapper.toDomain(jpaRepository.save(supplierMapper.toEntity(supplier)));
     }
 
     @Override
@@ -44,28 +52,12 @@ public class SupplierRepositoryAdapter implements SupplierRepository{
         SupplierEntity entity = jpaRepository.findById(userId)
             .orElseThrow(() -> new UserNotFoundException("No se pudo encontrar el usuario con ID "+userId));
         entity.setCompanyName(request.companyName());
-        entity.setAddresId(request.addressId());
-        return toDomain(jpaRepository.save(entity));
+        //entity.setAddres(addressMapper.toEntity(request.address()));
+        return supplierMapper.toDomain(jpaRepository.save(entity));
     }
 
     @Override
     public void delete(UUID userId) {
         jpaRepository.deleteById(userId);
-    }
-
-    private SupplierM toDomain(SupplierEntity entity) {
-        return SupplierM.create(
-            entity.getUserId(),  
-            entity.getCompanyName(), 
-            entity.getAddressId());
-    }
-
-    private SupplierEntity toEntity(SupplierM domain) {
-        return new SupplierEntity(
-            domain.getUserId(),
-            domain.getCompanyName(),
-            domain.getAddressId()
-        );
-    }
-    
+    }    
 }

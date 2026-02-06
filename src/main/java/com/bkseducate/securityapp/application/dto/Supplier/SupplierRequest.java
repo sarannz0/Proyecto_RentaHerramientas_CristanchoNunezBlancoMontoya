@@ -1,5 +1,7 @@
 package com.bkseducate.securityapp.application.dto.Supplier;
 
+import com.bkseducate.securityapp.domain.model.Address;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -27,5 +29,8 @@ public record SupplierRequest(
 
     @Schema(description = "Dirección del Supplier", example = "calle 10N....")
     @NotBlank(message = "El addresId es requerido")
-    String addressId
+    String addressDesc,
+    String postalCode,
+    String cityName,
+    String countryIsocode
 ) {}

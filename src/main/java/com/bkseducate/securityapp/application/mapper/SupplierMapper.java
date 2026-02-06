@@ -10,9 +10,12 @@ import com.bkseducate.securityapp.domain.model.SupplierM;
 import com.bkseducate.securityapp.domain.model.User;
 import com.bkseducate.securityapp.infrastructure.persistence.entity.SupplierEntity;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {AddressMapper.class})
 public abstract class SupplierMapper {
-    @Mapping(source = "supplier.addressId", target = "addressId")
+
+    protected AddressMapper addressMapper;
+
+    @Mapping(source = "supplier.address", target = "address")
     public abstract SupplierResponse toResponse(User user, SupplierM supplier);
 
     public abstract SupplierUpdateResponse toUpdateResponse(User user, SupplierM supplier);
@@ -22,15 +25,16 @@ public abstract class SupplierMapper {
     public SupplierM toDomain(SupplierEntity entity) {
         return SupplierM.create(
             entity.getUserId(),  
-            entity.getCompanyName(), 
-            entity.getAddressId());
+            entity.getCompanyName(),
+            addressMapper.toDomain(entity.getAddress()) 
+        );
     }
 
     public SupplierEntity toEntity(SupplierM domain) {
-        return new SupplierEntity(
-            domain.getUserId(),
-            domain.getCompanyName(),
-            domain.getAddressId()
-        );
+        SupplierEntity entity = new SupplierEntity();
+        entity.setUserId(domain.getUserId());
+        entity.setCompanyName(domain.getCompanyName());
+        entity.setAddres(addressMapper.toEntity(domain.getAddress()));
+        return entity;
     }
 }

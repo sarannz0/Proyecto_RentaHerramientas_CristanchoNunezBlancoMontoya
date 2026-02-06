@@ -2,6 +2,8 @@ package com.bkseducate.securityapp.infrastructure.persistence.entity;
 
 import java.util.UUID;
 
+import com.bkseducate.securityapp.domain.model.Address;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -18,18 +20,17 @@ public class SupplierEntity {
     String companyName;
 
     @Column(name = "address_id")
-    String addressId;
+    AddressEntity address;
 
     public SupplierEntity() {}
 
    public SupplierEntity(
-        UUID userId,
         String companyName,
-        String addressId
+        AddressEntity address
     ) {
-        this.userId = userId;
+        this.userId = UUID.randomUUID();
         this.companyName = companyName;
-        this.addressId = addressId;
+        this.address = address;
     }
 
    public UUID getUserId() {
@@ -48,12 +49,12 @@ public class SupplierEntity {
     this.companyName = companyName;
    }
 
-   public String getAddressId() {
-    return addressId;
+   public AddressEntity getAddress() {
+    return address;
    }
 
-   public void setAddresId(String addressId) {
-    this.addressId = addressId;
+   public void setAddres(AddressEntity address) {
+    this.address = address;
    }
     
     
