@@ -7,6 +7,8 @@ import com.bkseducate.securityapp.domain.model.Address;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,7 +21,8 @@ public class SupplierEntity {
     @Column(name = "company_name")
     String companyName;
 
-    @Column(name = "address_id")
+    @ManyToOne
+    @JoinColumn(name = "address_id", nullable = false, referencedColumnName = "id")
     AddressEntity address;
 
     public SupplierEntity() {}

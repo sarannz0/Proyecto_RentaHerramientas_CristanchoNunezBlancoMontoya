@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.stereotype.Component;
+
 import com.bkseducate.securityapp.application.mapper.CityMapper;
 import com.bkseducate.securityapp.domain.model.City;
 import com.bkseducate.securityapp.domain.ports.CityRepositoryPort;
 import com.bkseducate.securityapp.infrastructure.persistence.repository.CityJpaRepository;
 
+@Component
 public class CityRepositoryAdapter implements CityRepositoryPort{
     
     private final CityJpaRepository jpaRepository;
@@ -41,6 +44,4 @@ public class CityRepositoryAdapter implements CityRepositoryPort{
     public City save(City city) {
         return cityMapper.toDomain(jpaRepository.save(cityMapper.toEntity(city)));
     }
-
-
 }

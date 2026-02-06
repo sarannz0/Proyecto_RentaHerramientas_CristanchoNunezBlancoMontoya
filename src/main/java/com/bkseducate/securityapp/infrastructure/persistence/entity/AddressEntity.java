@@ -17,6 +17,7 @@ import jakarta.validation.constraints.Size;
 @Table(name="addresses")
 public class AddressEntity {
     @Id
+    @Column(columnDefinition = "CHAR(36)", length = 36)
     private UUID id;
 
     @NotBlank

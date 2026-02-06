@@ -6,52 +6,43 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
+import com.bkseducate.securityapp.application.mapper.CountryMapper;
 import com.bkseducate.securityapp.domain.model.Country;
 import com.bkseducate.securityapp.domain.ports.CountryRepositoryPort;
-import com.bkseducate.securityapp.infrastructure.persistence.entity.CountryEntity;
 import com.bkseducate.securityapp.infrastructure.persistence.repository.CountryJpaRepository;
 
 @Component
 public class CountryRepositoryAdapter implements CountryRepositoryPort{
 
     private final CountryJpaRepository jpaRepository;
+    private final CountryMapper countryMapper;
 
     public CountryRepositoryAdapter(
-        CountryJpaRepository jpaRepository
+        CountryJpaRepository jpaRepository,
+        CountryMapper countryMapper
     ) {
+        this.countryMapper = countryMapper;
         this.jpaRepository = jpaRepository;
     }
 
     @Override
     public Country save(Country country) {
-      return toDomain(jpaRepository.save(toEntity(country)));
+      return countryMapper.toDomain(jpaRepository.save(countryMapper.toEntity(country)));
     }
 
     @Override
     public Optional<Country> findById(UUID id) {
-        return jpaRepository.findById(id).map(this::toDomain);
+        return jpaRepository.findById(id).map(countryMapper::toDomain);
     }
 
     @Override
     public List<Country> findAll() {
-        return jpaRepository.findAll().stream().map(this::toDomain).toList();
+        return jpaRepository.findAll().stream().map(countryMapper::toDomain).toList();
     }
 
     @Override
     public Optional<Country> findByIsocode(String isocode) {
-        return jpaRepository.findByIsocode(isocode).map(this::toDomain);
-    }
-
-    private Country toDomain(CountryEntity entity) {
-        return Country.create(entity.getName(), entity.getIsocode());
-    }
-
-    private CountryEntity toEntity(Country country){
-        return new CountryEntity(
-            country.getId(),
-            country.getName(),
-            country.getIsocode()
-        );
+        return jpaRepository.findByIsocode(isocode).map(countryMapper::toDomain);
     }
     
 }

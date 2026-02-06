@@ -18,6 +18,7 @@ public class Address {
             City city
     ) {
         Address addre = new Address();
+        addre.id = UUID.randomUUID();
         addre.address = address;
         addre.postalCode = postalCode;
         addre.city = city;

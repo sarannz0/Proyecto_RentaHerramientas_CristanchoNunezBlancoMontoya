@@ -1,18 +1,30 @@
 package com.bkseducate.securityapp.application.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
+import org.springframework.stereotype.Component;
 
 import com.bkseducate.securityapp.application.dto.CountryDTO;
+import com.bkseducate.securityapp.domain.model.Country;
 import com.bkseducate.securityapp.infrastructure.persistence.entity.CountryEntity;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
-public interface CountryMapper {
-    CountryDTO toDTO(CountryEntity countryEntity);
+@Component
+public class CountryMapper {
 
-    CountryEntity toEntity(CountryDTO countryDTO);
+    public CountryEntity toEntity(Country country) {
+        CountryEntity entity = new CountryEntity();
+        entity.setId(country.getId());
+        entity.setName(country.getName());
+        entity.setIsocode(country.getIsocode());
+        return entity;
+    }
 
-    
+    public Country toDomain(CountryEntity countryEntity) {
+        return Country.recreate(
+            countryEntity.getId(),
+            countryEntity.getName(),
+            countryEntity.getIsocode()
+        );
+    }
     
 } 
  

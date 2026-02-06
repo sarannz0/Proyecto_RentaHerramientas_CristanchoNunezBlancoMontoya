@@ -7,13 +7,10 @@ import com.bkseducate.securityapp.application.dto.AddressDTO;
 import com.bkseducate.securityapp.domain.model.Address;
 import com.bkseducate.securityapp.infrastructure.persistence.entity.AddressEntity;
 
-@Mapper(componentModel = "spring",
-    uses = {CityMapper.class}
+@Mapper(componentModel = "spring"
 )
 public abstract class AddressMapper {
     protected CityMapper cityMapper;
-    public abstract AddressEntity DtoToEntity(AddressDTO addressDTO);
-    public abstract AddressDTO toDTO(AddressEntity addressEntity);
 
     public Address toDomain(AddressEntity addressEntity) {
         if (addressEntity == null) return null;

@@ -15,6 +15,7 @@ import jakarta.validation.constraints.Size;
 public class CountryEntity {
    
     @Id
+    @Column(columnDefinition = "CHAR(36)", length = 36)
     private UUID id;
 
     @NotBlank

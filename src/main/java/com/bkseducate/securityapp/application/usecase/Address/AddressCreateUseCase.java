@@ -1,6 +1,7 @@
 package com.bkseducate.securityapp.application.usecase.Address;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bkseducate.securityapp.domain.model.Address;
 import com.bkseducate.securityapp.domain.ports.CityRepositoryPort;
@@ -8,6 +9,7 @@ import com.bkseducate.securityapp.infrastructure.persistence.adapters.out.persis
 
 import jakarta.persistence.EntityNotFoundException;
 
+@Service
 public class AddressCreateUseCase {
     @Autowired 
     AddressRepositoryAdapter addressRepository;

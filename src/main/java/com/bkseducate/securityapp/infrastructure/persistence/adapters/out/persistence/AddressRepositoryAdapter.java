@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.stereotype.Component;
+
 import com.bkseducate.securityapp.application.mapper.AddressMapper;
 import com.bkseducate.securityapp.domain.model.Address;
 import com.bkseducate.securityapp.domain.ports.AddressRepositoryPort;
 import com.bkseducate.securityapp.infrastructure.persistence.repository.AddressJpaRepository;
- 
+
+@Component
 public class AddressRepositoryAdapter implements AddressRepositoryPort{
     private final AddressJpaRepository jpaRepository;
     private final AddressMapper addressMapper;

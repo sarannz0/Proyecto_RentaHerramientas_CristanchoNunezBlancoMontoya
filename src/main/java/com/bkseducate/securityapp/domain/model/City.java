@@ -15,6 +15,20 @@ public class City {
         Country country
     ) {
         City city = new City();
+        city.id = UUID.randomUUID();
+        city.name = name;
+        city.country = country;
+
+        return city;
+    }
+
+    public static City recreate(
+        UUID id,
+        String name, 
+        Country country
+    ) {
+        City city = new City();
+        city.id = id;
         city.name = name;
         city.country = country;
 
