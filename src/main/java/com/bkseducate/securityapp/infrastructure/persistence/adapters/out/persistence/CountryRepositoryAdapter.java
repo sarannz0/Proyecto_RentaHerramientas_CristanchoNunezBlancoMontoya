@@ -6,13 +6,13 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
-import com.bkseducate.securityapp.application.mapper.CountryMapper;
 import com.bkseducate.securityapp.domain.model.Country;
-import com.bkseducate.securityapp.domain.ports.CountryRepositoryPort;
+import com.bkseducate.securityapp.domain.ports.CountryRepository;
+import com.bkseducate.securityapp.infrastructure.persistence.mapper.CountryMapper;
 import com.bkseducate.securityapp.infrastructure.persistence.repository.CountryJpaRepository;
 
 @Component
-public class CountryRepositoryAdapter implements CountryRepositoryPort{
+public class CountryRepositoryAdapter implements CountryRepository{
 
     private final CountryJpaRepository jpaRepository;
     private final CountryMapper countryMapper;

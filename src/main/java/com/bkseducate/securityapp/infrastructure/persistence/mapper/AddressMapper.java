@@ -1,16 +1,17 @@
-package com.bkseducate.securityapp.application.mapper;
+package com.bkseducate.securityapp.infrastructure.persistence.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.springframework.stereotype.Component;
 
-import com.bkseducate.securityapp.application.dto.AddressDTO;
 import com.bkseducate.securityapp.domain.model.Address;
 import com.bkseducate.securityapp.infrastructure.persistence.entity.AddressEntity;
 
-@Mapper(componentModel = "spring"
-)
-public abstract class AddressMapper {
-    protected CityMapper cityMapper;
+import lombok.RequiredArgsConstructor;
+
+@Component
+@RequiredArgsConstructor
+public class AddressMapper {
+
+    private final CityMapper cityMapper;
 
     public Address toDomain(AddressEntity addressEntity) {
         if (addressEntity == null) return null;

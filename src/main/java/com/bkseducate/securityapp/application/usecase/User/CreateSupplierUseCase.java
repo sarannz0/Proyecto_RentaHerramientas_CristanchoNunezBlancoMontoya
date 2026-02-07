@@ -1,14 +1,9 @@
 package com.bkseducate.securityapp.application.usecase.User;
-
-import java.util.Currency;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bkseducate.securityapp.application.dto.Profile.SupplierResponse;
 import com.bkseducate.securityapp.application.dto.Supplier.SupplierRequest;
-import com.bkseducate.securityapp.application.mapper.SupplierMapper;
-import com.bkseducate.securityapp.application.usecase.Address.AddressCreateUseCase;
+import com.bkseducate.securityapp.application.usecase.Address.AddressCreateUpdateUseCase;
 import com.bkseducate.securityapp.domain.exceptions.DomainException;
 import com.bkseducate.securityapp.domain.model.Address;
 import com.bkseducate.securityapp.domain.model.City;
@@ -16,14 +11,16 @@ import com.bkseducate.securityapp.domain.model.Country;
 import com.bkseducate.securityapp.domain.model.Role;
 import com.bkseducate.securityapp.domain.model.SupplierM;
 import com.bkseducate.securityapp.domain.model.User;
-import com.bkseducate.securityapp.domain.ports.CityRepositoryPort;
-import com.bkseducate.securityapp.domain.ports.CountryRepositoryPort;
+import com.bkseducate.securityapp.domain.ports.CityRepository;
+import com.bkseducate.securityapp.domain.ports.CountryRepository;
 import com.bkseducate.securityapp.domain.ports.PasswordService;
 import com.bkseducate.securityapp.domain.ports.RoleRepository;
 import com.bkseducate.securityapp.domain.ports.SupplierRepository;
 import com.bkseducate.securityapp.domain.ports.UserRepository;
+import com.bkseducate.securityapp.infrastructure.persistence.mapper.SupplierMapper;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 
 @Service
 public class CreateSupplierUseCase {
@@ -32,20 +29,20 @@ public class CreateSupplierUseCase {
     private final PasswordService passwordService;
     private final RoleRepository roleRepository;
     private final SupplierMapper supplierMapper;
-    private final AddressCreateUseCase addressCreateUseCase;
+    private final AddressCreateUpdateUseCase addressCreateUseCase;
     private final SupplierRepository supplierRepository;
-    private final CityRepositoryPort cityRepositoryPort;
-    private final CountryRepositoryPort cRepositoryPort;
+    private final CityRepository cityRepositoryPort;
+    private final CountryRepository cRepositoryPort;
 
     public CreateSupplierUseCase(
         UserRepository userRepository,
         PasswordService passwordService,
         RoleRepository roleRepository,
         SupplierMapper supplierMapper,
-        AddressCreateUseCase addressCreateUseCase,
+        AddressCreateUpdateUseCase addressCreateUseCase,
         SupplierRepository supplierRepository,
-        CityRepositoryPort cityRepositoryPort,
-        CountryRepositoryPort cRepositoryPort
+        CityRepository cityRepositoryPort,
+        CountryRepository cRepositoryPort
     ) {
         this.userRepository = userRepository;
         this.passwordService = passwordService;
@@ -57,6 +54,7 @@ public class CreateSupplierUseCase {
         this.cRepositoryPort = cRepositoryPort;
     }
 
+    @Transactional
     public SupplierResponse execute(SupplierRequest request) {
         if (userRepository.existsByEmail(request.email()))
             throw new DomainException("El email "+request.email()+ "ya esta registrado");
@@ -66,9 +64,10 @@ public class CreateSupplierUseCase {
 
         Country savedCountry = cRepositoryPort.findByIsocode(request.countryIsocode())
             .orElseThrow(() -> new EntityNotFoundException("No se pudo encontrar el pais"));
-        System.out.println("================================ COUNTRY " + savedCountry.getId());
 
-        City savedCity = cityRepositoryPort.save(City.create(request.cityName(), savedCountry));
+        City savedCity = cityRepositoryPort.findByName(request.cityName().trim().toUpperCase())
+            .orElseGet(() -> cityRepositoryPort.save(City.create(request.cityName().trim().toUpperCase(), savedCountry)));
+
 
         Address savedAddress = addressCreateUseCase.execute(
             Address.create(request.addressDesc(), request.postalCode(), savedCity)

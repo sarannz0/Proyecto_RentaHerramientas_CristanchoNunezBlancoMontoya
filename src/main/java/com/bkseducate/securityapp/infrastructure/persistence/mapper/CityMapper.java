@@ -1,9 +1,4 @@
-package com.bkseducate.securityapp.application.mapper;
-
-
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
-import org.springframework.beans.factory.annotation.Autowired;
+package com.bkseducate.securityapp.infrastructure.persistence.mapper;
 import org.springframework.stereotype.Component;
 
 import com.bkseducate.securityapp.domain.model.City;
@@ -11,8 +6,12 @@ import com.bkseducate.securityapp.infrastructure.persistence.entity.CityEntity;
 
 @Component
 public class CityMapper {
-    @Autowired
-    private CountryMapper countryMapper;
+    private final CountryMapper countryMapper;
+
+    public CityMapper(CountryMapper countryMapper) {
+        this.countryMapper = countryMapper;
+    }
+
 
     public City toDomain(CityEntity cityEntity) {
         if (cityEntity == null) return null;

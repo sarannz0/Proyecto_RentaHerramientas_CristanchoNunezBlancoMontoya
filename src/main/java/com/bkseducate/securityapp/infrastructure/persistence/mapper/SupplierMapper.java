@@ -1,7 +1,8 @@
-package com.bkseducate.securityapp.application.mapper;
+package com.bkseducate.securityapp.infrastructure.persistence.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bkseducate.securityapp.application.dto.Profile.SupplierResponse;
 import com.bkseducate.securityapp.application.dto.Profile.updateProfile.SupplierUpdateResponse;
@@ -13,6 +14,7 @@ import com.bkseducate.securityapp.infrastructure.persistence.entity.SupplierEnti
 @Mapper(componentModel = "spring", uses = {AddressMapper.class})
 public abstract class SupplierMapper {
 
+    @Autowired
     protected AddressMapper addressMapper;
 
     @Mapping(source = "supplier.address", target = "address")

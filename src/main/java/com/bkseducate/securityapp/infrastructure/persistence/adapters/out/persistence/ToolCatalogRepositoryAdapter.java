@@ -6,11 +6,11 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
-import com.bkseducate.securityapp.application.mapper.SupplierMapper;
-import com.bkseducate.securityapp.application.mapper.ToolCatalogMapper;
 import com.bkseducate.securityapp.domain.model.ToolCatalog;
 import com.bkseducate.securityapp.domain.ports.ToolCatalogRepository;
 import com.bkseducate.securityapp.infrastructure.persistence.entity.ToolCatalogEntity;
+import com.bkseducate.securityapp.infrastructure.persistence.mapper.SupplierMapper;
+import com.bkseducate.securityapp.infrastructure.persistence.mapper.ToolCatalogMapper;
 import com.bkseducate.securityapp.infrastructure.persistence.repository.ToolCatalogJpaRepository;
 
 import jakarta.persistence.EntityNotFoundException;

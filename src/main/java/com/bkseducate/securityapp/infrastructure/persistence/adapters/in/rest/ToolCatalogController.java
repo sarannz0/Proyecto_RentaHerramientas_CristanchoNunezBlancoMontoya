@@ -1,7 +1,10 @@
 package com.bkseducate.securityapp.infrastructure.persistence.adapters.in.rest;
 
+import java.util.UUID;
+
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -31,9 +34,12 @@ public class ToolCatalogController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void createToolCatalog(
         @RequestPart("imgFile") MultipartFile imgFile,
-        @RequestPart String request
+        @RequestPart String request,
+        Authentication authentication
     ) throws JsonProcessingException {
+        UUID supplierId = (UUID) authentication.getPrincipal();
         createToolCatalogUseCase.execute(
+            supplierId,
             objectMapper.readValue(request, ToolCatalogRequest.class), 
             imgFile
         );

@@ -9,8 +9,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record ToolCatalogRequest(
-    @NotNull(message = "El supplierId es requerido")
-    UUID supplierId,
     @NotBlank(message = "El name es requerido")
     String name,
     @NotNull(message = "El price es requerido")

@@ -1,9 +1,7 @@
-package com.bkseducate.securityapp.application.mapper;
+package com.bkseducate.securityapp.infrastructure.persistence.mapper;
 
-import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-import com.bkseducate.securityapp.application.dto.CountryDTO;
 import com.bkseducate.securityapp.domain.model.Country;
 import com.bkseducate.securityapp.infrastructure.persistence.entity.CountryEntity;
 

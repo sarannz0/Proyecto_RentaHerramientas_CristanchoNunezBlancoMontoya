@@ -2,13 +2,14 @@ package com.bkseducate.securityapp.application.usecase.User;
 
 import com.bkseducate.securityapp.application.dto.Profile.UserResponse;
 import com.bkseducate.securityapp.application.dto.User.RegisterRequest;
-import com.bkseducate.securityapp.application.mapper.UserMapper;
 import com.bkseducate.securityapp.domain.exceptions.DomainException;
 import com.bkseducate.securityapp.domain.model.Role;
 import com.bkseducate.securityapp.domain.model.User;
 import com.bkseducate.securityapp.domain.ports.PasswordService;
 import com.bkseducate.securityapp.domain.ports.RoleRepository;
 import com.bkseducate.securityapp.domain.ports.UserRepository;
+import com.bkseducate.securityapp.infrastructure.persistence.mapper.UserMapper;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

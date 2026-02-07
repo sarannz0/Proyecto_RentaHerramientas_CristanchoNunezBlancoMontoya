@@ -1,4 +1,4 @@
-package com.bkseducate.securityapp.application.mapper;
+package com.bkseducate.securityapp.infrastructure.persistence.mapper;
 
 import org.mapstruct.Mapper;
 

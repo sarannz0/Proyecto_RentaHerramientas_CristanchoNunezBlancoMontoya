@@ -21,12 +21,10 @@ public class CityEntity {
     @Column(columnDefinition = "CHAR(36)", length = 36)
     private UUID id;
 
-    @NotBlank
     @Size(max = 50)
-    @Column(name = "name", length = 50, nullable = false)
+    @Column(name = "name", length = 50, nullable = false, unique = true)
     private String name;
 
-    @NotNull(message = "El país es obligatorio")
     @ManyToOne(fetch = FetchType.LAZY) 
     @JoinColumn(name = "country_id", nullable = false) 
     private CountryEntity country;

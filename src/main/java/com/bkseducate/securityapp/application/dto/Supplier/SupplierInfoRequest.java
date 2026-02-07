@@ -1,13 +1,14 @@
-package com.bkseducate.securityapp.application.dto.Profile.updateProfile;
+package com.bkseducate.securityapp.application.dto.Supplier;
 
 import com.bkseducate.securityapp.domain.model.Address;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public record SupplierUpdateRequest(
+public record SupplierInfoRequest(
     @Schema(description = "Nombre del usuario", example = "Ponscio", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "Nombre es requerido")
     @Size(min = 3, max = 16, message = "El Nombre debe contener entre 3 y 16 caracteres")
@@ -17,26 +18,18 @@ public record SupplierUpdateRequest(
     @NotBlank(message = "Email es requerido")
     @Email(message = "Email debe tener un formato válido")
     String email,
+    
+    @Schema(description = "Contraseña del usuario (mínimo 6 caracteres)", example = "password123", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotBlank(message = "Password es requerido")
+    @Size(min = 6, message = "Password debe tener al menos 6 caracteres")
+    String password,
 
     @Schema(description = "Nombre de la empresa", example = "DeWalt")
-    @NotBlank(message = "El companyName es requerido")
+    @NotBlank(message = "CompanyName es requerido")
     String companyName,
 
     @Schema(description = "Dirección del Supplier", example = "calle 10N....")
-    @NotBlank(message = "El addresDesc es requerido")
-    String addressDesc,
+    @NotNull(message = "Address es requerido")
+    Address address
+) {}
 
-    @Schema(description = "Codigo postaldel Supplier", example = "1234")
-    @NotBlank(message = "El PostalCode es requerido")
-    String postalCode,
-
-    @Schema(description = "Ciudad del Supplier", example = "Bogota D.C.")
-    @NotBlank(message = "El CityName es requerido")
-    String cityName,
-    
-    @Schema(description = "IsoCode del pais del Supplier", example = "COL, MEX, ARG")
-    @NotBlank(message = "El addresDesc es requerido")
-    String countryIsocode
-) implements ProfileUpdate {
-    
-} 

@@ -7,12 +7,12 @@ import java.util.UUID;
 import org.springframework.stereotype.Component;
 
 import com.bkseducate.securityapp.application.dto.Supplier.SupplierRequest;
-import com.bkseducate.securityapp.application.mapper.AddressMapper;
-import com.bkseducate.securityapp.application.mapper.SupplierMapper;
 import com.bkseducate.securityapp.domain.exceptions.UserNotFoundException;
 import com.bkseducate.securityapp.domain.model.SupplierM;
 import com.bkseducate.securityapp.domain.ports.SupplierRepository;
 import com.bkseducate.securityapp.infrastructure.persistence.entity.SupplierEntity;
+import com.bkseducate.securityapp.infrastructure.persistence.mapper.AddressMapper;
+import com.bkseducate.securityapp.infrastructure.persistence.mapper.SupplierMapper;
 import com.bkseducate.securityapp.infrastructure.persistence.repository.SupplierJpaRepository;
 
 @Component
@@ -52,7 +52,7 @@ public class SupplierRepositoryAdapter implements SupplierRepository{
         SupplierEntity entity = jpaRepository.findById(userId)
             .orElseThrow(() -> new UserNotFoundException("No se pudo encontrar el usuario con ID "+userId));
         entity.setCompanyName(request.companyName());
-        //entity.setAddres(addressMapper.toEntity(request.address()));
+        //entity.setAddres(addressMapper.toEntity(request.addressDesc()));
         return supplierMapper.toDomain(jpaRepository.save(entity));
     }
 

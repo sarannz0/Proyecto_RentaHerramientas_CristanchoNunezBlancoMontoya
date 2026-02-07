@@ -21,9 +21,21 @@ public record UpdateRequest(
     @NotBlank(message = "El companyName es requerido")
     String companyName,
 
-    @Schema(description = "Direcion del Supplier", example = "calle 10N....")
-    @NotBlank(message = "El addresId es requerido")
-    String addressId,
+    @Schema(description = "Dirección del Supplier", example = "calle 10N....")
+    @NotBlank(message = "El addresDesc es requerido")
+    String addressDesc,
+
+    @Schema(description = "Codigo postaldel Supplier", example = "1234")
+    @NotBlank(message = "El PostalCode es requerido")
+    String postalCode,
+
+    @Schema(description = "Ciudad del Supplier", example = "Bogota D.C.")
+    @NotBlank(message = "El CityName es requerido")
+    String cityName,
+    
+    @Schema(description = "IsoCode del pais del Supplier", example = "COL, MEX, ARG")
+    @NotBlank(message = "El addresDesc es requerido")
+    String countryIsocode,
 
     @Schema(description = "Perfil extra para el proveedor", example = "{companyName: 'sas'...}")
     ProfileUpdate profile

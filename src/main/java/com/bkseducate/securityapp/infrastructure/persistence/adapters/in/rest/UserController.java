@@ -1,19 +1,13 @@
 package com.bkseducate.securityapp.infrastructure.persistence.adapters.in.rest;
 
-import com.bkseducate.securityapp.application.dto.Profile.ProfileResponse;
-import com.bkseducate.securityapp.application.dto.Profile.SupplierResponse;
 import com.bkseducate.securityapp.application.dto.Profile.UserResponse;
 import com.bkseducate.securityapp.application.dto.Profile.updateProfile.ProfileUpdate;
 import com.bkseducate.securityapp.application.dto.Profile.updateProfile.UpdateRequest;
-import com.bkseducate.securityapp.application.dto.Profile.updateProfile.UserUpdateRequest;
 import com.bkseducate.securityapp.application.dto.Profile.updateProfile.UserUpdateResponse;
 import com.bkseducate.securityapp.application.dto.Role.AssignRoleRequest;
-import com.bkseducate.securityapp.application.dto.Supplier.SupplierRequest;
-import com.bkseducate.securityapp.application.dto.User.RegisterRequest;
 import com.bkseducate.securityapp.application.dto.User.StatusUserRequest;
 import com.bkseducate.securityapp.application.dto.User.StatusUserResponse;
 import com.bkseducate.securityapp.application.usecase.Role.AssignRoleUseCase;
-import com.bkseducate.securityapp.application.usecase.User.CreateSupplierUseCase;
 import com.bkseducate.securityapp.application.usecase.User.GetUsersForAdminUseCase;
 import com.bkseducate.securityapp.application.usecase.User.InfoUpdateUsersUseCase;
 import com.bkseducate.securityapp.application.usecase.User.SetStatusUserUseCase;

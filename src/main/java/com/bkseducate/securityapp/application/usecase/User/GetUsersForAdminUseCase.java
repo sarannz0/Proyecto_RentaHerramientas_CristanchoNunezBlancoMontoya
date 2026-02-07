@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.bkseducate.securityapp.application.dto.Profile.UserResponse;
-import com.bkseducate.securityapp.application.mapper.UserMapper;
 import com.bkseducate.securityapp.domain.exceptions.InfoNotFoundException;
 import com.bkseducate.securityapp.domain.model.User;
 import com.bkseducate.securityapp.domain.ports.UserRepository;
+import com.bkseducate.securityapp.infrastructure.persistence.mapper.UserMapper;
 
 @Service
 public class GetUsersForAdminUseCase {

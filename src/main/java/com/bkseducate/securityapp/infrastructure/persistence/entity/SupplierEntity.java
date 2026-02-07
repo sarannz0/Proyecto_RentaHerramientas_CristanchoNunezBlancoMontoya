@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
 @Table(name = "suppliers")
 public class SupplierEntity {
     @Id
-    @Column(name = "user_id")
+    @Column(name = "user_id", columnDefinition = "CHAR(36)", length = 36)
     UUID userId;
 
     @Column(name = "company_name")

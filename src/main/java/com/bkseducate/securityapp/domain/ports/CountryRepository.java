@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import com.bkseducate.securityapp.domain.model.Country;
 
-public interface CountryRepositoryPort {
+public interface CountryRepository {
 
     Country save(Country country);
 

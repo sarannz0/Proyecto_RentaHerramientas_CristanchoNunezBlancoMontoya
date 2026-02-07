@@ -1,4 +1,4 @@
-package com.bkseducate.securityapp.application.mapper;
+package com.bkseducate.securityapp.infrastructure.persistence.mapper;
 
 import com.bkseducate.securityapp.application.dto.Profile.UserResponse;
 import com.bkseducate.securityapp.application.dto.Profile.updateProfile.UserUpdateResponse;

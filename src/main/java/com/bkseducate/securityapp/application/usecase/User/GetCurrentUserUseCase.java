@@ -2,13 +2,14 @@ package com.bkseducate.securityapp.application.usecase.User;
 
 import com.bkseducate.securityapp.application.dto.Profile.ProfileResponse;
 import com.bkseducate.securityapp.application.dto.Profile.UserResponse;
-import com.bkseducate.securityapp.application.mapper.SupplierMapper;
-import com.bkseducate.securityapp.application.mapper.UserMapper;
 import com.bkseducate.securityapp.domain.exceptions.UserNotFoundException;
 import com.bkseducate.securityapp.domain.model.SupplierM;
 import com.bkseducate.securityapp.domain.model.User;
 import com.bkseducate.securityapp.domain.ports.SupplierRepository;
 import com.bkseducate.securityapp.domain.ports.UserRepository;
+import com.bkseducate.securityapp.infrastructure.persistence.mapper.SupplierMapper;
+import com.bkseducate.securityapp.infrastructure.persistence.mapper.UserMapper;
+
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
