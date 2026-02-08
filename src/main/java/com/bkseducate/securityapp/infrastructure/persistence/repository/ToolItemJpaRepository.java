@@ -12,4 +12,5 @@ import com.bkseducate.securityapp.infrastructure.persistence.entity.ToolItemEnti
 public interface ToolItemJpaRepository extends JpaRepository<ToolItemEntity, UUID>{
 
     List<ToolItemEntity> findAllByToolCatalogEntityId(UUID toolCatalogEntityId);
-}
+    void deleteAllByToolCatalogEntityId(UUID toolCatalogEntityId);
+}   

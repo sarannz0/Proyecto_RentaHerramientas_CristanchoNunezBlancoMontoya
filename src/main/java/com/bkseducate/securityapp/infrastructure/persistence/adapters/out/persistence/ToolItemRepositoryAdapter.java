@@ -68,6 +68,13 @@ public class ToolItemRepositoryAdapter implements ToolItemRepository{
     public List<ToolItem> findAllByToolCatalogId(UUID toolCatalogId) {
         return jpaRepository.findAllByToolCatalogEntityId(toolCatalogId).stream().map(toolItemMapper::toDomain).toList();
     }
+
+    @Override
+    public void deleteAllByToolCatalogEntityId(UUID toolCatalogEntityId) {
+        jpaRepository.deleteAllByToolCatalogEntityId(toolCatalogEntityId);
+    }
+
+   
 }
 
 

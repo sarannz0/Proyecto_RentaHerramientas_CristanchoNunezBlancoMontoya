@@ -55,7 +55,8 @@ public class SecurityConfig {
                     "/v3/api-docs.yml",
                     "/swagger-resources/**",
                     "/webjars/**",
-                    "/configuration/**"
+                    "/configuration/**",
+                    "/imagenes/**"
                 ).permitAll();
                 
                 // Todos los demás endpoints requieren autenticación

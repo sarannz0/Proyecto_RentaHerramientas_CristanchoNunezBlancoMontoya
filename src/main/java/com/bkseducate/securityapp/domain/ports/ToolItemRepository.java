@@ -13,4 +13,5 @@ public interface ToolItemRepository {
     ToolItem save(ToolItem tool);
     ToolItem update(UUID id, ToolItem tool);
     void delete(UUID id); 
+    void deleteAllByToolCatalogEntityId(UUID toolCatalogEntityId);
 }
