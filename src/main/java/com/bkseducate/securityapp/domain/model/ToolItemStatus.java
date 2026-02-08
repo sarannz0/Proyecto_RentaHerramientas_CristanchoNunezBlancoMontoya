@@ -1,7 +1,7 @@
 package com.bkseducate.securityapp.domain.model;
 
 public enum ToolItemStatus {
-    AVAIBLE,
+    AVAIABLE,
     UNAVAIABLE,
     DAMAGED,
     MAINTENANCE

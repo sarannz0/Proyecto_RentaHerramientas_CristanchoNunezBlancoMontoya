@@ -8,6 +8,7 @@ import com.bkseducate.securityapp.domain.model.ToolItem;
 
 public interface ToolItemRepository {
     List<ToolItem> findAll();
+    List<ToolItem> findAllByToolCatalogId(UUID toolCatalogId);
     Optional<ToolItem> findById(UUID id);
     ToolItem save(ToolItem tool);
     ToolItem update(UUID id, ToolItem tool);

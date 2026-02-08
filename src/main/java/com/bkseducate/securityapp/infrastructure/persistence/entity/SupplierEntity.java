@@ -2,8 +2,6 @@ package com.bkseducate.securityapp.infrastructure.persistence.entity;
 
 import java.util.UUID;
 
-import com.bkseducate.securityapp.domain.model.Address;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -59,6 +57,5 @@ public class SupplierEntity {
    public void setAddres(AddressEntity address) {
     this.address = address;
    }
-    
     
 }

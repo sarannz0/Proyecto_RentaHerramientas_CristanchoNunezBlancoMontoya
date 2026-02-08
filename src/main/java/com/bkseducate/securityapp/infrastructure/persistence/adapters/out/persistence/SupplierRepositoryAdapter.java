@@ -20,14 +20,12 @@ public class SupplierRepositoryAdapter implements SupplierRepository{
 
     private final SupplierJpaRepository jpaRepository;
     private final SupplierMapper supplierMapper;
-    private final AddressMapper addressMapper;
 
     public SupplierRepositoryAdapter(
         SupplierJpaRepository jpaRepository,
         SupplierMapper supplierMapper,
         AddressMapper addressMapper
     ) {
-        this.addressMapper = addressMapper;
         this.supplierMapper = supplierMapper;
         this.jpaRepository = jpaRepository;
     }

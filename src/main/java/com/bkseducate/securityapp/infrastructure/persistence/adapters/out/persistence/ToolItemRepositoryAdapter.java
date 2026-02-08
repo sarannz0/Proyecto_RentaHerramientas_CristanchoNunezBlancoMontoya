@@ -63,6 +63,11 @@ public class ToolItemRepositoryAdapter implements ToolItemRepository{
             .orElseThrow(() -> new UserNotFoundException("No se pudo encontrar el usuario con ID "+id));
         jpaRepository.deleteById(id);
     }
+
+    @Override
+    public List<ToolItem> findAllByToolCatalogId(UUID toolCatalogId) {
+        return jpaRepository.findAllByToolCatalogEntityId(toolCatalogId).stream().map(toolItemMapper::toDomain).toList();
+    }
 }
 
 

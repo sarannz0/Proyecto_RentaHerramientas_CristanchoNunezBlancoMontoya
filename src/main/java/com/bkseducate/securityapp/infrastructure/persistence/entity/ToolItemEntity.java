@@ -30,7 +30,7 @@ public class ToolItemEntity {
     private ToolItemStatus status;
 
     @Column(nullable = false)
-    private Boolean avaiable;
+    private Boolean avaiable = true;
 
     public ToolItemEntity() {
     }

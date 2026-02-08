@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bkseducate.securityapp.infrastructure.persistence.adapters.out.persistence.CountryRepositoryAdapter;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import jakarta.websocket.server.PathParam;
 
 import java.util.UUID;
 
@@ -14,8 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController

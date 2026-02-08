@@ -1,5 +1,6 @@
 package com.bkseducate.securityapp.infrastructure.persistence.repository;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,4 +10,6 @@ import com.bkseducate.securityapp.infrastructure.persistence.entity.ToolItemEnti
 
 @Repository
 public interface ToolItemJpaRepository extends JpaRepository<ToolItemEntity, UUID>{
+
+    List<ToolItemEntity> findAllByToolCatalogEntityId(UUID toolCatalogEntityId);
 }
