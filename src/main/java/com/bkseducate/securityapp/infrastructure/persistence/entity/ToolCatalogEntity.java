@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 
 
 @Entity
-@Table(name = "tools")
+@Table(name = "tool_catalog")
 public class ToolCatalogEntity {
     @Id
     @Column(columnDefinition = "CHAR(36)", length = 36)
@@ -25,14 +25,14 @@ public class ToolCatalogEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
-        name = "supplier_fk",
+        name = "supplier_id",
         referencedColumnName = "user_id",
         nullable = false,
         updatable = false
     )
     private SupplierEntity supplier;
 
-    @Column(nullable = false)
+    @Column(nullable = false) 
     private String name;
     
     @Column(nullable = false)

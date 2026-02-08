@@ -29,49 +29,61 @@ public class ToolItemEntity {
     @Column(nullable = false)
     private ToolItemStatus status;
 
-    @Column(nullable = false)
-    private Boolean avaiable = true;
+    @Column(name = "available", nullable = false)
+    private Boolean available = true;
+
+
+    public ToolItemEntity(UUID id, ToolCatalogEntity toolCatalogEntity, ToolItemStatus status, Boolean available) {
+        this.id = id;
+        this.toolCatalogEntity = toolCatalogEntity;
+        this.status = status;
+        this.available = available;
+    }
+
 
     public ToolItemEntity() {
     }
 
-    public ToolItemEntity(ToolCatalogEntity toolCatalogEntity, ToolItemStatus status, Boolean avaiable) {
-        this.toolCatalogEntity = toolCatalogEntity;
-        this.status = status;
-        this.avaiable = avaiable;
-    }
 
     public UUID getId() {
         return id;
     }
 
+
     public void setId(UUID id) {
         this.id = id;
     }
+
 
     public ToolCatalogEntity getToolCatalogEntity() {
         return toolCatalogEntity;
     }
 
+
     public void setToolCatalogEntity(ToolCatalogEntity toolCatalogEntity) {
         this.toolCatalogEntity = toolCatalogEntity;
     }
+
 
     public ToolItemStatus getStatus() {
         return status;
     }
 
+
     public void setStatus(ToolItemStatus status) {
         this.status = status;
     }
 
-    public Boolean getAvaiable() {
-        return avaiable;
+
+    public Boolean getAvailable() {
+        return available;
     }
 
-    public void setAvaiable(Boolean avaiable) {
-        this.avaiable = avaiable;
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
     }
+
     
     
 }

@@ -1,6 +1,9 @@
 package com.bkseducate.securityapp.infrastructure.persistence.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -22,6 +25,8 @@ public class UserEntity {
     @Column(nullable = false)
     private String name;
 
+    @NotBlank
+    @Email
     @Column(nullable = false, unique = true)
     private String email;
     

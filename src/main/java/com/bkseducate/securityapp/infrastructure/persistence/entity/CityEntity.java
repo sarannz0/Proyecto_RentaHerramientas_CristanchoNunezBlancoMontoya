@@ -10,7 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -21,16 +20,17 @@ public class CityEntity {
     @Column(columnDefinition = "CHAR(36)", length = 36)
     private UUID id;
 
+    @NotBlank
     @Size(max = 50)
     @Column(name = "name", length = 50, nullable = false, unique = true)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY) 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false) 
     @JoinColumn(name = "country_id", nullable = false) 
     private CountryEntity country;
 
-    public CityEntity(UUID id, @NotBlank @Size(max = 50) String name,
-        @NotNull(message = "El país es obligatorio") CountryEntity country) {
+   
+    public CityEntity(UUID id, @NotBlank @Size(max = 50) String name, CountryEntity country) {
         this.id = id;
         this.name = name;
         this.country = country;
