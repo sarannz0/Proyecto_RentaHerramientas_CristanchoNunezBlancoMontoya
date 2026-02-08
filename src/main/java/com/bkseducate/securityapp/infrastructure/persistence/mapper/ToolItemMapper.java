@@ -16,7 +16,7 @@ public abstract class ToolItemMapper {
             entity.getId(),
             toolCatalogMapper.toDomain(entity.getToolCatalogEntity()),
             entity.getStatus(),
-            entity.getAvaiable()
+            entity.getAvailable()
         );
     }
 

@@ -18,7 +18,7 @@ public class AddressMapper {
         return Address.recreate(
             addressEntity.getId(),
             addressEntity.getAddress(),
-            addressEntity.getPostal_code(),
+            addressEntity.getpostalCode(),
             cityMapper.toDomain(addressEntity.getCity())
         );
     }
@@ -28,7 +28,7 @@ public class AddressMapper {
         AddressEntity entity = new AddressEntity();
         entity.setId(address.getId());
         entity.setAddress(address.getAddress());
-        entity.setPostal_code(address.getPostalCode());
+        entity.setpostalCode(address.getPostalCode());
         entity.setCity(cityMapper.toEntity(address.getCity()));
         return entity;
     }

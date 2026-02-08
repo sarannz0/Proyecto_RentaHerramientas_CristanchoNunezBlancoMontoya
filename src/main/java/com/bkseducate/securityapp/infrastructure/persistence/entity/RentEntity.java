@@ -1,0 +1,133 @@
+package com.bkseducate.securityapp.infrastructure.persistence.entity;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+import com.bkseducate.securityapp.domain.model.RentStatus;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "rents")
+public class RentEntity {
+
+    @Id
+    @Column(columnDefinition = "CHAR(36)", length = 36)
+    private UUID id;
+
+   @Column(name = "start_date", nullable = false)
+    private LocalDateTime startDate;
+
+    @Column(name = "end_date", nullable = false)
+    private LocalDateTime endDate;
+
+    @Column(name = "total_amount", nullable = false)
+    private BigDecimal totalAmount;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "tool_item_id", nullable = false, updatable = false)
+    private ToolItemEntity toolItemEntity;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private RentStatus rentStatus;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false, updatable = false)
+    private UserEntity userEntity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
+    private AddressEntity addressEntity;
+
+    public RentEntity(UUID id, LocalDateTime startDate, LocalDateTime endDate, BigDecimal totalAmount,
+            ToolItemEntity toolItemEntity, RentStatus rentStatus, UserEntity userEntity, AddressEntity addressEntity) {
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.totalAmount = totalAmount;
+        this.toolItemEntity = toolItemEntity;
+        this.rentStatus = rentStatus;
+        this.userEntity = userEntity;
+        this.addressEntity = addressEntity;
+    }
+
+    public RentEntity() {
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public ToolItemEntity getToolItemEntity() {
+        return toolItemEntity;
+    }
+
+    public void setToolItemEntity(ToolItemEntity toolItemEntity) {
+        this.toolItemEntity = toolItemEntity;
+    }
+
+    public RentStatus getRentStatus() {
+        return rentStatus;
+    }
+
+    public void setRentStatus(RentStatus rentStatus) {
+        this.rentStatus = rentStatus;
+    }
+
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
+    public AddressEntity getAddressEntity() {
+        return addressEntity;
+    }
+
+    public void setAddressEntity(AddressEntity addressEntity) {
+        this.addressEntity = addressEntity;
+    }
+
+
+
+}

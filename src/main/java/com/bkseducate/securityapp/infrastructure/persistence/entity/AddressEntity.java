@@ -9,7 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -20,9 +19,9 @@ public class AddressEntity {
     @Column(columnDefinition = "CHAR(36)", length = 36)
     private UUID id;
 
-    @NotBlank
+
     @Size(max = 55)
-    @Column(name = "address", length = 55)
+    @Column(name = "address", length = 55, nullable = false)
     private String address;
 
     @NotNull(message = "La dirección es obligatoria")
@@ -30,18 +29,19 @@ public class AddressEntity {
     @JoinColumn(name = "city_id", nullable = false)
     private CityEntity city;
     
-    @NotBlank
-    @Size(max = 15)
-    @Column(name = "postal_code", length = 15)
-    private String postal_code;
 
-    public AddressEntity(UUID id, @NotBlank @Size(max = 55) String address,
-            @NotNull(message = "La dirección es obligatoria") CityEntity city,
-            @NotBlank @Size(max = 15) String postal_code) {
+    @Size(max = 15)
+    @Column(name = "postalCode", length = 15, nullable = false)
+    private String postalCode;
+
+   
+
+    public AddressEntity(UUID id, @Size(max = 55) String address,
+            @NotNull(message = "La dirección es obligatoria") CityEntity city, @Size(max = 15) String postalCode) {
         this.id = id;
         this.address = address;
         this.city = city;
-        this.postal_code = postal_code;
+        this.postalCode = postalCode;
     }
 
     public AddressEntity() {
@@ -71,11 +71,11 @@ public class AddressEntity {
         this.city = city;
     }
 
-    public String getPostal_code() {
-        return postal_code;
+    public String getpostalCode() {
+        return postalCode;
     }
 
-    public void setPostal_code(String postal_code) {
-        this.postal_code = postal_code;
+    public void setpostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 }

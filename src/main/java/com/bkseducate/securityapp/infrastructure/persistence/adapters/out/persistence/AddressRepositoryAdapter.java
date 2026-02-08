@@ -50,7 +50,7 @@ public class AddressRepositoryAdapter implements AddressRepository{
         AddressEntity entity = jpaRepository.findById(id)
             .orElseThrow(() -> new UserNotFoundException("No se pudo encontrar el usuario con ID " + id));
         entity.setAddress(address.getAddress());
-        entity.setPostal_code(address.getPostalCode());
+        entity.setpostalCode(address.getPostalCode());
         entity.setCity(cityMapper.toEntity(address.getCity()));
         return addressMapper.toDomain(jpaRepository.save(entity));
     }
