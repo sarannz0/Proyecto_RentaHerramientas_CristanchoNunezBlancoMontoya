@@ -1,298 +1,211 @@
-# SecurityApp
 # 🏗️ Plataforma de Renta de Herramientas y Equipos de Construcción
 
-Aplicación de autenticación y autorización construida con Spring Boot 3.3.0 y Spring Security 6, siguiendo **Arquitectura Hexagonal** y **Domain-Driven Design (DDD)**.
-Backend robusto para la gestión de alquiler de maquinaria y herramientas, desarrollado con **Spring Boot 3.3.0** y **Java 21**. Este proyecto implementa una **Arquitectura Hexagonal (Ports & Adapters)** estricta y **Domain-Driven Design (DDD)** para garantizar la escalabilidad y mantenibilidad.
+Backend robusto para la gestión de alquiler de maquinaria y herramientas, desarrollado con **Spring Boot 3.3.0** y **Java 21**. Este proyecto implementa una **Arquitectura Hexagonal (Ports & Adapters)** estricta y **Domain-Driven Design (DDD)** para garantizar la escalabilidad, mantenibilidad y un bajo acoplamiento con tecnologías externas.
 
-El sistema conecta a **Proveedores** (dueños de equipos) con **Clientes** (contratistas/particulares), gestionando todo el ciclo de vida del alquiler: desde la publicación del inventario y solicitudes de renta, hasta la facturación y pagos.
+El sistema conecta a **Proveedores** (dueños de equipos) con **Clientes** (contratistas o particulares), gestionando todo el ciclo de vida del alquiler: desde la publicación del inventario y solicitudes de renta, hasta la facturación y pagos.
+
+## 🚀 Características Principales
+
+### Funcionalidades del Negocio
+- ✅ **Gestión de Inventario**: Los proveedores pueden registrar, actualizar y gestionar su catálogo de herramientas.
+- ✅ **Sistema de Reservas**: Los clientes pueden buscar herramientas, consultar disponibilidad y realizar alquileres.
+- ✅ **Gestión de Pagos**: Integración para procesar pagos en línea y generar facturas.
+- ✅ **Paneles de Control por Rol**: Vistas personalizadas para Administradores, Proveedores y Clientes.
+- ✅ **Seguimiento de Alquileres**: Historial de alquileres, gestión de devoluciones y estado de los equipos.
+
+### Características Técnicas
+- ✅ **Autenticación Segura**: Sistema basado en **JWT** con Access Token y Refresh Token.
+- ✅ **Autorización por Roles**: Tres niveles de acceso: `ADMIN`, `PROVEEDOR`, y `CLIENTE`.
+- ✅ **Arquitectura Hexagonal Pura**: El dominio es agnóstico al framework, bases de datos y otros detalles de infraestructura.
+- ✅ **Manejo Global de Excepciones**: Respuestas de error consistentes y claras.
+- ✅ **Validación de Datos**: Uso de Jakarta Validation para asegurar la integridad de los datos de entrada.
+- ✅ **Documentación de API**: Generación automática de documentación interactiva con **Swagger/OpenAPI**.
+
+## 👥 Roles y Funcionalidades
+
+### 1. Administrador (`ROLE_ADMIN`)
+- **Gestión de Usuarios**: Supervisa y administra todos los usuarios (proveedores y clientes).
+- **Control Total**: Accede a historiales completos de alquileres, pagos y reportes de daños.
+- **Métricas y Reportes**: Genera estadísticas de ingresos, uso de equipos y rentabilidad.
+
+### 2. Proveedor (`ROLE_PROVEEDOR`)
+- **Gestión de Inventario**: Publica y administra sus herramientas, definiendo costos y disponibilidad.
+- **Gestión de Reservas**: Acepta o rechaza solicitudes de alquiler de sus equipos.
+- **Seguimiento**: Confirma devoluciones, reporta daños y gestiona la facturación de sus alquileres.
+
+### 3. Cliente (`ROLE_CLIENTE`)
+- **Exploración y Búsqueda**: Navega por el catálogo de herramientas, filtra por disponibilidad y consulta precios.
+- **Proceso de Alquiler**: Realiza reservas, selecciona fechas y efectúa pagos en línea.
+- **Historial Personal**: Accede a su historial de alquileres y gestiona sus datos.
 
 ## 🏗️ Arquitectura
 
-El proyecto está estructurado siguiendo los principios de Arquitectura Hexagonal:
-El proyecto sigue los principios de Arquitectura Hexagonal para desacoplar la lógica de negocio de los frameworks y bases de datos:
+El proyecto sigue los principios de **Arquitectura Hexagonal (Puertos y Adaptadores)** para desacoplar la lógica de negocio de los detalles de implementación.
 
 ```
 src/main/java/com/bkseducate/securityapp/
-├── domain/                    # Capa de dominio (sin dependencias externas)
-│   ├── model/                # Entidades de dominio (User, Role, RefreshToken)
-│   ├── ports/                # Interfaces (puertos) del dominio
-│   └── exceptions/           # Excepciones de dominio
-├── application/              # Capa de aplicación
-│   ├── usecase/             # Casos de uso
-│   ├── dto/                  # Data Transfer Objects
-│   └── mapper/               # Mappers MapStruct
-├── infrastructure/          # Capa de infraestructura
-│   ├── security/            # JWT, Password, SecurityConfig
-│   ├── persistence/         # Entidades JPA, Repositorios
-│   └── exception/           # Manejo global de excepciones
-└── adapters/                # Adaptadores
-    ├── in/                  # Controladores REST (adaptadores de entrada)
-    └── out/                 # Adaptadores de persistencia (adaptadores de salida)
+├── domain/                    # Capa de dominio (lógica pura, sin dependencias externas)
+│   ├── model/                # Entidades y objetos de valor (User, Role, Tool)
+│   ├── ports/                # Interfaces (puertos) que definen la comunicación
+│   └── exceptions/           # Excepciones específicas del dominio
+├── application/              # Capa de aplicación (orquesta los casos de uso)
+│   ├── usecase/              # Implementación de los casos de uso (ej: CreateUserUseCase)
+│   ├── dto/                  # Data Transfer Objects para la comunicación
+│   └── mapper/               # Mappers (MapStruct) para convertir entre DTOs y Dominio
+├── infrastructure/           # Capa de infraestructura (implementaciones concretas)
+│   ├── security/             # Lógica de JWT, config de Spring Security
+│   ├── persistence/          # Entidades JPA, repositorios y adaptadores de BD
+│   └── config/               # Configuración de Beans (ej: OpenApiConfig)
+└── adapters/                 # Adaptadores que conectan el exterior con la aplicación
+    ├── in/                   # Adaptadores de entrada (ej: Controladores REST)
+    └── out/                  # Adaptadores de salida (ej: Implementación de repositorios)
 ```
 
-## 🚀 Características
+## 🛠️ Tecnologías Utilizadas
 
-- ✅ Autenticación con JWT (Access Token + Refresh Token)
-- ✅ Registro de usuarios con asignación automática de ROL_USER
-- ✅ Refresh Token persistido en base de datos
-- ✅ Cambio de contraseña
-- ✅ Asignación de roles (requiere ADMIN)
-- ✅ Logout con invalidación de refresh token
-- ✅ Manejo global de excepciones
-- ✅ Validación de entrada con Jakarta Validation
-- ✅ MapStruct para mapeos DTO ↔ Dominio
-- ✅ Arquitectura Hexagonal pura (dominio sin dependencias de Spring)
-- ✅ Documentación API con Swagger/OpenAPI (SpringDoc)
+- **Backend**:
+  - Java 21
+  - Spring Boot 3.3.0
+  - Spring Security 6 (con JWT)
+  - Spring Data JPA / Hibernate
+  - MySQL 8.0
+  - MapStruct
+- **Documentación**:
+  - SpringDoc OpenAPI (Swagger UI)
+- **Build Tool**:
+  - Maven
 
-## 📋 Requisitos
+## 📋 Requisitos Previos
 
-- Java 17+
-- Maven 3.6+
-- MySQL 8.0+ (o superior)
+- Java 21 o superior.
+- Maven 3.6 o superior.
+- MySQL 8.0 o superior.
 
-## 🔧 Configuración
+## 🔧 Configuración e Instalación
 
-### Perfiles de Spring Boot
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone https://github.com/tu-usuario/tu-repositorio.git
+    cd tu-repositorio
+    ```
 
-El proyecto usa perfiles de Spring Boot para diferentes entornos:
+2.  **Configurar la base de datos:**
+    Asegúrate de tener una instancia de MySQL en ejecución. La aplicación puede crear la base de datos automáticamente en el entorno de desarrollo.
 
-- **dev** (por defecto): Desarrollo con MySQL local
-- **prod**: Producción con MySQL configurado
+    Si prefieres crearla manualmente:
+    ```sql
+    CREATE DATABASE toolscat_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    ```
 
-### Variables de entorno para Desarrollo
+3.  **Configurar variables de entorno:**
+    El proyecto utiliza perfiles de Spring (`dev`, `prod`). Para desarrollo, puedes configurar las siguientes variables de entorno:
 
-```bash
-export SPRING_PROFILES_ACTIVE=dev
-export DB_URL=jdbc:mysql://localhost:3306/security_app_dev?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
-export DB_USERNAME=root
-export DB_PASSWORD=tu_password
-export JWT_SECRET=tu-secreto-super-seguro-aqui
-```
-
-### Variables de entorno para Producción
-
-```bash
-export SPRING_PROFILES_ACTIVE=prod
-export DB_URL=jdbc:mysql://tu-servidor:3306/security_app_prod?useSSL=true&requireSSL=true&serverTimezone=UTC
-export DB_USERNAME=usuario_prod
-export DB_PASSWORD=password_seguro_prod
-export JWT_SECRET=tu-secreto-super-seguro-aqui  # OBLIGATORIO en producción
-export SERVER_PORT=8080
-```
-
-### Archivos de configuración
-
-- `application.yml`: Configuración base común
-- `application-dev.yml`: Configuración para desarrollo
-- `application-prod.yml`: Configuración para producción
-- `application-local.yml.example`: Plantilla para configuración local (copia y renombra)
-
-### Propiedades principales
-
-- `jwt.secret`: Secreto para firmar tokens JWT (obligatorio en producción)
-- `jwt.access-token-expiration`: Expiración del access token (900000ms = 15 min)
-- `jwt.refresh-token-expiration`: Expiración del refresh token (604800000ms = 7 días)
-- `spring.datasource.*`: Configuración de conexión a MySQL
-
-Ver `docs/DATABASE_SETUP.md` para más detalles sobre la configuración de la base de datos.
+    ```bash
+    export SPRING_PROFILES_ACTIVE=dev
+    export DB_URL=jdbc:mysql://localhost:3306/toolscat_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+    export DB_USERNAME=root
+    export DB_PASSWORD=tu_password_de_mysql
+    export JWT_SECRET=este-es-un-secreto-muy-largo-y-seguro-para-desarrollo
+    ```
+    > ⚠️ **Importante**: `JWT_SECRET` debe ser una cadena larga y aleatoria, especialmente en producción.
 
 ## 🏃 Ejecución
 
-```bash
-# Compilar
-mvn clean install
+1.  **Compilar el proyecto:**
+    ```bash
+    mvn clean install
+    ```
 
-# Ejecutar
-mvn spring-boot:run
-```
+2.  **Ejecutar la aplicación:**
+    ```bash
+    mvn spring-boot:run
+    ```
 
-La aplicación estará disponible en `http://localhost:8080`
+La aplicación estará disponible en `http://localhost:8080`.
 
-## 📖 Documentación de la API
+## 📖 Documentación de la API (Swagger)
 
-### Swagger UI
+Una vez que la aplicación esté en ejecución, puedes acceder a la documentación interactiva de la API a través de Swagger UI.
 
-Una vez que la aplicación esté ejecutándose, accede a la documentación interactiva:
+➡️ **URL de Swagger UI:** http://localhost:8080/swagger-ui.html
 
-```
-http://localhost:8080/swagger-ui.html
-```
+Desde esta interfaz podrás:
+- Visualizar todos los endpoints disponibles, agrupados por controlador.
+- Ver los modelos de datos (DTOs) de entrada y salida.
+- Probar los endpoints directamente, incluyendo aquellos que requieren autenticación.
 
-Desde Swagger UI puedes:
-- Ver todos los endpoints disponibles
-- Probar los endpoints directamente desde el navegador
-- Ver los modelos de datos (DTOs)
-- Autenticarte con JWT para probar endpoints protegidos
+Para probar endpoints protegidos, primero obtén un `accessToken` desde `POST /auth/login` y luego autoriza tus peticiones en Swagger haciendo clic en el botón **"Authorize"**.
 
-### Especificación OpenAPI
+## 📡 Endpoints Principales
 
-La especificación OpenAPI está disponible en:
-- JSON: `http://localhost:8080/v3/api-docs`
-- YAML: `http://localhost:8080/v3/api-docs.yaml`
+A continuación se muestran los endpoints de autenticación y gestión de usuarios. Los endpoints específicos del negocio (herramientas, alquileres, etc.) pueden ser explorados en detalle a través de Swagger.
 
-Para más detalles sobre la configuración y uso de Swagger, consulta [`docs/SWAGGER_OPENAPI_SETUP.md`](docs/SWAGGER_OPENAPI_SETUP.md).
+### Públicos (No requieren autenticación)
 
-## 📡 Endpoints
+- `POST /auth/register`: Registro de un nuevo usuario (cliente o proveedor).
+- `POST /auth/login`: Inicio de sesión para obtener tokens de acceso.
+- `POST /auth/refresh`: Refresca un `accessToken` expirado usando un `refreshToken`.
 
-### Públicos (sin autenticación)
+### Protegidos (Requieren `Bearer Token`)
 
-- `POST /auth/register` - Registro de usuario
-- `POST /auth/login` - Login (retorna access token y refresh token)
-- `POST /auth/refresh` - Refrescar access token
+- `GET /auth/me`: Obtiene los datos del usuario autenticado.
+- `PUT /auth/change-password`: Permite al usuario cambiar su propia contraseña.
+- `POST /auth/logout`: Cierra la sesión invalidando el `refreshToken`.
+- `PUT /users/{userId}/roles`: Asigna un rol a un usuario (requiere `ROLE_ADMIN`).
 
-### Protegidos (requieren autenticación)
+### Ejemplo de uso con `cURL`
 
-- `GET /auth/me` - Obtener usuario autenticado
-- `PUT /auth/change-password` - Cambiar contraseña
-- `POST /auth/logout` - Cerrar sesión
-- `PUT /users/{userId}/roles` - Asignar rol (requiere ADMIN)
+1.  **Registrar un usuario:**
+    ```bash
+    curl -X POST http://localhost:8080/auth/register \
+      -H "Content-Type: application/json" \
+      -d '{
+        "email": "cliente@example.com",
+        "password": "password123"
+      }'
+    ```
 
-### Autenticación
+2.  **Iniciar sesión:**
+    ```bash
+    curl -X POST http://localhost:8080/auth/login \
+      -H "Content-Type: application/json" \
+      -d '{
+        "email": "cliente@example.com",
+        "password": "password123"
+      }'
+    ```
+    *Respuesta:*
+    ```json
+    {
+      "accessToken": "ey...",
+      "refreshToken": "a1b2c3d4-...",
+      "tokenType": "Bearer",
+      "expiresIn": 900
+    }
+    ```
 
-Incluir el token en el header:
-```
-Authorization: Bearer <access_token>
-```
+3.  **Acceder a un recurso protegido:**
+    ```bash
+    curl -X GET http://localhost:8080/auth/me \
+      -H "Authorization: Bearer ey..."
+    ```
 
-## 📝 Ejemplos de uso
+## 🧪 Pruebas
 
-### 1. Registrar usuario
-
-```bash
-curl -X POST http://localhost:8080/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "user@example.com",
-    "password": "password123"
-  }'
-```
-
-### 2. Login
-
-```bash
-curl -X POST http://localhost:8080/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "user@example.com",
-    "password": "password123"
-  }'
-```
-
-Respuesta:
-```json
-{
-  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "refreshToken": "550e8400-e29b-41d4-a716-446655440000",
-  "tokenType": "Bearer",
-  "expiresIn": 900
-}
-```
-
-### 3. Obtener usuario autenticado
-
-```bash
-curl -X GET http://localhost:8080/auth/me \
-  -H "Authorization: Bearer <access_token>"
-```
-
-### 4. Refrescar token
-
-```bash
-curl -X POST http://localhost:8080/auth/refresh \
-  -H "Content-Type: application/json" \
-  -d '{
-    "refreshToken": "550e8400-e29b-41d4-a716-446655440000"
-  }'
-```
-
-### 5. Cambiar contraseña
-
-```bash
-curl -X PUT http://localhost:8080/auth/change-password \
-  -H "Authorization: Bearer <access_token>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "currentPassword": "password123",
-    "newPassword": "newpassword456"
-  }'
-```
-
-### 6. Asignar rol (requiere ADMIN)
-
-```bash
-curl -X PUT http://localhost:8080/users/{userId}/roles \
-  -H "Authorization: Bearer <admin_access_token>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "role": "ADMIN"
-  }'
-```
-
-## 🔐 Roles
-
-- `ROLE_USER` - Asignado por defecto al crear usuario
-- `ROLE_ADMIN` - Requerido para asignar roles
-- `ROLE_MODERATOR` - Rol adicional disponible
-
-## 🧪 Testing
+Para ejecutar la suite de pruebas unitarias y de integración, utiliza el siguiente comando:
 
 ```bash
 mvn test
 ```
 
-## 📦 Build
+## 📚 Principios y Buenas Prácticas
 
-```bash
-mvn clean package
-```
-
-El JAR ejecutable se generará en `target/security-app-1.0.0-SNAPSHOT.jar`
-
-Ejecutar JAR:
-```bash
-java -jar target/security-app-1.0.0-SNAPSHOT.jar
-```
-
-## 🗄️ Base de datos
-
-El proyecto usa **MySQL** como base de datos principal.
-
-### Configuración rápida
-
-1. Asegúrate de tener MySQL ejecutándose
-2. Configura las variables de entorno (ver sección Configuración)
-3. La aplicación creará automáticamente la base de datos si no existe (en desarrollo)
-
-### Crear base de datos manualmente
-
-```sql
-CREATE DATABASE security_app_dev CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE DATABASE security_app_prod CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-```
-
-Para más detalles, consulta `docs/DATABASE_SETUP.md`.
-
-## 🔄 Extensibilidad
-
-El proyecto está diseñado para ser fácilmente extensible:
-
-- **OAuth2/Keycloak**: Implementar nuevos adaptadores en `infrastructure/security`
-- **Otras bases de datos**: Cambiar solo los adaptadores en `adapters/out/persistence`
-- **Nuevos casos de uso**: Agregar en `application/usecase` sin modificar el dominio
-- **Nuevos endpoints**: Agregar controladores en `adapters/in/rest`
-
-## 📚 Principios aplicados
-
-- **Arquitectura Hexagonal**: Separación clara entre dominio, aplicación e infraestructura
-- **DDD**: Modelo de dominio rico con entidades, value objects y excepciones
-- **SOLID**: Principios aplicados en toda la arquitectura
-- **Clean Code**: Código limpio, documentado y mantenible
-- **Security Best Practices**: JWT seguro, contraseñas hasheadas, tokens revocables
-
-## 👤 Autor
-
-Desarrollado siguiendo las mejores prácticas de Spring Boot y arquitectura de software.
+- **Arquitectura Hexagonal**: Separación clara entre el `QUÉ` (dominio) y el `CÓMO` (infraestructura).
+- **Domain-Driven Design (DDD)**: Un modelo de dominio rico que encapsula la lógica y las reglas del negocio.
+- **SOLID**: Principios aplicados para crear un software robusto, mantenible y extensible.
+- **Clean Code**: Código legible, bien documentado y fácil de entender.
+- **Security Best Practices**: Contraseñas hasheadas con BCrypt, tokens JWT con expiración corta, refresh tokens revocables y validación de entradas.
 
 ## 📄 Licencia
 
-Este proyecto es de uso educativo y demostrativo.
+Este proyecto se distribuye bajo una licencia de uso educativo y demostrativo.
