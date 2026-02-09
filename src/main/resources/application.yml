@@ -1,6 +1,6 @@
 app:
   admin:
-    email: ${ADMIN_EMAIL:admin@bkseducate.com}
+    email: ${ADMIN_EMAIL:admin@admin.com}
     password: ${ADMIN_PASSWORD:admin}
 
 

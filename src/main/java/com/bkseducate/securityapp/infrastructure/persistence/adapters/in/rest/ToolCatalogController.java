@@ -1,5 +1,6 @@
 package com.bkseducate.securityapp.infrastructure.persistence.adapters.in.rest;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,7 +22,10 @@ import com.bkseducate.securityapp.application.dto.ToolCatalog.ToolCatalogRequest
 import com.bkseducate.securityapp.application.dto.ToolCatalog.ToolCatalogUpdateRequest;
 import com.bkseducate.securityapp.application.usecase.ToolCatalog.CreateToolCatalogUseCase;
 import com.bkseducate.securityapp.application.usecase.ToolCatalog.DeleteToolCatalogUseCase;
+import com.bkseducate.securityapp.application.usecase.ToolCatalog.ListToolCatalogByIdUseCase;
+import com.bkseducate.securityapp.application.usecase.ToolCatalog.ListToolCatalogUseCase;
 import com.bkseducate.securityapp.application.usecase.ToolCatalog.UpdateToolCatalogUseCase;
+import com.bkseducate.securityapp.domain.model.ToolCatalog;
 import com.bkseducate.securityapp.infrastructure.exception.ErrorResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,6 +49,8 @@ public class ToolCatalogController {
         private final ObjectMapper objectMapper;
         private final DeleteToolCatalogUseCase deleteToolCatalogUseCase;
         private final UpdateToolCatalogUseCase updateToolCatalogUseCase;
+        private final ListToolCatalogByIdUseCase listToolCatalogByIdUseCase;
+        private final ListToolCatalogUseCase listToolCatalogUseCase;
 
         @Operation(summary = "Crear catálogo de herramientas", description = "Crea un nuevo catálogo de herramientas con imagen. Requiere rol SUPPLIER.")
         @ApiResponses(value = {
@@ -103,5 +110,20 @@ public class ToolCatalogController {
                                 objectMapper.readValue(request, ToolCatalogUpdateRequest.class),
                                 imgFile);
                 return ResponseEntity.ok().build();
+        }
+
+        @PreAuthorize("hasRole('SUPPLIER')")
+        @GetMapping("/list")
+        public ResponseEntity<List<ToolCatalog>> findAllBySupplierId(
+                Authentication authentication
+        ) {
+                UUID supplierId = (UUID) authentication.getPrincipal();
+                return ResponseEntity.ok(listToolCatalogByIdUseCase.execute(supplierId)); 
+        }       
+        
+        @PreAuthorize("hasRole('USER')")
+        @GetMapping("/list/all")
+        public ResponseEntity<List<ToolCatalog>> findAll() {
+                return ResponseEntity.ok(listToolCatalogUseCase.execute()); 
         }
 }
