@@ -4,16 +4,21 @@ import java.util.UUID;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(description = "DTO para información de ciudad")
 public class CityDTO {
+    @Schema(description = "ID de la ciudad", example = "b1eebc99-9c0b-4ef8-bb6d-6bb9bd380a22")
     private UUID id;
 
+    @Schema(description = "Nombre de la ciudad", example = "Bogotá", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "El nombre de la ciudad es obligatorio")
     private String name;
 
+    @Schema(description = "País asociado", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "El país es obligatorio")
     private CountryDTO country;
-    
+
     public CityDTO() {
     }
 

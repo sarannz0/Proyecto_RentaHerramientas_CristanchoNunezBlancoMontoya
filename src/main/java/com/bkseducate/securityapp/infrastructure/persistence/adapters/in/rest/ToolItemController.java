@@ -23,80 +23,109 @@ import com.bkseducate.securityapp.application.usecase.ToolItem.ToolItemCreateUse
 import com.bkseducate.securityapp.application.usecase.ToolItem.ToolItemUpdateAvaiableUseCase;
 import com.bkseducate.securityapp.application.usecase.ToolItem.ToolItemUpdateStatusUseCase;
 import com.bkseducate.securityapp.domain.model.ToolItem;
+import com.bkseducate.securityapp.infrastructure.exception.ErrorResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+@Tag(name = "Items Herramientas", description = "Gestión de los items físicos de herramientas")
 @RestController
 @RequestMapping("/tool/item")
 @RequiredArgsConstructor
-public class ToolItemController {        
-    
-    private final ToolItemCreateUseCase toolItemCreateUseCase;
-    private final ToolITemDeleteUseCase toolITemDeleteUseCase;
-    private final ToolITemGetAllUseCase toolITemGetAllUseCase;
-    private final ToolItemUpdateStatusUseCase toolItemUpdateStatusUseCase;
-    private final ToolItemUpdateAvaiableUseCase toolItemUpdateAvaiableUseCase;
+public class ToolItemController {
 
-    @SecurityRequirement(name = "bearerAuth")
-    @PostMapping("/create/{catalogId}")
-    @PreAuthorize("hasRole('SUPPLIER')")
-    public ResponseEntity<HttpStatus> create(
-        @PathVariable UUID catalogId,
-        Authentication authentication
-    ) {
-        UUID supplierId = (UUID) authentication.getPrincipal();
-        toolItemCreateUseCase.execute(catalogId, supplierId);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
+        private final ToolItemCreateUseCase toolItemCreateUseCase;
+        private final ToolITemDeleteUseCase toolITemDeleteUseCase;
+        private final ToolITemGetAllUseCase toolITemGetAllUseCase;
+        private final ToolItemUpdateStatusUseCase toolItemUpdateStatusUseCase;
+        private final ToolItemUpdateAvaiableUseCase toolItemUpdateAvaiableUseCase;
 
-    @SecurityRequirement(name = "bearerAuth")
-    @DeleteMapping("/delete/{itemId}")
-    @PreAuthorize("hasRole('SUPPLIER')")
-    public ResponseEntity<HttpStatus> delete(
-        @PathVariable UUID itemId,
-        Authentication authentication
-    ) {
-        UUID supplierId = (UUID) authentication.getPrincipal();
-        toolITemDeleteUseCase.execute(itemId, supplierId);
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
+        @Operation(summary = "Crear ítem de herramienta", description = "Crea un ítem físico asociado a un catálogo. Requiere rol SUPPLIER.")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "201", description = "Item creado exitosamente"),
+                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+        })
+        @SecurityRequirement(name = "bearerAuth")
+        @PostMapping("/create/{catalogId}")
+        @PreAuthorize("hasRole('SUPPLIER')")
+        public ResponseEntity<HttpStatus> create(
+                        @Parameter(description = "ID del catálogo", required = true) @PathVariable UUID catalogId,
+                        Authentication authentication) {
+                UUID supplierId = (UUID) authentication.getPrincipal();
+                toolItemCreateUseCase.execute(catalogId, supplierId);
+                return ResponseEntity.status(HttpStatus.CREATED).build();
+        }
 
-    @SecurityRequirement(name = "bearerAuth")
-    @GetMapping("/get/{catalogId}")
-    @PreAuthorize("hasRole('SUPPLIER')")
-    public ResponseEntity<List<ToolItem>> getAll(
-        @PathVariable UUID catalogId,
-        Authentication authentication
-    ) {
-        UUID supplierId = (UUID) authentication.getPrincipal();
-        return ResponseEntity.status(HttpStatus.OK).body(toolITemGetAllUseCase.execute(catalogId, supplierId));
-    }
-    
-    @SecurityRequirement(name = "bearerAuth")
-    @PutMapping("/update/status/{itemId}")
-    @PreAuthorize("hasRole('SUPPLIER')")
-    public ResponseEntity<HttpStatus> updateStatus(
-        @PathVariable UUID itemId,
-        Authentication authentication,
-        @Valid @RequestBody ToolUpdateStatusRequest status
-    ) {
-        UUID supplierId = (UUID) authentication.getPrincipal();
-        toolItemUpdateStatusUseCase.execute(itemId, status.status(), supplierId);
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
+        @Operation(summary = "Eliminar ítem de herramienta", description = "Elimina un ítem específico. Requiere rol SUPPLIER.")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Eliminado exitosamente"),
+                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+        })
+        @SecurityRequirement(name = "bearerAuth")
+        @DeleteMapping("/delete/{itemId}")
+        @PreAuthorize("hasRole('SUPPLIER')")
+        public ResponseEntity<HttpStatus> delete(
+                        @Parameter(description = "ID del ítem", required = true) @PathVariable UUID itemId,
+                        Authentication authentication) {
+                UUID supplierId = (UUID) authentication.getPrincipal();
+                toolITemDeleteUseCase.execute(itemId, supplierId);
+                return ResponseEntity.status(HttpStatus.OK).build();
+        }
 
-    @SecurityRequirement(name = "bearerAuth")
-    @PutMapping("/update/avaible/{itemId}/{bool}")
-    @PreAuthorize("hasRole('SUPPLIER')")
-    public ResponseEntity<HttpStatus> updateAvaiable(
-        @PathVariable UUID itemId,
-        @PathVariable Boolean bool,
-        Authentication authentication
-    ) {
-        UUID supplierId = (UUID) authentication.getPrincipal();
-        toolItemUpdateAvaiableUseCase.execute(itemId, bool, supplierId);
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
+        @Operation(summary = "Listar ítems de un catálogo", description = "Obtiene todos los ítems asociados a un catálogo. Requiere rol SUPPLIER.")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Lista de ítems obtenida", content = @Content(schema = @Schema(implementation = ToolItem.class))),
+                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+        })
+        @SecurityRequirement(name = "bearerAuth")
+        @GetMapping("/get/{catalogId}")
+        @PreAuthorize("hasRole('SUPPLIER')")
+        public ResponseEntity<List<ToolItem>> getAll(
+                        @Parameter(description = "ID del catálogo", required = true) @PathVariable UUID catalogId,
+                        Authentication authentication) {
+                UUID supplierId = (UUID) authentication.getPrincipal();
+                return ResponseEntity.status(HttpStatus.OK).body(toolITemGetAllUseCase.execute(catalogId, supplierId));
+        }
+
+        @Operation(summary = "Actualizar estado físico de un ítem", description = "Cambia el estado (e.g. DAMAGED, MAINTENANCE) de un ítem. Requiere rol SUPPLIER.")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Estado actualizado"),
+                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+        })
+        @SecurityRequirement(name = "bearerAuth")
+        @PutMapping("/update/status/{itemId}")
+        @PreAuthorize("hasRole('SUPPLIER')")
+        public ResponseEntity<HttpStatus> updateStatus(
+                        @Parameter(description = "ID del ítem", required = true) @PathVariable UUID itemId,
+                        Authentication authentication,
+                        @Valid @RequestBody ToolUpdateStatusRequest status) {
+                UUID supplierId = (UUID) authentication.getPrincipal();
+                toolItemUpdateStatusUseCase.execute(itemId, status.status(), supplierId);
+                return ResponseEntity.status(HttpStatus.OK).build();
+        }
+
+        @Operation(summary = "Actualizar disponibilidad de un ítem", description = "Habilita o deshabilita la disponibilidad de un ítem. Requiere rol SUPPLIER.")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Disponibilidad actualizada"),
+                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+        })
+        @SecurityRequirement(name = "bearerAuth")
+        @PutMapping("/update/avaible/{itemId}/{bool}")
+        @PreAuthorize("hasRole('SUPPLIER')")
+        public ResponseEntity<HttpStatus> updateAvaiable(
+                        @Parameter(description = "ID del ítem", required = true) @PathVariable UUID itemId,
+                        @Parameter(description = "Disponible (true/false)", required = true) @PathVariable Boolean bool,
+                        Authentication authentication) {
+                UUID supplierId = (UUID) authentication.getPrincipal();
+                toolItemUpdateAvaiableUseCase.execute(itemId, bool, supplierId);
+                return ResponseEntity.status(HttpStatus.OK).build();
+        }
 }
