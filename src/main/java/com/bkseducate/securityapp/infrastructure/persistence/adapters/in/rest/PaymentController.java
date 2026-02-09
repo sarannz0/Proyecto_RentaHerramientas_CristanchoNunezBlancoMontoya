@@ -27,11 +27,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-<<<<<<< HEAD
-@Tag(name = "Pagos", description = "Gestión de pagos de rentas")
-=======
 @Tag(name = "Pagos", description = "Gestión de pagos de alquileres")
->>>>>>> ce87019e160d1704c67b30049bcd54fe7e6d96a8
 @RestController
 @RequestMapping("/pay")
 @RequiredArgsConstructor

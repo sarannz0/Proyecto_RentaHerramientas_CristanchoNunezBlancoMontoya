@@ -115,13 +115,8 @@ public class AuthController {
     @Operation(summary = "Obtener usuario autenticado", description = "Retorna la información del usuario actualmente autenticado (perfil usuario o proveedor). Requiere autenticación.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Usuario obtenido exitosamente", content = @Content(schema = @Schema(implementation = ProfileResponse.class))),
-<<<<<<< HEAD
-            @ApiResponse(responseCode = "401", description = "No autenticado"),
-            @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
-=======
             @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
->>>>>>> ce87019e160d1704c67b30049bcd54fe7e6d96a8
     })
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/me")
