@@ -16,6 +16,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.UUID;
 
+import com.bkseducate.securityapp.infrastructure.exception.ErrorResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,14 +34,15 @@ public class CountryController {
     @Operation(summary = "Obtener país por ID", description = "Retorna el ID del país si existe. Requiere rol ADMIN.")
     @SecurityRequirement(name = "bearerAuth")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "País encontrado", content = @Content(schema = @Schema(implementation = UUID.class))),
-            @ApiResponse(responseCode = "403", description = "No autorizado (Requiere ADMIN)"),
-            @ApiResponse(responseCode = "404", description = "País no encontrado")
+            @ApiResponse(responseCode = "200", description = "País encontrado", content = @Content(schema = @Schema(description = "UUID del país", example = "550e8400-e29b-41d4-a716-446655440000", type = "string", format = "uuid"))),
+            @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "403", description = "No autorizado (Requiere ADMIN)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "País no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public UUID getPais(
-            @Parameter(description = "ID del país", required = true) @PathVariable UUID id) {
+            @Parameter(description = "ID del país", required = true, example = "550e8400-e29b-41d4-a716-446655440000") @PathVariable UUID id) {
         return countryRepositoryAdapter.findById(id).get().getId();
     }
 

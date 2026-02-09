@@ -32,6 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -44,6 +45,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/tools")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
 public class ToolCatalogController {
         private final CreateToolCatalogUseCase createToolCatalogUseCase;
         private final ObjectMapper objectMapper;
@@ -55,9 +57,10 @@ public class ToolCatalogController {
         @Operation(summary = "Crear catálogo de herramientas", description = "Crea un nuevo catálogo de herramientas con imagen. Requiere rol SUPPLIER.")
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Catálogo creado exitosamente"),
+                        @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
                         @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
         })
-        @SecurityRequirement(name = "bearerAuth")
         @PreAuthorize("hasRole('SUPPLIER')")
         @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
         public ResponseEntity<HttpStatus> createToolCatalog(
@@ -75,9 +78,10 @@ public class ToolCatalogController {
         @Operation(summary = "Eliminar catálogo de herramientas", description = "Elimina un catálogo existente. Requiere rol SUPPLIER.")
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Eliminado exitosamente"),
-                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                        @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "404", description = "Catálogo no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
         })
-        @SecurityRequirement(name = "bearerAuth")
         @PreAuthorize("hasRole('SUPPLIER')")
         @DeleteMapping("/delete/{catalogId}")
         public ResponseEntity<HttpStatus> deleteToolCatalog(
@@ -93,9 +97,11 @@ public class ToolCatalogController {
         @Operation(summary = "Actualizar catálogo de herramientas", description = "Actualiza la información e imagen de un catálogo. Requiere rol SUPPLIER.")
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Actualizado exitosamente"),
-                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                        @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "404", description = "Catálogo no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
         })
-        @SecurityRequirement(name = "bearerAuth")
         @PreAuthorize("hasRole('SUPPLIER')")
         @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, path = "/update/{catalogId}")
         public ResponseEntity<HttpStatus> updateToolCatalog(
@@ -112,6 +118,12 @@ public class ToolCatalogController {
                 return ResponseEntity.ok().build();
         }
 
+        @Operation(summary = "Listar catálogos del proveedor", description = "Obtiene todos los catálogos de herramientas del proveedor autenticado. Requiere rol SUPPLIER.")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Lista de catálogos del proveedor", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ToolCatalog.class)))),
+                        @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+        })
         @PreAuthorize("hasRole('SUPPLIER')")
         @GetMapping("/list")
         public ResponseEntity<List<ToolCatalog>> findAllBySupplierId(
@@ -121,6 +133,12 @@ public class ToolCatalogController {
                 return ResponseEntity.ok(listToolCatalogByIdUseCase.execute(supplierId)); 
         }       
         
+        @Operation(summary = "Listar todos los catálogos", description = "Obtiene todos los catálogos de herramientas disponibles. Requiere rol USER.")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Lista de todos los catálogos", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ToolCatalog.class)))),
+                        @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere USER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+        })
         @PreAuthorize("hasRole('USER')")
         @GetMapping("/list/all")
         public ResponseEntity<List<ToolCatalog>> findAll() {

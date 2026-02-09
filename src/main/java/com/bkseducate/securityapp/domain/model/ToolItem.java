@@ -4,7 +4,9 @@ import java.util.UUID;
 
 import com.bkseducate.securityapp.domain.exceptions.DomainException;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(description = "Ítem físico de una herramienta (unidad disponible para alquiler)")
 public class ToolItem {
     private UUID id;
     private ToolCatalog toolCatalog;

@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+@Schema(description = "Solicitud para actualizar datos de perfil (usuario o proveedor)")
 public record UpdateRequest(
     @Schema(description = "Nombre del usuario", example = "Ponscio", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "Nombre es requerido")
