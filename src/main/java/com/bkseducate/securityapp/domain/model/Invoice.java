@@ -7,7 +7,7 @@ import java.util.UUID;
 public class Invoice {
 
     private UUID id;
-    private UUID rentId;
+    private Rent rent;
     private BigDecimal totalAmount;
     private LocalDateTime date;
 
@@ -15,12 +15,12 @@ public class Invoice {
     }
 
     public static Invoice create(
-        UUID rentId,
+        Rent rent,
         BigDecimal totalAmount
     ) {
         Invoice invoice = new Invoice();
         invoice.id = UUID.randomUUID();
-        invoice.rentId = rentId;
+        invoice.rent = rent;
         invoice.totalAmount = totalAmount;
         invoice.date = LocalDateTime.now();
 
@@ -29,13 +29,13 @@ public class Invoice {
 
     public static Invoice recreate(
         UUID id,
-        UUID rentId,
+        Rent rent,
         BigDecimal totalAmount,
         LocalDateTime date
     ) {
         Invoice invoice = new Invoice();
         invoice.id = id;
-        invoice.rentId = rentId;
+        invoice.rent = rent;
         invoice.totalAmount = totalAmount;
         invoice.date = date;
 
@@ -46,8 +46,8 @@ public class Invoice {
         return id;
     }
 
-    public UUID getRentId() {
-        return rentId;
+    public Rent getRentId() {
+        return rent;
     }
 
     public BigDecimal getTotalAmount() {

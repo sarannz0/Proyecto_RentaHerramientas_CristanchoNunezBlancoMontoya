@@ -1,6 +1,8 @@
 package com.bkseducate.securityapp.infrastructure.persistence.mapper;
 
 import com.bkseducate.securityapp.domain.model.Role;
+import com.bkseducate.securityapp.infrastructure.persistence.entity.RoleEntity;
+
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,5 +24,13 @@ public class RoleMapper {
      */
     public String roleToAuthority(Role role) {
         return role != null ? role.getAuthority() : null;
+    }
+
+    public Role toDomain(RoleEntity entity) {
+        return Role.reconstruct(
+            entity.getId(),
+            entity.getName(),
+            entity.getAuthority()
+        );
     }
 }

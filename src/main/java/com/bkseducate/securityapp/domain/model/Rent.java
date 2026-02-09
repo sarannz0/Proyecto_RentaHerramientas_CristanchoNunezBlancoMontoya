@@ -3,66 +3,79 @@ package com.bkseducate.securityapp.domain.model;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.bkseducate.securityapp.domain.exceptions.DomainException;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.HashSet;
+import java.util.Set;
+
 public class Rent {
 
     private UUID id;
-    private UUID customerId;
-    private UUID toolItemId;
-
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-
+    private BigDecimal totalAmount;
+    private Set<ToolItem> toolItem = new HashSet<>();
     private RentStatus status;
-
-    private Rent() {
-    }
+    private User user;
+    private Address address;
+    
 
     public static Rent create(
-        UUID customerId,
-        UUID toolItemId,
         LocalDateTime startDate,
-        LocalDateTime endDate
+        LocalDateTime endDate,
+        User user,
+        Address address
     ) {
         Rent rent = new Rent();
         rent.id = UUID.randomUUID();
-        rent.customerId = customerId;
-        rent.toolItemId = toolItemId;
         rent.startDate = startDate;
         rent.endDate = endDate;
-        rent.status = RentStatus.RENTED;
+        rent.user = user;
+        rent.status = RentStatus.PENDING;
+        rent.address = address;
 
         return rent;
     }
 
     public static Rent recreate(
         UUID id,
-        UUID customerId,
-        UUID toolItemId,
         LocalDateTime startDate,
         LocalDateTime endDate,
-        RentStatus status
+        BigDecimal totalAmount,
+        Set<ToolItem> toolItem,
+        RentStatus status,
+        User user,
+        Address address
     ) {
         Rent rent = new Rent();
         rent.id = id;
-        rent.customerId = customerId;
-        rent.toolItemId = toolItemId;
         rent.startDate = startDate;
         rent.endDate = endDate;
+        rent.totalAmount = totalAmount;
+        rent.toolItem = toolItem;
         rent.status = status;
-
+        rent.address = address;
         return rent;
+    }
+
+    public void updateAmount(BigDecimal amount) {
+        this.totalAmount = amount;
+    }
+
+    public void assignTool(ToolItem toolItem) {
+        if (toolItem == null) throw new DomainException("El item no puede ser nulo");
+        this.toolItem.add(toolItem);
+    }
+
+    public void removeToo(ToolItem toolItem) {
+        if (toolItem == null) throw new DomainException("El item no puede ser nulo");
+        this.toolItem.remove(toolItem);
     }
 
     public UUID getId() {
         return id;
-    }
-
-    public UUID getCustomerId() {
-        return customerId;
-    }
-
-    public UUID getToolItemId() {
-        return toolItemId;
     }
 
     public LocalDateTime getStartDate() {
@@ -73,8 +86,28 @@ public class Rent {
         return endDate;
     }
 
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public Set<ToolItem> getToolItem() {
+        return toolItem;
+    }
+
     public RentStatus getStatus() {
         return status;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    private Rent() {
+    }
+
 }
 

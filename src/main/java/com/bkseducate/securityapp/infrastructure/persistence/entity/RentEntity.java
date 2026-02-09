@@ -2,10 +2,14 @@ package com.bkseducate.securityapp.infrastructure.persistence.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import com.bkseducate.securityapp.domain.model.RentStatus;
+import com.bkseducate.securityapp.domain.model.ToolItem;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,6 +18,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -33,9 +38,9 @@ public class RentEntity {
     @Column(name = "total_amount", nullable = false)
     private BigDecimal totalAmount;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "tool_item_id", nullable = false, updatable = false)
-    private ToolItemEntity toolItemEntity;
+    private Set<ToolItemEntity> toolItemEntity = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -50,7 +55,7 @@ public class RentEntity {
     private AddressEntity addressEntity;
 
     public RentEntity(UUID id, LocalDateTime startDate, LocalDateTime endDate, BigDecimal totalAmount,
-            ToolItemEntity toolItemEntity, RentStatus rentStatus, UserEntity userEntity, AddressEntity addressEntity) {
+            Set<ToolItemEntity> toolItemEntity, RentStatus rentStatus, UserEntity userEntity, AddressEntity addressEntity) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -96,11 +101,11 @@ public class RentEntity {
         this.totalAmount = totalAmount;
     }
 
-    public ToolItemEntity getToolItemEntity() {
+    public Set<ToolItemEntity> getToolItemEntity() {
         return toolItemEntity;
     }
 
-    public void setToolItemEntity(ToolItemEntity toolItemEntity) {
+    public void setToolItemEntity(Set<ToolItemEntity> toolItemEntity) {
         this.toolItemEntity = toolItemEntity;
     }
 

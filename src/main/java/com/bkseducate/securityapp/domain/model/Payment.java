@@ -7,7 +7,7 @@ import java.util.UUID;
 public class Payment {
 
     private UUID id;
-    private UUID rentId;
+    private Rent rent;
     private BigDecimal amount;
     private LocalDateTime date;
     private PaymentMethod method;
@@ -16,13 +16,13 @@ public class Payment {
     }
 
     public static Payment create(
-        UUID rentId,
+        Rent rent,
         BigDecimal amount,
         PaymentMethod method
     ) {
         Payment payment = new Payment();
         payment.id = UUID.randomUUID();
-        payment.rentId = rentId;
+        payment.rent = rent;
         payment.amount = amount;
         payment.date = LocalDateTime.now();
         payment.method = method;
@@ -31,14 +31,14 @@ public class Payment {
 
     public static Payment recreate(
         UUID id,
-        UUID rentId,
+        Rent rent,
         BigDecimal amount,
         LocalDateTime date,
         PaymentMethod method
     ) {
         Payment payment = new Payment();
         payment.id = id;
-        payment.rentId = rentId;
+        payment.rent = rent;
         payment.amount = amount;
         payment.date = date;
         payment.method = method;
@@ -49,8 +49,8 @@ public class Payment {
         return id;
     }
 
-    public UUID getRentId() {
-        return rentId;
+    public Rent getRentId() {
+        return rent;
     }
 
     public BigDecimal getAmount() {

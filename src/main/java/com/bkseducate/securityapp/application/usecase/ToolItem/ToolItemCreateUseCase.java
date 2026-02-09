@@ -27,7 +27,7 @@ public class ToolItemCreateUseCase {
 
         ToolItem toolItem = ToolItem.create(
             toolCatalogEntity,
-            ToolItemStatus.AVAIABLE,
+            ToolItemStatus.AVAILABLE,
             true
         ); 
 

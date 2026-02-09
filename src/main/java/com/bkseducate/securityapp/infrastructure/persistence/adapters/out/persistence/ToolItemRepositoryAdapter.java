@@ -7,7 +7,9 @@ import org.springframework.stereotype.Component;
 
 import com.bkseducate.securityapp.domain.exceptions.UserNotFoundException;
 import com.bkseducate.securityapp.domain.model.ToolItem;
+import com.bkseducate.securityapp.domain.model.ToolItemStatus;
 import com.bkseducate.securityapp.domain.ports.ToolItemRepository;
+import com.bkseducate.securityapp.infrastructure.persistence.entity.ToolItemEntity;
 import com.bkseducate.securityapp.infrastructure.persistence.mapper.ToolItemMapper;
 import com.bkseducate.securityapp.infrastructure.persistence.repository.ToolItemJpaRepository;
 
@@ -72,6 +74,12 @@ public class ToolItemRepositoryAdapter implements ToolItemRepository{
     @Override
     public void deleteAllByToolCatalogEntityId(UUID toolCatalogEntityId) {
         jpaRepository.deleteAllByToolCatalogEntityId(toolCatalogEntityId);
+    }
+
+    @Override
+    public List<ToolItem> findAllByToolCatalogEntityIdByToolItemStatus(UUID toolCatalogId, ToolItemStatus status) {
+        return jpaRepository.findAllByToolCatalogEntityIdByToolItemStatus(toolCatalogId, status).stream()
+            .map(toolItemMapper::toDomain).toList();
     }
 
    

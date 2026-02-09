@@ -23,10 +23,10 @@ public abstract class SupplierMapper {
     public abstract SupplierUpdateResponse toUpdateResponse(User user, SupplierM supplier);
 
     public abstract SupplierRequest toRequest(User user, SupplierM supplier);
-
+    
     public SupplierM toDomain(SupplierEntity entity) {
-        return SupplierM.create(
-            entity.getUserId(),  
+        return SupplierM.reconstruct(
+            entity.getUserId(),
             entity.getCompanyName(),
             addressMapper.toDomain(entity.getAddress()) 
         );

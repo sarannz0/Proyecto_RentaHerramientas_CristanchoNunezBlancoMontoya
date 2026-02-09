@@ -77,10 +77,11 @@ public class CreateSupplierUseCase {
             .orElseThrow(() -> new RuntimeException("No se encontro el ROL SUPPLIER"));
         user.assignRole(role);
 
-        SupplierM supplier = SupplierM.create(user.getId(), request.companyName(), savedAddress);
-
-        SupplierM savedSupplier = supplierRepository.save(supplier);
         User savedUser = userRepository.save(user);
+        SupplierM supplier = SupplierM.create(user.getId() ,request.companyName(), savedAddress);
+        
+        SupplierM savedSupplier = supplierRepository.save(supplier);
+        
         return supplierMapper.toResponse(savedUser, savedSupplier);
     }
 }

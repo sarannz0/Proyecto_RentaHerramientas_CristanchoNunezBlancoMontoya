@@ -3,6 +3,7 @@ package com.bkseducate.securityapp.infrastructure.exception;
 import com.bkseducate.securityapp.domain.exceptions.DomainException;
 import com.bkseducate.securityapp.domain.exceptions.InfoNotFoundException;
 import com.bkseducate.securityapp.domain.exceptions.InvalidCredentialsException;
+import com.bkseducate.securityapp.domain.exceptions.InvalidInfoException;
 import com.bkseducate.securityapp.domain.exceptions.UserNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -128,6 +129,18 @@ public class GlobalExceptionHandler {
             request.getRequestURI()
         );
         // En producción, no exponer detalles del error
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(InvalidInfoException.class)
+    public ResponseEntity<ErrorResponse> InvalidInfoException(
+            Exception ex, HttpServletRequest request) {
+        ErrorResponse error = ErrorResponse.of(
+            HttpStatus.NOT_FOUND.value(),
+            "Error de busqueda",
+            ex.getMessage(),
+            request.getRequestURI()
+        );
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 }
