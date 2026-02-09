@@ -1,10 +1,15 @@
 # SecurityApp
+# 🏗️ Plataforma de Renta de Herramientas y Equipos de Construcción
 
 Aplicación de autenticación y autorización construida con Spring Boot 3.3.0 y Spring Security 6, siguiendo **Arquitectura Hexagonal** y **Domain-Driven Design (DDD)**.
+Backend robusto para la gestión de alquiler de maquinaria y herramientas, desarrollado con **Spring Boot 3.3.0** y **Java 21**. Este proyecto implementa una **Arquitectura Hexagonal (Ports & Adapters)** estricta y **Domain-Driven Design (DDD)** para garantizar la escalabilidad y mantenibilidad.
+
+El sistema conecta a **Proveedores** (dueños de equipos) con **Clientes** (contratistas/particulares), gestionando todo el ciclo de vida del alquiler: desde la publicación del inventario y solicitudes de renta, hasta la facturación y pagos.
 
 ## 🏗️ Arquitectura
 
 El proyecto está estructurado siguiendo los principios de Arquitectura Hexagonal:
+El proyecto sigue los principios de Arquitectura Hexagonal para desacoplar la lógica de negocio de los frameworks y bases de datos:
 
 ```
 src/main/java/com/bkseducate/securityapp/
