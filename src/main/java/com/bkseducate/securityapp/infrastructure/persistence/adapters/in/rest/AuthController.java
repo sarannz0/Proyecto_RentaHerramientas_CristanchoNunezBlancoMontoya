@@ -111,13 +111,7 @@ public class AuthController {
 
     @Operation(summary = "Obtener usuario autenticado", description = "Retorna la información del usuario actualmente autenticado.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Usuario obtenido exitosamente", content = @Content(schema = @Schema(implementation = ProfileResponse.class))), // Changed
-                                                                                                                                                                             // this
-                                                                                                                                                                             // to
-                                                                                                                                                                             // ProfileResponse
-                                                                                                                                                                             // based
-                                                                                                                                                                             // on
-                                                                                                                                                                             // YAML
+            @ApiResponse(responseCode = "200", description = "Usuario obtenido exitosamente", content = @Content(schema = @Schema(implementation = ProfileResponse.class))),
             @ApiResponse(responseCode = "401", description = "No autenticado"),
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
     })

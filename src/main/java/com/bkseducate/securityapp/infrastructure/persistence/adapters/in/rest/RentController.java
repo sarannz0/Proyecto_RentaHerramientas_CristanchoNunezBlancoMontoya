@@ -32,4 +32,6 @@ public class RentController {
         UUID userId = (UUID) authentication.getPrincipal();
         return ResponseEntity.ok(createRentUseCase.execute(userId, request));
     }
+
+    
 }

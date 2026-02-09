@@ -60,6 +60,11 @@ public class Rent {
         return rent;
     }
 
+    public void updateStatus(RentStatus status) {
+        if (status == null) throw new DomainException("El status no puede ser nulo");
+        this.status = status;
+    }
+
     public void updateAmount(BigDecimal amount) {
         this.totalAmount = amount;
     }

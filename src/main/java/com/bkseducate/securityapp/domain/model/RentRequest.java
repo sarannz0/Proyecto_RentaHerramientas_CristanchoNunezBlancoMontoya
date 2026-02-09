@@ -6,31 +6,31 @@ import java.util.UUID;
 public class RentRequest {
 
     private UUID id;
-    private UUID rentId;
+    private Rent rent;
     private LocalDateTime createdAt;
     private RentRequestStatus status;
 
     private RentRequest() {
     }
 
-    public static RentRequest create(UUID rentId) {
+    public static RentRequest create(Rent rent) {
         RentRequest request = new RentRequest();
         request.id = UUID.randomUUID();
-        request.rentId = rentId;
+        request.rent = rent;
         request.createdAt = LocalDateTime.now();
-        request.status = RentRequestStatus.ACCEPTED;
+        request.status = RentRequestStatus.PENDING;
         return request;
     }
 
     public static RentRequest recreate(
         UUID id,
-        UUID rentId,
+        Rent rent,
         LocalDateTime createdAt,
         RentRequestStatus status
     ) {
         RentRequest request = new RentRequest();
         request.id = id;
-        request.rentId = rentId;
+        request.rent = rent;
         request.createdAt = createdAt;
         request.status = status;
         return request;
@@ -40,8 +40,8 @@ public class RentRequest {
         return id;
     }
 
-    public UUID getRentId() {
-        return rentId;
+    public Rent getRent() {
+        return rent;
     }
 
     public LocalDateTime getCreatedAt() {
