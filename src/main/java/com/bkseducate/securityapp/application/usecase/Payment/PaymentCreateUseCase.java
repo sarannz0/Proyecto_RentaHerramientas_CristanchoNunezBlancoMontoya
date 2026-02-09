@@ -20,9 +20,13 @@ public class PaymentCreateUseCase {
     private final PaymentRepository paymentRepository;
     private final RentRepository rentRepository;
 
-    public void execute(UUID rentId, BigDecimal amount, PaymentMethod method) {
+    public void execute(UUID userId, UUID rentId, PaymentMethod method) {
+
         Rent rent = rentRepository.findByID(rentId)
             .orElseThrow(() -> new UserNotFoundException("No se pudo encontrar la RENTA con ID " +  rentId));
-        paymentRepository.save(Payment.create(rent, amount, method));
+
+        if (!rent.getUser().getId().equals(userId)) throw new RuntimeException("No tienes permisos para acceder a este recurso");
+
+        paymentRepository.save(Payment.create(rent, rent.getTotalAmount(), method));
     }
 }

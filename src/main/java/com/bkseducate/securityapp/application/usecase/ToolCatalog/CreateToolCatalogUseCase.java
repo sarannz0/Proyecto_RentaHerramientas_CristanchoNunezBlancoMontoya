@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bkseducate.securityapp.application.dto.ToolCatalog.ToolCatalogRequest;
@@ -13,7 +14,6 @@ import com.bkseducate.securityapp.domain.ports.SupplierRepository;
 import com.bkseducate.securityapp.domain.ports.ToolCatalogRepository;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 
 @Service
 public class CreateToolCatalogUseCase {

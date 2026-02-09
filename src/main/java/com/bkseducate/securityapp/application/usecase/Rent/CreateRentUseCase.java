@@ -83,7 +83,7 @@ public class CreateRentUseCase {
         
         for (UUID p : request.productsId()) {
             ToolCatalog toolCatalog = toolCatalogRepository.findById(p)
-                .orElseThrow(() -> new EntityNotFoundException("No se pudo encontrar el ITEM con ID" + p));
+                .orElseThrow(() -> new EntityNotFoundException("No se pudo encontrar el ITEM con ID " + p));
 
             ToolItem toolItem = toolItemRepository.findAllByToolCatalogEntityIdByToolItemStatus(toolCatalog.getId(), ToolItemStatus.AVAILABLE).stream().findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("No hay items disponibles, o no se pudo encontrar el catalogo con nombre " + toolCatalog.getName()));    

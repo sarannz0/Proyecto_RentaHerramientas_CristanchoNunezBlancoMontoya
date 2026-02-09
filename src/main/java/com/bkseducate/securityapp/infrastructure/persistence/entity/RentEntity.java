@@ -39,7 +39,7 @@ public class RentEntity {
     private BigDecimal totalAmount;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "tool_item_id", nullable = false, updatable = false)
+    @JoinColumn(name = "tool_item_id", nullable = true, updatable = false)
     private Set<ToolItemEntity> toolItemEntity = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
