@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bkseducate.securityapp.application.dto.Profile.SupplierResponse;
 import com.bkseducate.securityapp.application.dto.Supplier.SupplierRequest;
 import com.bkseducate.securityapp.application.usecase.User.CreateSupplierUseCase;
+import com.bkseducate.securityapp.infrastructure.exception.ErrorResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,39 +19,35 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
+@Tag(name = "Proveedores", description = "Gestión de proveedores")
 @RestController
 @RequestMapping("/supplier")
 
 public class SupplierController {
-    
+
     private final CreateSupplierUseCase createSupplierUseCase;
 
     public SupplierController(
-        CreateSupplierUseCase createSupplierUseCase
-    ) {
+            CreateSupplierUseCase createSupplierUseCase) {
         this.createSupplierUseCase = createSupplierUseCase;
     }
 
-    @Operation(
-        summary = "Registrar Proveedor en la App",
-        description = "Registra los usuarios de tipo Proveedor (SUPPLIER). Requiere rol ADMIN."
-    )
+    @Operation(summary = "Registrar Proveedor", description = "Registra los usuarios de tipo Proveedor (SUPPLIER). Requiere rol ADMIN.")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Proveedor registrado exitosamente",
-            content = @Content(schema = @Schema(implementation = SupplierResponse.class))),
-        @ApiResponse(responseCode = "400", description = "Datos inválidos"),
-        @ApiResponse(responseCode = "401", description = "No autenticado"),
-        @ApiResponse(responseCode = "403", description = "No tiene permisos (requiere ADMIN)"),
-        @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+            @ApiResponse(responseCode = "201", description = "Proveedor registrado exitosamente", content = @Content(schema = @Schema(implementation = SupplierResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "403", description = "No autorizado (Requiere ADMIN)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping()
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<SupplierResponse> createSupplier(
-        @Valid @RequestBody SupplierRequest request
-    ) {
+            @Valid @RequestBody SupplierRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(createSupplierUseCase.execute(request));
-    }  
+    }
 }
