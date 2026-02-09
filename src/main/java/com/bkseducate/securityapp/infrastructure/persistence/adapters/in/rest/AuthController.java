@@ -13,6 +13,7 @@ import com.bkseducate.securityapp.application.usecase.User.CreateUserUseCase;
 import com.bkseducate.securityapp.application.usecase.User.GetCurrentUserUseCase;
 import com.bkseducate.securityapp.application.usecase.User.LoginUseCase;
 import com.bkseducate.securityapp.application.usecase.User.LogoutUseCase;
+import com.bkseducate.securityapp.infrastructure.exception.ErrorResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -61,11 +62,11 @@ public class AuthController {
         this.getCurrentUserUseCase = getCurrentUserUseCase;
     }
 
-    @Operation(summary = "Registrar nuevo usuario", description = "Crea un nuevo usuario en el sistema. Se asigna automáticamente el rol ROLE_USER.")
+    @Operation(summary = "Registrar nuevo usuario", description = "Crea un nuevo usuario en el sistema. Se asigna automáticamente el rol ROLE_USER. Endpoint público, no requiere autenticación.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Usuario creado exitosamente", content = @Content(schema = @Schema(implementation = UserResponse.class))),
-            @ApiResponse(responseCode = "400", description = "Datos inválidos o usuario ya existe"),
-            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+            @ApiResponse(responseCode = "400", description = "Datos inválidos o usuario ya existe", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping("/register")
     public ResponseEntity<UserResponse> register(@Valid @RequestBody RegisterRequest request) {
@@ -73,11 +74,11 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @Operation(summary = "Iniciar sesión", description = "Autentica un usuario y retorna un access token y refresh token JWT.")
+    @Operation(summary = "Iniciar sesión", description = "Autentica un usuario y retorna un access token y refresh token JWT. Endpoint público, no requiere autenticación.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Login exitoso", content = @Content(schema = @Schema(implementation = LoginResponse.class))),
-            @ApiResponse(responseCode = "401", description = "Credenciales inválidas"),
-            @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+            @ApiResponse(responseCode = "401", description = "Credenciales inválidas", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
@@ -85,10 +86,11 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Refrescar access token", description = "Genera un nuevo access token usando un refresh token válido.")
+    @Operation(summary = "Refrescar access token", description = "Genera un nuevo access token usando un refresh token válido. Endpoint público, no requiere autenticación.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Token refrescado exitosamente", content = @Content(schema = @Schema(implementation = LoginResponse.class))),
-            @ApiResponse(responseCode = "401", description = "Refresh token inválido o expirado")
+            @ApiResponse(responseCode = "400", description = "Solicitud inválida", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "401", description = "Refresh token inválido o expirado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping("/refresh")
     public ResponseEntity<LoginResponse> refresh(@Valid @RequestBody RefreshTokenRequest request) {
@@ -96,10 +98,11 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Cerrar sesión", description = "Invalida el refresh token, cerrando la sesión del usuario.")
+    @Operation(summary = "Cerrar sesión", description = "Invalida el refresh token, cerrando la sesión del usuario. Requiere autenticación.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Sesión cerrada exitosamente"),
-            @ApiResponse(responseCode = "401", description = "No autenticado")
+            @ApiResponse(responseCode = "400", description = "Solicitud inválida", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/logout")
@@ -109,11 +112,16 @@ public class AuthController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Obtener usuario autenticado", description = "Retorna la información del usuario actualmente autenticado.")
+    @Operation(summary = "Obtener usuario autenticado", description = "Retorna la información del usuario actualmente autenticado (perfil usuario o proveedor). Requiere autenticación.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Usuario obtenido exitosamente", content = @Content(schema = @Schema(implementation = ProfileResponse.class))),
+<<<<<<< HEAD
             @ApiResponse(responseCode = "401", description = "No autenticado"),
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+=======
+            @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+>>>>>>> ce87019e160d1704c67b30049bcd54fe7e6d96a8
     })
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/me")
@@ -123,11 +131,11 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Cambiar contraseña", description = "Permite al usuario autenticado cambiar su contraseña. Requiere la contraseña actual.")
+    @Operation(summary = "Cambiar contraseña", description = "Permite al usuario autenticado cambiar su contraseña. Requiere la contraseña actual. Requiere autenticación.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Contraseña cambiada exitosamente"),
-            @ApiResponse(responseCode = "400", description = "Datos inválidos"),
-            @ApiResponse(responseCode = "401", description = "Contraseña actual incorrecta o no autenticado")
+            @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "401", description = "Contraseña actual incorrecta o no autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @SecurityRequirement(name = "bearerAuth")
     @PutMapping("/change-password")

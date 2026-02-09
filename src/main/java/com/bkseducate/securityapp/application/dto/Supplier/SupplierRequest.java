@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+@Schema(description = "Solicitud para registrar un nuevo proveedor (usuario con rol SUPPLIER)")
 public record SupplierRequest(
     @Schema(description = "Nombre del usuario", example = "Ponscio", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "Nombre es requerido")

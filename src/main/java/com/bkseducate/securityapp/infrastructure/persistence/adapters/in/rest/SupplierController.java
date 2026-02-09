@@ -22,10 +22,10 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
-@Tag(name = "Proveedores", description = "Gestión de proveedores")
+@Tag(name = "Proveedores", description = "Gestión de proveedores (registro de usuarios tipo SUPPLIER)")
 @RestController
 @RequestMapping("/supplier")
-
+@SecurityRequirement(name = "bearerAuth")
 public class SupplierController {
 
     private final CreateSupplierUseCase createSupplierUseCase;
@@ -43,7 +43,6 @@ public class SupplierController {
             @ApiResponse(responseCode = "403", description = "No autorizado (Requiere ADMIN)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @SecurityRequirement(name = "bearerAuth")
     @PostMapping()
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<SupplierResponse> createSupplier(

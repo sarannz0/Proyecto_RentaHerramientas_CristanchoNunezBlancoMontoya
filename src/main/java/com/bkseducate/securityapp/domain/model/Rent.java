@@ -5,11 +5,13 @@ import java.util.UUID;
 
 import com.bkseducate.securityapp.domain.exceptions.DomainException;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
 
+@Schema(description = "Alquiler de herramientas asociado a un usuario")
 public class Rent {
 
     private UUID id;

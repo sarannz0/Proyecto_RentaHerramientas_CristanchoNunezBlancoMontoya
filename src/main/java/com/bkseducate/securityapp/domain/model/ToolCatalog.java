@@ -5,6 +5,9 @@ import java.util.UUID;
 
 import com.bkseducate.securityapp.domain.exceptions.DomainException;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Catálogo de una herramienta ofrecida por un proveedor")
 public class ToolCatalog {
     private UUID id;
     private SupplierM supplier;

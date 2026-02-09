@@ -60,7 +60,10 @@ public class UserController {
     @Operation(summary = "Asignar rol a usuario", description = "Asigna un rol específico a un usuario. Requiere rol ADMIN.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Rol asignado exitosamente", content = @Content(schema = @Schema(implementation = UserResponse.class))),
-            @ApiResponse(responseCode = "403", description = "No autorizado (Requiere ADMIN)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "403", description = "No autorizado (Requiere ADMIN)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PutMapping("/{userId}/roles")
     @PreAuthorize("hasRole('ADMIN')")
@@ -74,6 +77,7 @@ public class UserController {
     @Operation(summary = "Listar usuarios", description = "Devuelve una lista de los usuarios registrados (USER/SUPPLIER). Requiere rol ADMIN.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de usuarios", content = @Content(array = @ArraySchema(schema = @Schema(implementation = UserResponse.class)))),
+            @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "403", description = "No autorizado (Requiere ADMIN)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping("/list")
@@ -85,7 +89,10 @@ public class UserController {
     @Operation(summary = "Actualizar usuario por ADMIN", description = "ADMIN actualiza información no sensible de un usuario.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Actualizado correctamente", content = @Content(schema = @Schema(implementation = UserUpdateResponse.class))),
-            @ApiResponse(responseCode = "403", description = "No autorizado (Requiere ADMIN)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "403", description = "No autorizado (Requiere ADMIN)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PutMapping("/update/{userId}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -95,9 +102,12 @@ public class UserController {
         return ResponseEntity.ok(infoUpdateUsersUseCase.execute(request, userId));
     }
 
-    @Operation(summary = "Actualizar propios datos", description = "Usuario autenticado actualiza su propia información.")
+    @Operation(summary = "Actualizar propios datos", description = "Usuario autenticado actualiza su propia información. Requiere autenticación.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Actualizado correctamente", content = @Content(schema = @Schema(implementation = UserUpdateResponse.class)))
+            @ApiResponse(responseCode = "200", description = "Actualizado correctamente", content = @Content(schema = @Schema(implementation = UserUpdateResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PutMapping("/update/me")
     public ResponseEntity<ProfileUpdate> updateUser(
@@ -110,7 +120,10 @@ public class UserController {
     @Operation(summary = "Cambiar estado de usuario", description = "Bloquea o activa un usuario. Requiere rol ADMIN.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Estado actualizado exitosamente", content = @Content(schema = @Schema(implementation = StatusUserResponse.class))),
-            @ApiResponse(responseCode = "403", description = "No autorizado (Requiere ADMIN)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "403", description = "No autorizado (Requiere ADMIN)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PutMapping("/status")
     @PreAuthorize("hasRole('ADMIN')")

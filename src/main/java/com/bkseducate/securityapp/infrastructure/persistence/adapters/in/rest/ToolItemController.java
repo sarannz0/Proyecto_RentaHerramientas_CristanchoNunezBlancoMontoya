@@ -27,6 +27,7 @@ import com.bkseducate.securityapp.infrastructure.exception.ErrorResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -51,7 +52,9 @@ public class ToolItemController {
         @Operation(summary = "Crear ítem de herramienta", description = "Crea un ítem físico asociado a un catálogo. Requiere rol SUPPLIER.")
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "201", description = "Item creado exitosamente"),
-                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                        @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "404", description = "Catálogo no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
         })
         @SecurityRequirement(name = "bearerAuth")
         @PostMapping("/create/{catalogId}")
@@ -67,7 +70,9 @@ public class ToolItemController {
         @Operation(summary = "Eliminar ítem de herramienta", description = "Elimina un ítem específico. Requiere rol SUPPLIER.")
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Eliminado exitosamente"),
-                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                        @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "404", description = "Ítem no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
         })
         @SecurityRequirement(name = "bearerAuth")
         @DeleteMapping("/delete/{itemId}")
@@ -82,8 +87,10 @@ public class ToolItemController {
 
         @Operation(summary = "Listar ítems de un catálogo", description = "Obtiene todos los ítems asociados a un catálogo. Requiere rol SUPPLIER.")
         @ApiResponses(value = {
-                        @ApiResponse(responseCode = "200", description = "Lista de ítems obtenida", content = @Content(schema = @Schema(implementation = ToolItem.class))),
-                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                        @ApiResponse(responseCode = "200", description = "Lista de ítems obtenida", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ToolItem.class)))),
+                        @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "404", description = "Catálogo no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
         })
         @SecurityRequirement(name = "bearerAuth")
         @GetMapping("/get/{catalogId}")
@@ -98,7 +105,10 @@ public class ToolItemController {
         @Operation(summary = "Actualizar estado físico de un ítem", description = "Cambia el estado (e.g. DAMAGED, MAINTENANCE) de un ítem. Requiere rol SUPPLIER.")
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Estado actualizado"),
-                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                        @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "404", description = "Ítem no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
         })
         @SecurityRequirement(name = "bearerAuth")
         @PutMapping("/update/status/{itemId}")
@@ -115,7 +125,9 @@ public class ToolItemController {
         @Operation(summary = "Actualizar disponibilidad de un ítem", description = "Habilita o deshabilita la disponibilidad de un ítem. Requiere rol SUPPLIER.")
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Disponibilidad actualizada"),
-                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                        @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "404", description = "Ítem no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
         })
         @SecurityRequirement(name = "bearerAuth")
         @PutMapping("/update/avaible/{itemId}/{bool}")
