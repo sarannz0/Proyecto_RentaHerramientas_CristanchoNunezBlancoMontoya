@@ -34,8 +34,11 @@ public class InvoiceController {
     @Operation(summary = "Obtener factura", description = "Obtiene la factura asociada a una renta. Requiere rol USER.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Factura obtenida exitosamente", content = @Content(schema = @Schema(implementation = Invoice.class))),
-            @ApiResponse(responseCode = "403", description = "No autorizado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "404", description = "Factura no encontrada", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(responseCode = "400", description = "Parámetros de solicitud inválidos", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "403", description = "No autorizado (Requiere USER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Factura no encontrada", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/{rentId}")

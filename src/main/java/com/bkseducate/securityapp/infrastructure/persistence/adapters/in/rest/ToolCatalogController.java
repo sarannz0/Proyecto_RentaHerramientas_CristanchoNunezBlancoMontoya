@@ -59,7 +59,8 @@ public class ToolCatalogController {
                         @ApiResponse(responseCode = "200", description = "Catálogo creado exitosamente"),
                         @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
                         @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
         })
         @PreAuthorize("hasRole('SUPPLIER')")
         @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -78,9 +79,11 @@ public class ToolCatalogController {
         @Operation(summary = "Eliminar catálogo de herramientas", description = "Elimina un catálogo existente. Requiere rol SUPPLIER.")
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Eliminado exitosamente"),
+                        @ApiResponse(responseCode = "400", description = "Solicitud inválida", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
                         @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
                         @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-                        @ApiResponse(responseCode = "404", description = "Catálogo no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                        @ApiResponse(responseCode = "404", description = "Catálogo no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
         })
         @PreAuthorize("hasRole('SUPPLIER')")
         @DeleteMapping("/delete/{catalogId}")
@@ -100,7 +103,8 @@ public class ToolCatalogController {
                         @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
                         @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
                         @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-                        @ApiResponse(responseCode = "404", description = "Catálogo no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                        @ApiResponse(responseCode = "404", description = "Catálogo no encontrado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
         })
         @PreAuthorize("hasRole('SUPPLIER')")
         @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, path = "/update/{catalogId}")
@@ -122,7 +126,8 @@ public class ToolCatalogController {
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Lista de catálogos del proveedor", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ToolCatalog.class)))),
                         @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere SUPPLIER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
         })
         @PreAuthorize("hasRole('SUPPLIER')")
         @GetMapping("/list")
@@ -137,7 +142,8 @@ public class ToolCatalogController {
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Lista de todos los catálogos", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ToolCatalog.class)))),
                         @ApiResponse(responseCode = "401", description = "No autenticado", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere USER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                        @ApiResponse(responseCode = "403", description = "No autorizado (Requiere USER)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                        @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
         })
         @PreAuthorize("hasRole('USER')")
         @GetMapping("/list/all")
