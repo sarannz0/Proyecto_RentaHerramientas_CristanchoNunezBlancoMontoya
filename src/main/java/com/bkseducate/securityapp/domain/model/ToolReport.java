@@ -6,9 +6,9 @@ import java.util.UUID;
 public class ToolReport {
 
     private UUID id;
-    private UUID toolItemId;
-    private UUID userId;
-    private UUID rentId;
+    private ToolItem toolItem;
+    private User user;
+    private Rent rent;
     private String description;
     private LocalDateTime date;
 
@@ -16,16 +16,16 @@ public class ToolReport {
     }
 
     public static ToolReport create(
-        UUID toolItemId,
-        UUID userId,
-        UUID rentId,
+        ToolItem toolItem,
+        User user,
+        Rent rent,
         String description
     ) {
         ToolReport report = new ToolReport();
         report.id = UUID.randomUUID();
-        report.toolItemId = toolItemId;
-        report.userId = userId;
-        report.rentId = rentId;
+        report.toolItem = toolItem;
+        report.user = user;
+        report.rent = rent;
         report.description = description;
         report.date = LocalDateTime.now();
 
@@ -34,17 +34,17 @@ public class ToolReport {
 
     public static ToolReport recreate(
         UUID id,
-        UUID toolItemId,
-        UUID userId,
-        UUID rentId,
+        ToolItem toolItem,
+        User user,
+        Rent rent,
         String description,
         LocalDateTime date
     ) {
         ToolReport report = new ToolReport();
         report.id = id;
-        report.toolItemId = toolItemId;
-        report.userId = userId;
-        report.rentId = rentId;
+        report.toolItem = toolItem;
+        report.user = user;
+        report.rent = rent;
         report.description = description;
         report.date = date;
 
@@ -55,16 +55,16 @@ public class ToolReport {
         return id;
     }
 
-    public UUID getToolItemId() {
-        return toolItemId;
+    public ToolItem getToolItem() {
+        return toolItem;
     }
 
-    public UUID getUserId() {
-        return userId;
+    public User getUserId() {
+        return user;
     }
 
-    public UUID getRentId() {
-        return rentId;
+    public Rent getRentId() {
+        return rent;
     }
 
     public String getDescription() {
