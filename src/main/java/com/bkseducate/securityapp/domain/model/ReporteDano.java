@@ -9,6 +9,7 @@ public class ReporteDano {
     private double repairCost;
     
     private LocalDateTime date;
+    private Rent rent;
 
     private ReporteDano() {
     }
@@ -16,13 +17,14 @@ public class ReporteDano {
     public static ReporteDano create(
         String description,
         double repairCost,
-        LocalDateTime date
+        Rent rent
     ) {
         ReporteDano report = new ReporteDano();
         report.id = UUID.randomUUID();
         report.description = description;
         report.repairCost = repairCost;
         report.date = LocalDateTime.now();
+        report.rent = rent;
 
         return report;
     }
@@ -31,13 +33,15 @@ public class ReporteDano {
         UUID id,
         String description,
         double repairCost,
-        LocalDateTime date
+        LocalDateTime date,
+        Rent rent
     ) {
         ReporteDano report = new  ReporteDano();
         report.id = id;
         report.description = description;
         report.repairCost = repairCost;
         report.date = date;
+        report.rent = rent;
 
         return report;
     }
@@ -56,5 +60,13 @@ public class ReporteDano {
 
     public double getRepairCost() {
         return repairCost;
+    }
+
+    public Rent getRent() {
+        return rent;
+    }
+
+    public void setRent(Rent rent) {
+        this.rent = rent;
     }
 }

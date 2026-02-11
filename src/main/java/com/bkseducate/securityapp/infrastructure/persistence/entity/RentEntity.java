@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.bkseducate.securityapp.domain.model.RentStatus;
-import com.bkseducate.securityapp.domain.model.ToolItem;
+import com.bkseducate.securityapp.domain.model.ReporteDanoEnum;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -46,7 +46,7 @@ public class RentEntity {
     @Column(nullable = false)
     private RentStatus rentStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
     private UserEntity userEntity;
 
@@ -54,8 +54,23 @@ public class RentEntity {
     @JoinColumn(name = "address_id")
     private AddressEntity addressEntity;
 
-    public RentEntity(UUID id, LocalDateTime startDate, LocalDateTime endDate, BigDecimal totalAmount,
-            Set<ToolItemEntity> toolItemEntity, RentStatus rentStatus, UserEntity userEntity, AddressEntity addressEntity) {
+    private ReporteDanoEnum estadoDevolucion;
+
+   
+    public RentEntity() {
+    }
+
+    public RentEntity(
+        UUID id,
+        LocalDateTime startDate,
+        LocalDateTime endDate,
+        BigDecimal totalAmount,
+        Set<ToolItemEntity> toolItemEntity,
+        RentStatus rentStatus,
+        UserEntity userEntity,
+        AddressEntity addressEntity,
+        ReporteDanoEnum estadoDevolucion
+        ) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -64,11 +79,8 @@ public class RentEntity {
         this.rentStatus = rentStatus;
         this.userEntity = userEntity;
         this.addressEntity = addressEntity;
+        this.estadoDevolucion = estadoDevolucion;
     }
-
-    public RentEntity() {
-    }
-
     public UUID getId() {
         return id;
     }
@@ -133,6 +145,13 @@ public class RentEntity {
         this.addressEntity = addressEntity;
     }
 
+    @Enumerated(EnumType.STRING)
+    public ReporteDanoEnum getEstadoDevolucion() {
+        return estadoDevolucion;
+    }
 
+    public void setEstadoDevolucion(ReporteDanoEnum estadoDevolucion) {
+        this.estadoDevolucion = estadoDevolucion;
+    }
 
 }

@@ -5,9 +5,9 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.bkseducate.securityapp.infrastructure.persistence.entity.ToolReportEntity;
+import com.bkseducate.securityapp.infrastructure.persistence.entity.ReporteDanoEntity;
 
 @Repository
-public interface ToolReportJpaRepository extends JpaRepository<ToolReportEntity, UUID> {
+public interface ReporteDanoJpaRepository extends JpaRepository<ReporteDanoEntity, UUID> {
     
 }

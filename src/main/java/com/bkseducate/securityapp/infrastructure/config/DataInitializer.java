@@ -43,8 +43,8 @@ public class DataInitializer implements CommandLineRunner {
     
     @Override
     public void run(String... args) {
-        initializeRoles();
-        initializeAdmin();
+        //initializeRoles();
+        //initializeAdmin();
     }
     
     private void initializeRoles() {

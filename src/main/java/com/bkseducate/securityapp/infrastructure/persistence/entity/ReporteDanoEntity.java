@@ -6,23 +6,29 @@ import java.util.UUID;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tools_reports")
+@Table(name = "reporte_danos")
 public class ReporteDanoEntity {
     @Id
     @Column(columnDefinition = "CHAR(36)", length = 36)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String description;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private double repairCost;
 
     @Column(nullable = false)
     private LocalDateTime date;
+
+    @OneToOne
+    @JoinColumn(referencedColumnName = "id")
+    private RentEntity rent;
 
     public ReporteDanoEntity() {
     }
@@ -31,12 +37,14 @@ public class ReporteDanoEntity {
         UUID id,
         String description,
         double repairCost,
-        LocalDateTime date
+        LocalDateTime date,
+        RentEntity rent
         ) {
         this.id = id;
         this.description = description;
         this.repairCost = repairCost;
         this.date = date;
+        this.rent = rent;
     }
 
     public UUID getId() {
@@ -69,6 +77,15 @@ public class ReporteDanoEntity {
 
     public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+
+    public RentEntity getRent() {
+        return rent;
+    }
+
+    public void setRent(RentEntity rent) {
+        this.rent = rent;
     }
 
 

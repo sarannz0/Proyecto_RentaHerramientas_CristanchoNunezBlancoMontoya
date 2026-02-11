@@ -22,6 +22,9 @@ public class Rent {
     private RentStatus status;
     private User user;
     private Address address;
+    private ReporteDanoEnum estadoDevolucion;
+    
+
     
 
     public static Rent create(
@@ -37,6 +40,7 @@ public class Rent {
         rent.user = user;
         rent.status = RentStatus.PENDING;
         rent.address = address;
+        rent.estadoDevolucion = ReporteDanoEnum.PENDIENTE_DEVOLUCION;
 
         return rent;
     }
@@ -49,7 +53,8 @@ public class Rent {
         Set<ToolItem> toolItem,
         RentStatus status,
         User user,
-        Address address
+        Address address,
+        ReporteDanoEnum estadoDevolucion
     ) {
         Rent rent = new Rent();
         rent.id = id;
@@ -58,13 +63,20 @@ public class Rent {
         rent.totalAmount = totalAmount;
         rent.toolItem = toolItem;
         rent.status = status;
+        rent.user = user;
         rent.address = address;
+        rent.estadoDevolucion = estadoDevolucion;
         return rent;
     }
 
     public void updateStatus(RentStatus status) {
         if (status == null) throw new DomainException("El status no puede ser nulo");
         this.status = status;
+    }
+
+    public void updateEstadoDevolucion(ReporteDanoEnum estado) {
+        if (estado == null ) throw new DomainException("El status no puede ser nulo");
+        this.estadoDevolucion = estado;
     }
 
     public void updateAmount(BigDecimal amount) {
@@ -111,6 +123,10 @@ public class Rent {
 
     public Address getAddress() {
         return address;
+    }
+
+    public ReporteDanoEnum getEstadoDevolucion() {
+        return estadoDevolucion;
     }
 
     private Rent() {

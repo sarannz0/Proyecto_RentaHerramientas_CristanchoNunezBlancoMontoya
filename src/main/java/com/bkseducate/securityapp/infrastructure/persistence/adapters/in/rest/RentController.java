@@ -1,4 +1,4 @@
-package com.bkseducate.securityapp.infrastructure.persistence.adapters.in.rest;
+ package com.bkseducate.securityapp.infrastructure.persistence.adapters.in.rest;
 
 import java.util.UUID;
 

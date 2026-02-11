@@ -24,7 +24,8 @@ public class RentMapper {
             entity.getToolItemEntity().stream().map(toolItemMapper::toDomain).collect(Collectors.toSet()),
             entity.getRentStatus(),
             userMapper.toDomain(entity.getUserEntity()),
-            addressMapper.toDomain(entity.getAddressEntity())
+            addressMapper.toDomain(entity.getAddressEntity()),
+            entity.getEstadoDevolucion()
         );
     }
 
@@ -37,7 +38,8 @@ public class RentMapper {
             rent.getToolItem().stream().map(toolItemMapper::toEntity).collect(Collectors.toSet()),
             rent.getStatus(),
             userMapper.toEntity(rent.getUser()),
-            addressMapper.toEntity(rent.getAddress())
+            addressMapper.toEntity(rent.getAddress()),
+            rent.getEstadoDevolucion()
         );
     }
 
