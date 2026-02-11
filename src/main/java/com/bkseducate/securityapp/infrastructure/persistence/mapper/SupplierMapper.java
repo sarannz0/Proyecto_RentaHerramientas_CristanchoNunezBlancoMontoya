@@ -12,7 +12,7 @@ import com.bkseducate.securityapp.domain.model.User;
 import com.bkseducate.securityapp.infrastructure.persistence.entity.SupplierEntity;
 
 @Mapper(componentModel = "spring", uses = {AddressMapper.class})
-public abstract class SupplierMapper {
+public abstract class SupplierMapper{
 
     @Autowired
     protected AddressMapper addressMapper;
