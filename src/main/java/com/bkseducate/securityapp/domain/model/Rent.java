@@ -20,6 +20,7 @@ public class Rent {
     private BigDecimal totalAmount;
     private Set<ToolItem> toolItem = new HashSet<>();
     private RentStatus status;
+    private EstadoDevolucion estadoDevolucion;
     private User user;
     private Address address;
     
@@ -36,6 +37,7 @@ public class Rent {
         rent.endDate = endDate;
         rent.user = user;
         rent.status = RentStatus.PENDING;
+        rent.estadoDevolucion = EstadoDevolucion.PENDIENTE_DEVOLUCION;
         rent.address = address;
 
         return rent;
@@ -48,6 +50,7 @@ public class Rent {
         BigDecimal totalAmount,
         Set<ToolItem> toolItem,
         RentStatus status,
+        EstadoDevolucion estadoDevolucion,
         User user,
         Address address
     ) {
@@ -58,6 +61,7 @@ public class Rent {
         rent.totalAmount = totalAmount;
         rent.toolItem = toolItem;
         rent.status = status;
+        rent.estadoDevolucion = estadoDevolucion;
         rent.address = address;
         return rent;
     }
@@ -65,6 +69,11 @@ public class Rent {
     public void updateStatus(RentStatus status) {
         if (status == null) throw new DomainException("El status no puede ser nulo");
         this.status = status;
+    }
+
+    public void updateEstadoDevolucion(EstadoDevolucion estadoDevolucion){
+        if (estadoDevolucion == null) throw new DomainException("La devolucion no puede ser nula");
+        this.estadoDevolucion = estadoDevolucion;
     }
 
     public void updateAmount(BigDecimal amount) {
@@ -103,6 +112,10 @@ public class Rent {
 
     public RentStatus getStatus() {
         return status;
+    }
+
+    public EstadoDevolucion getEstadoDevolucion() {
+        return estadoDevolucion;
     }
 
     public User getUser() {

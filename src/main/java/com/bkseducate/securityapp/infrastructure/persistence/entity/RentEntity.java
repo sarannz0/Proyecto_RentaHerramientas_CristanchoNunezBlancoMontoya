@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import com.bkseducate.securityapp.domain.model.EstadoDevolucion;
 import com.bkseducate.securityapp.domain.model.RentStatus;
 import com.bkseducate.securityapp.domain.model.ToolItem;
 
@@ -46,6 +47,10 @@ public class RentEntity {
     @Column(nullable = false)
     private RentStatus rentStatus;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private EstadoDevolucion estadoDevolucion;
+    
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
     private UserEntity userEntity;
@@ -55,13 +60,14 @@ public class RentEntity {
     private AddressEntity addressEntity;
 
     public RentEntity(UUID id, LocalDateTime startDate, LocalDateTime endDate, BigDecimal totalAmount,
-            Set<ToolItemEntity> toolItemEntity, RentStatus rentStatus, UserEntity userEntity, AddressEntity addressEntity) {
+            Set<ToolItemEntity> toolItemEntity, RentStatus rentStatus, EstadoDevolucion estadoDevolucion, UserEntity userEntity, AddressEntity addressEntity) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalAmount = totalAmount;
         this.toolItemEntity = toolItemEntity;
         this.rentStatus = rentStatus;
+        this.estadoDevolucion = estadoDevolucion;
         this.userEntity = userEntity;
         this.addressEntity = addressEntity;
     }
@@ -115,6 +121,14 @@ public class RentEntity {
 
     public void setRentStatus(RentStatus rentStatus) {
         this.rentStatus = rentStatus;
+    }
+    
+    public EstadoDevolucion getEstadoDevolucion() {
+        return estadoDevolucion;
+    }
+
+    public void setEstadoDevolucion(EstadoDevolucion estadoDevolucion) {
+        this.estadoDevolucion = estadoDevolucion;
     }
 
     public UserEntity getUserEntity() {

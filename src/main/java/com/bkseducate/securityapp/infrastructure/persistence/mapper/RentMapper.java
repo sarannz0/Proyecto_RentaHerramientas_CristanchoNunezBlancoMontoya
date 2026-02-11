@@ -23,6 +23,7 @@ public class RentMapper {
             entity.getTotalAmount(),
             entity.getToolItemEntity().stream().map(toolItemMapper::toDomain).collect(Collectors.toSet()),
             entity.getRentStatus(),
+            entity.getEstadoDevolucion(),
             userMapper.toDomain(entity.getUserEntity()),
             addressMapper.toDomain(entity.getAddressEntity())
         );
@@ -36,6 +37,7 @@ public class RentMapper {
             rent.getTotalAmount(),
             rent.getToolItem().stream().map(toolItemMapper::toEntity).collect(Collectors.toSet()),
             rent.getStatus(),
+            rent.getEstadoDevolucion(),         
             userMapper.toEntity(rent.getUser()),
             addressMapper.toEntity(rent.getAddress())
         );
