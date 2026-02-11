@@ -98,3 +98,7 @@ public class CreateRentUseCase {
         return rentRepository.save(rent);
     }
 }
+
+
+
+
